@@ -125,9 +125,18 @@ export default function Dashboard(props) {
                   }
                   autoWidth
                 >
-                  <MenuItem value="0">2020</MenuItem>
-                  <MenuItem value="1">2021</MenuItem>
-                  <MenuItem value="2">2022</MenuItem>
+                  <MenuItem value="0">Jan</MenuItem>
+                  <MenuItem value="1">Feb</MenuItem>
+                  <MenuItem value="2">Mar</MenuItem>
+                  <MenuItem value="3">Apr</MenuItem>
+                  <MenuItem value="4">May</MenuItem>
+                  <MenuItem value="5">Jun</MenuItem>
+                  <MenuItem value="6">Jul</MenuItem>
+                  <MenuItem value="7">Aug</MenuItem>
+                  <MenuItem value="8">Sep</MenuItem>
+                  <MenuItem value="9">Oct</MenuItem>
+                  <MenuItem value="10">Nov</MenuItem>
+                  <MenuItem value="11">Dec</MenuItem>
                 </Select>
               </div>
             }

@@ -30,10 +30,10 @@ export default function TableComponent({ data }) {
         </TableRow>
       </TableHead>
       <TableBody>
-        {data.map(({ id, name, email, date, money}) => (
+        {data.map(({ id, name, bankingNum, date, money}) => (
           <TableRow key={id}>
             <TableCell className="pl-3 fw-normal">{name}</TableCell>
-            <TableCell>{email}</TableCell>
+            <TableCell>{bankingNum}</TableCell>
             <TableCell>{date}</TableCell>
             <TableCell>{money}</TableCell>
           </TableRow>
