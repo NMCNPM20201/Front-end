@@ -28,10 +28,10 @@ import Dashboard from "../../pages/dashboard";
 import Typography from "../../pages/typography";
 import Notifications from "../../pages/notifications";
 import Maps from "../../pages/maps";
+import Settings from "../../pages/settings";
 import Tables from "../../pages/tables";
 import Icons from "../../pages/icons";
 import Charts from "../../pages/charts";
-
 // context
 import { useLayoutState } from "../../context/LayoutContext";
 
@@ -56,6 +56,7 @@ function Layout(props) {
               <Route path="/app/dashboard" component={Dashboard} />
               <Route path="/app/typography" component={Typography} />
               <Route path="/app/tables" component={Tables} />
+              <Route path="/app/settings" component={Settings} />
               <Route path="/app/notifications" component={Notifications} />
               <Route
                 exact
