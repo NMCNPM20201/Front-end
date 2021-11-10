@@ -1374,6 +1374,29 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@giphy/js-fetch-api@^4.1.2":
+  version "4.1.2"
+  resolved "https://registry.yarnpkg.com/@giphy/js-fetch-api/-/js-fetch-api-4.1.2.tgz#0c4a975567efa6591fd47d04d5d7f7012a2c527f"
+  integrity sha512-wDfDQu8HiVkLb+YXcZf8QFbznmMHWbg86ZBydYmnp2mfuHyaHKsz9n9PnxdH3RorMS9YM/Ca/zqAM5y89Qj+Hw==
+  dependencies:
+    "@giphy/js-types" "^4.1.0"
+    "@giphy/js-util" "^4.0.1"
+    qs "^6.9.4"
+
+"@giphy/js-types@^4.1.0":
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/@giphy/js-types/-/js-types-4.1.0.tgz#987b184bf848c81092ba61ab10895096eefa78de"
+  integrity sha512-+qSN4Mx4TmrjLQm4SC0I/ZBkb5eWM94sljXwfjIlqn0GMSR3geqEqwmE9Uf/ldgzFh+XMMCasQjIdUl2nWc++Q==
+
+"@giphy/js-util@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.yarnpkg.com/@giphy/js-util/-/js-util-4.0.1.tgz#dc1987465cf69267a1aa92ae027c7de3d3dab3b2"
+  integrity sha512-46wXgt5Y+MxZjuzjE6JlvMLE+6Vlag+PYxbyTxpsunhmOKNoYK99d51E09iynmXTFuZWYgWJR9LcfnzqsWHy+Q==
+  dependencies:
+    "@giphy/js-types" "^4.1.0"
+    dompurify "^2.2.2"
+    uuid "^8.3.0"
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
@@ -4632,6 +4655,11 @@ domhandler@^2.3.0:
   integrity sha512-JiK04h0Ht5u/80fdLMCEmV4zkNh2BcoMFBmZ/91WtYZ8qVXSKjiw7fXMgFPnHcSZgOo3XdinHvmnDUeMf5R4wA==
   dependencies:
     domelementtype "1"
+
+dompurify@^2.2.2:
+  version "2.3.3"
+  resolved "https://registry.yarnpkg.com/dompurify/-/dompurify-2.3.3.tgz#c1af3eb88be47324432964d8abc75cf4b98d634c"
+  integrity sha512-dqnqRkPMAjOZE0FogZ+ceJNM2dZ3V/yNOuFB7+39qpO93hHhfRpHw3heYQC7DPK9FqbQTfBKUJhiSfz4MvXYwg==
 
 domutils@1.5.1:
   version "1.5.1"
@@ -9838,6 +9866,13 @@ qs@6.7.0:
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.7.0.tgz#41dc1a015e3d581f1621776be31afb2876a9b1bc"
   integrity sha512-VCdBRNFTX1fyE7Nb6FYoURo/SPe62QCaAyzJvUjwRaIsc+NePBEniHlvxFmmX56+HZphIGtV0XeCirBtpDrTyQ==
 
+qs@^6.9.4:
+  version "6.10.1"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.10.1.tgz#4931482fa8d647a5aab799c5271d2133b981fb6a"
+  integrity sha512-M528Hph6wsSVOBiYUnGf+K/7w0hNshs/duGsNXPUCLH5XAqjEtiPGwNONLV0tBH8NoGb0mvD5JubnUTrujKDTg==
+  dependencies:
+    side-channel "^1.0.4"
+
 qs@~6.5.2:
   version "6.5.2"
   resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
@@ -11053,6 +11088,15 @@ side-channel@^1.0.2:
   dependencies:
     es-abstract "^1.18.0-next.0"
     object-inspect "^1.8.0"
+
+side-channel@^1.0.4:
+  version "1.0.4"
+  resolved "https://registry.yarnpkg.com/side-channel/-/side-channel-1.0.4.tgz#efce5c8fdc104ee751b25c58d4290011fa5ea2cf"
+  integrity sha512-q5XPytqFEIKHkGdiMIrY10mvLRvnQh42/+GoBlFW3b2LXLE2xxJpZFdm94we0BaoV3RwJyGqg5wS7epxTv0Zvw==
+  dependencies:
+    call-bind "^1.0.0"
+    get-intrinsic "^1.0.2"
+    object-inspect "^1.9.0"
 
 signal-exit@^3.0.0, signal-exit@^3.0.2:
   version "3.0.3"

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -30,23 +30,24 @@ import {
 } from "../../context/LayoutContext";
 
 const notifications = [
-  { id: 0, color: "warning", message: "Check out this awesome ticket" },
+  { 
+    color: "warning", 
+    type: "notification",
+    message: "Check out this awesome ticket" 
+  },
   {
-    id: 1,
     color: "success",
-    type: "info",
+    type: "notification",
     message: "What is the best way to get ...",
   },
   {
-    id: 2,
     color: "secondary",
     type: "notification",
     message: "This is just a simple notification",
   },
   {
-    id: 3,
     color: "primary",
-    type: "e-commerce",
+    type: "notification",
     message: "12 new orders has arrived today",
   },
 ];
@@ -62,6 +63,34 @@ export default function Header(props) {
   var [notificationsMenu, setNotificationsMenu] = useState(null);
   var [isNotificationsUnread, setIsNotificationsUnread] = useState(true);
   var [isSearchOpen, setSearchOpen] = useState(false);
+  var [notificationsData, setNotificationsData] = useState([]);
+  var ws = useRef(null);
+
+  const onMessage = (event) => {
+    let recv = JSON.parse(event.data);
+    setNotificationsData((values) => {
+      let newData = [...values];
+      newData.push({
+        color: "primary",
+        type: "notification",
+        message: recv.data,
+      });
+      if (newData.length > 5) {
+        newData = newData.slice(1);
+      }
+      return newData;
+    });
+  }
+
+  /*useEffect(() => {
+    ws.current = new WebSocket("localhost:3000");
+    ws.current.onmessage = onMessage;
+    const interval = setInterval(() => ws.current.send("echo"), 1000);
+    return () => {
+      ws.current.close();
+      clearInterval(interval);
+    }
+  }, []);*/
 
   return (
     <AppBar position="fixed" className={classes.appBar}>
@@ -144,9 +173,9 @@ export default function Header(props) {
           className={classes.headerMenu}
           disableAutoFocusItem
         >
-          {notifications.map(notification => (
+          {notifications/* {notificationsData} */.map(notification => (
             <MenuItem
-              key={notification.id}
+              /*key={notification.id}*/
               onClick={() => setNotificationsMenu(null)}
               className={classes.headerMenuItem}
             >
