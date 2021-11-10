@@ -34,25 +34,12 @@ export default function Genurl() {
             return <div className="text-container">{items}</div>;
         };
 
-<<<<<<< HEAD
         const onMessage = async (msg) => {
-=======
-    const onMessage = async (event) => {
-        setWaiting(values => true);
-        await getGifTexts(JSON.parse(event.data).accuracy);
-    }
-
-    useEffect(async () => {
-        ws.current = new WebSocket("ws://localhost:8080/gs-guide-websocket");
-        ws.current.onmessage = await onMessage;
-        ws.current.onopen = () => ws.current.send("echo");
-        const interval = setInterval(() => {
->>>>>>> 94adb67b6e2aa0b043de4ed2ce4de0eb2e4b50db
             setWaiting(values => true);
             await getGifTexts(msg.body);
         }
 
-        useSubscription("/topic/test", async (message) => await onMessage(message));
+        useSubscription("/topic/message", async (message) => await onMessage(message));
 
         return (
             <>
@@ -66,7 +53,7 @@ export default function Genurl() {
     return (
         <>
             <StompSessionProvider
-                url={"https://stream.elite12.de/api/sock"}
+                url={"http://localhost:8080/gs-guide-websocket"}
                 debug={(str) => {
                     console.log(str);
                 }}
