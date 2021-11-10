@@ -35,7 +35,7 @@ export default function Genurl() {
     }
 
     useEffect(async () => {
-        ws.current = new WebSocket("ws://localhost:3000/ws");
+        ws.current = new WebSocket("ws://localhost:8080/gs-guide-websocket");
         ws.current.onmessage = await onMessage;
         ws.current.onopen = () => ws.current.send("echo");
         const interval = setInterval(() => {
