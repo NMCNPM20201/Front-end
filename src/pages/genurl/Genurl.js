@@ -39,7 +39,7 @@ export default function Genurl() {
             await getGifTexts(msg.body);
         }
 
-        useSubscription("/topic/test", async (message) => await onMessage(message));
+        useSubscription("/topic/message", async (message) => await onMessage(message));
 
         return (
             <>
@@ -58,7 +58,7 @@ export default function Genurl() {
     return (
         <>
             <StompSessionProvider
-                url={"https://stream.elite12.de/api/sock"}
+                url={"http://localhost:8080/gs-guide-websocket"}
                 debug={(str) => {
                     console.log(str);
                 }}
