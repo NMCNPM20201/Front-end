@@ -22,7 +22,7 @@ export default function Genurl() {
         const Item = (props) => {
             return (
                 <div className="gif-item">
-                    <img src={props.url} />
+                    <img src={props.url} width="350"/>
                 </div>
             );
         }
@@ -46,9 +46,17 @@ export default function Genurl() {
                 {!waiting && (
                     <div style={{
                         display: "flex",
-                        justifyContent: "center"
+                        justifyContent: "center",
                     }}>
-                        <TextList gifs={gifTexts} />
+                        <div>
+                            <img src="http://i.stack.imgur.com/SBv4T.gif" width="400" />
+                        </div>
+                        <div style={{
+                            position: "absolute",
+                            bottom: "47%",
+                        }}>
+                            <TextList gifs={gifTexts} />
+                        </div>
                     </div>
                 )}
             </>
