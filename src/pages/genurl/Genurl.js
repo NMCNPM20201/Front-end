@@ -1,5 +1,6 @@
 import { GiphyFetch } from "@giphy/js-fetch-api";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
+import Zoom from '@material-ui/core/Zoom/Zoom';
 import {
     StompSessionProvider,
     useSubscription,
@@ -17,6 +18,7 @@ export default function Genurl() {
             const res = await gf.animate(text, { limit: 1 })
             setGifTexts(values => res.data);
             setWaiting(values => false);
+            setTimeout(() => setWaiting(values => true), 7000);
         }
 
         const Item = (props) => {
@@ -40,25 +42,37 @@ export default function Genurl() {
         }
 
         useSubscription("/topic/message", async (message) => await onMessage(message));
+        /*useEffect(() => {
+            getGifTexts("Cam on ban A da donate 100000 dong");
+            setTimeout(() => getGifTexts("Cam on ban B da donate 700000 dong"), 8000);
+        }, []);*/
 
         return (
-            <>
-                {!waiting && (
-                    <div style={{
-                        display: "flex",
-                        justifyContent: "center",
-                    }}>
+            <> 
+                <div style={{
+                    display: "flex",
+                    justifyContent: "center",
+                }}>
+                    <Zoom 
+                        in={!waiting}
+                        timeout={{enter: 1500, exit: 0}}
+                    >
                         <div>
                             <img src="http://i.stack.imgur.com/SBv4T.gif" width="400" />
                         </div>
+                    </Zoom>
+                    <Zoom 
+                        in={!waiting}
+                        timeout={{enter: 1500, exit: 0}}
+                    >
                         <div style={{
                             position: "absolute",
                             bottom: "47%",
                         }}>
                             <TextList gifs={gifTexts} />
                         </div>
-                    </div>
-                )}
+                    </Zoom>
+                </div>
             </>
         );
     }
