@@ -24,7 +24,7 @@ export default function Genurl() {
         const Item = (props) => {
             return (
                 <div className="gif-item">
-                    <img src={props.url} width="350"/>
+                    <img src={props.url} width="600" height="200"/>
                 </div>
             );
         }
@@ -44,30 +44,33 @@ export default function Genurl() {
         useSubscription("/topic/message", async (message) => await onMessage(message));
         /*useEffect(() => {
             getGifTexts("Cam on ban A da donate 100000 dong");
-            setTimeout(() => getGifTexts("Cam on ban B da donate 700000 dong"), 8000);
+            setTimeout(() => getGifTexts("Cam on ban B da donate 700000 dong"), 9000);
         }, []);*/
 
         return (
             <> 
                 <div style={{
+                    height: "500px",
                     display: "flex",
-                    justifyContent: "center",
+                    flexDirection: "column",
+                    justifyContent: "space-around",
+                    alignItems: "center",
                 }}>
                     <Zoom 
                         in={!waiting}
-                        timeout={{enter: 1500, exit: 0}}
+                        timeout={{enter: 1500, exit: 200}}
                     >
                         <div>
-                            <img src="http://i.stack.imgur.com/SBv4T.gif" width="400" />
+                            <img src="https://i.pinimg.com/originals/18/55/9c/18559ccfe163425e8328d4255049b817.gif" width="600" height="300"/>
                         </div>
                     </Zoom>
                     <Zoom 
                         in={!waiting}
-                        timeout={{enter: 1500, exit: 0}}
+                        timeout={{enter: 1500, exit: 200}}
                     >
                         <div style={{
                             position: "absolute",
-                            bottom: "47%",
+                            top: "48%",
                         }}>
                             <TextList gifs={gifTexts} />
                         </div>
