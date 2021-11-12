@@ -24,7 +24,7 @@ export default function Genurl() {
         const Item = (props) => {
             return (
                 <div className="gif-item">
-                    <img src={props.url} width="600" height="200"/>
+                    <img src={props.url} width="600" height="300"/>
                 </div>
             );
         }
@@ -61,7 +61,7 @@ export default function Genurl() {
                         timeout={{enter: 1500, exit: 200}}
                     >
                         <div>
-                            <img src="https://i.pinimg.com/originals/18/55/9c/18559ccfe163425e8328d4255049b817.gif" width="600" height="300"/>
+                            <img src="https://i.pinimg.com/originals/18/55/9c/18559ccfe163425e8328d4255049b817.gif" width="300" height="200"/>
                         </div>
                     </Zoom>
                     <Zoom 
