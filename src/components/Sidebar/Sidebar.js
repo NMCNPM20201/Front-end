@@ -8,9 +8,6 @@ import {
   FormatSize as TypographyIcon,
   FilterNone as UIElementsIcon,
   BorderAll as TableIcon,
-  QuestionAnswer as SupportIcon,
-  LibraryBooks as LibraryIcon,
-  HelpOutline as FAQIcon,
   ArrowBack as ArrowBackIcon,
 } from "@material-ui/icons";
 import { useTheme } from "@material-ui/styles";
@@ -35,8 +32,8 @@ const structure = [
   { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
   {
     id: 1,
-    label: "Typography",
-    link: "/app/typography",
+    label: "Animation",
+    link: "/app/animation",
     icon: <TypographyIcon />,
   },
   { id: 2, label: "Tables", link: "/app/tables", icon: <TableIcon /> },
@@ -58,31 +55,6 @@ const structure = [
       { label: "Charts", link: "/app/ui/charts" },
       { label: "Maps", link: "/app/ui/maps" },
     ],
-  },
-  { id: 7, type: "divider" },
-  { id: 8, type: "title", label: "HELP" },
-  { id: 9, label: "Library", link: "https://flatlogic.com/templates", icon: <LibraryIcon /> },
-  { id: 10, label: "Support", link: "https://flatlogic.com/forum", icon: <SupportIcon /> },
-  { id: 11, label: "FAQ", link: "https://flatlogic.com/forum", icon: <FAQIcon /> },
-  { id: 12, type: "divider" },
-  { id: 13, type: "title", label: "PROJECTS" },
-  {
-    id: 14,
-    label: "My recent",
-    link: "",
-    icon: <Dot size="small" color="warning" />,
-  },
-  {
-    id: 15,
-    label: "Starred",
-    link: "",
-    icon: <Dot size="small" color="primary" />,
-  },
-  {
-    id: 16,
-    label: "Background",
-    link: "",
-    icon: <Dot size="small" color="secondary" />,
   },
 ];
 

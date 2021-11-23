@@ -9,9 +9,10 @@
     "node-fetch": "^2.6.1"
   },
   "dependencies": {
+    "@giphy/js-fetch-api": "^4.1.2",
+    "@material-ui/core": "^4.12.3",
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
-    "@material-ui/core": "^4.11.3",
     "@material-ui/icons": "^4.11.2",
     "@material-ui/styles": "^4.11.3",
     "@mdi/js": "^5.9.55",
@@ -31,10 +32,12 @@
     "react-number-format": "^4.8.0",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.1",
+    "react-stomp-hooks": "^2.0.2",
     "react-syntax-highlighter": "^15.4.3",
     "react-toastify": "^7.0.3",
     "recharts": "^2.0.4",
-    "tinycolor2": "^1.4.2"
+    "tinycolor2": "^1.4.2",
+    "axios": "^0.24.0"
   },
   "scripts": {
     "start": "react-scripts start",
