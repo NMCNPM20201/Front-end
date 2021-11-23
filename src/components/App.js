@@ -2,6 +2,7 @@ import React from "react";
 import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 import Layout from "./Layout";
 import Error from "../pages/error";
+import Genurl from "../pages/genurl";
 
 function App() {
 
@@ -24,6 +25,7 @@ function App() {
           path="/app"
           render={() => <Redirect to="/app/dashboard" />}
         />
+        <Route exact path="/genurl" component={Genurl} />
         <PrivateRoute path="/app" component={Layout} />
         <Route component={Error} />
       </Switch>
