@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Drawer, IconButton, List } from "@material-ui/core";
+
 import {
+  Settings,
   Home as HomeIcon,
   NotificationsNone as NotificationsIcon,
   FormatSize as TypographyIcon,
@@ -35,14 +37,16 @@ const structure = [
     icon: <TypographyIcon />,
   },
   { id: 2, label: "Tables", link: "/app/tables", icon: <TableIcon /> },
+  { id: 3, label: "Settings", link: "/app/settings", icon: <Settings />},
+  { id: 4, label: "SoundSettings", link: "/app/soundSettings", icon: <Settings />},
   {
-    id: 3,
+    id: 5,
     label: "Notifications",
     link: "/app/notifications",
     icon: <NotificationsIcon />,
   },
   {
-    id: 4,
+    id: 6,
     label: "UI Elements",
     link: "/app/ui",
     icon: <UIElementsIcon />,

@@ -27,6 +27,8 @@ import Sidebar from "../Sidebar";
 import Dashboard from "../../pages/dashboard";
 import Notifications from "../../pages/notifications";
 import Maps from "../../pages/maps";
+import Settings from "../../pages/settings";
+import SoundSettings from "../../pages/soundSettings";
 import Tables from "../../pages/tables";
 import Icons from "../../pages/icons";
 import Charts from "../../pages/charts";
@@ -56,6 +58,8 @@ function Layout(props) {
               <Route path="/app/dashboard" component={Dashboard} />
               <Route path="/app/animation" component={Animation} />
               <Route path="/app/tables" component={Tables} />
+              <Route path="/app/soundSettings" component={SoundSettings} />
+              <Route path="/app/settings" component={Settings} />
               <Route path="/app/notifications" component={Notifications} />
               <Route
                 exact
