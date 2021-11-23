@@ -157,7 +157,6 @@ function SoundSettings() {
         <BasicTextFields />
         <ContinuousSlider />
         <ContainedButtons />
-        
         <MultilineTextFields />
       </header>
     </div>

@@ -422,6 +422,39 @@ function SettingSound() {
     </div>
   );
 }
+
+//-------SaveSettings---------
+function NodeSave() {
+  const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
+  const handleClickVariant = (variant) => () => {
+    // variant could be success, error, warning, info, or default
+    enqueueSnackbar('Successfully saved!', { variant });
+  };
+
+  return (
+    <React.Fragment>
+          <Button
+            onClick={handleClickVariant('success')}
+            variant="contained"
+            color="primary"
+            disableRipple
+            className={classNames(classes.margin, classes.bootstrapRoot)}
+            >
+            Save Settings
+          </Button>
+    </React.Fragment>
+  );
+}
+
+function SaveSettings() {
+  return (
+    <SnackbarProvider maxSnack={3}>
+      <NodeSave />
+    </SnackbarProvider>
+  );
+}
+
 //--------FormRow---------------------------------
 
 function NestedGrid() {
@@ -437,8 +470,10 @@ function NestedGrid() {
         <FormattedInputs/>
         </Grid>
         <Grid item xs={1}>
-        <Tooltip title="Add" arrow>
-        <HelpIcon color="action" />
+        <Tooltip
+          title="The smallest a donation can be for the donation alert to be displayed. This is useful if you only want the donation alert to be displayed for larger amounts. Remember, this is the amount donated in the amount donated in the currency you have selected in the donation settings section. Setting this to 0 will make every donation alert be displayed."
+          arrow>
+          <HelpIcon color="action" />
         </Tooltip>
         </Grid>
       </React.Fragment>
@@ -484,7 +519,9 @@ function NestedGrid() {
         />
         </Grid>
         <Grid item xs={1}>
-        <Tooltip title="Add" arrow>
+        <Tooltip 
+        title="When a donation alert shows up, this will be the format of the message. Available Tokens, {name} The name of the donator, {amount} The amount that was donated" 
+        arrow>
         <HelpIcon color="action" />
         </Tooltip>
         </Grid>
@@ -507,7 +544,7 @@ function NestedGrid() {
             />
         </Grid>
         <Grid item xs={1}>
-        <Tooltip title="Add" arrow>
+        <Tooltip title="How many seconds to show this alert before hiding it." arrow>
         <HelpIcon color="action" />
         </Tooltip>
         </Grid>
@@ -530,7 +567,7 @@ function NestedGrid() {
           />
         </Grid>
         <Grid item xs={1}>
-        <Tooltip title="Add" arrow>
+        <Tooltip title="How many seconds after your image/video/audios to show the alert text. This is useful if you want to wait a few seconds for an animation to finish before your alert text appears." arrow>
         <HelpIcon color="action" />
         </Tooltip>
         </Grid>
@@ -588,7 +625,7 @@ function NestedGrid() {
         <Grid 
           className="ButtonSave"
           item xs={11} >
-          <IntegrationNotistack/>
+          <SaveSettings/>
         </Grid>
       </React.Fragment>
     );
@@ -651,37 +688,6 @@ function SimpleTabs() {
       <NestedGrid/>
       </TabPanel>
     </div>
-  );
-}
-//-------TEST---------
-function MyApp() {
-  const classes = useStyles();
-  const { enqueueSnackbar } = useSnackbar();
-  const handleClickVariant = (variant) => () => {
-    // variant could be success, error, warning, info, or default
-    enqueueSnackbar('This is a success message!', { variant });
-  };
-
-  return (
-    <React.Fragment>
-          <Button
-            onClick={handleClickVariant('success')}
-            variant="contained"
-            color="primary"
-            disableRipple
-            className={classNames(classes.margin, classes.bootstrapRoot)}
-            >
-            Save Settings
-          </Button>
-    </React.Fragment>
-  );
-}
-
-function IntegrationNotistack() {
-  return (
-    <SnackbarProvider maxSnack={3}>
-      <MyApp />
-    </SnackbarProvider>
   );
 }
 
