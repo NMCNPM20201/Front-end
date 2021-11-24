@@ -11,6 +11,8 @@ import {
 } from "@material-ui/core";
 import { useEffect, useState } from "react";
 
+import UploadGif from "./components/UploadGif";
+
 import useStyles from "./styles";
 
 export default function Animation() {
@@ -83,7 +85,7 @@ export default function Animation() {
     return (
         <>
             <PageTitle title="Animation Settings"/>
-            <Grid container spacing={4}>
+            <Grid container spacing={3}>
                 <Grid item xs={12}>
                     <div style={{width: "50%"}}>
                         <TextField 
@@ -95,6 +97,7 @@ export default function Animation() {
                             focused 
                             value={keyword}
                             onChange={handleInputChange}
+                            spellCheck="false"
                         />
                     </div>
                 </Grid>
@@ -111,6 +114,16 @@ export default function Animation() {
                     </Typography>
                     {!loadingGifTexts && (<GifTextsList gifs={gifTexts} />)}
                     {!!loadingGifTexts && (<LinearProgress />)}
+                </Grid>
+                <Grid item container xs={12} spacing={2}>
+                    <Grid item xs={12}>
+                        <Typography variant="h5" color="textSecondary" noWrap>
+                            Upload your Gif
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <UploadGif />
+                    </Grid>
                 </Grid>
                 <Grid item xs={12}>
                     <div 
