@@ -6,19 +6,24 @@ import {
     useSubscription,
 } from "react-stomp-hooks";
 
+import { getSharingGif, getSharingTextStyleId } from "../../helpers";
+
 export default function Genurl() {
     const SubscribingComponent = () => {
         const gf = new GiphyFetch("vmqVD48zw7QGC3hKatE5bUSA0cZdXhyM");
         const [gifTexts, setGifTexts] = useState([]);
         const [waiting, setWaiting] = useState(true);
-
+        
         const ws = useRef(null);
 
+        const sharingGif = getSharingGif();
+        const sharingTextStyleId = getSharingTextStyleId();
+
         const getGifTexts = async (text) => {
-            const res = await gf.animate(text, { limit: 1 })
+            const res = await gf.animate(text, { limit: 16 })
             setGifTexts(values => res.data);
             setWaiting(values => false);
-            setTimeout(() => setWaiting(values => true), 7000);
+            setTimeout(() => setWaiting(values => true), 5000);
         }
 
         const Item = (props) => {
@@ -30,8 +35,10 @@ export default function Genurl() {
         }
 
         const TextList = (props) => {
-            const items = props.gifs.map((itemData) => {
-                return <Item url={itemData.url} />;
+            const items = props.gifs.map((itemData, index) => {
+                if (index == sharingTextStyleId)
+                    return <Item url={itemData.url} />;
+                return <div></div>
             });
             return <div className="text-container">{items}</div>;
         };
@@ -61,7 +68,7 @@ export default function Genurl() {
                         timeout={{enter: 1500, exit: 200}}
                     >
                         <div>
-                            <img src="https://i.pinimg.com/originals/18/55/9c/18559ccfe163425e8328d4255049b817.gif" width="300" height="200"/>
+                            <img src={sharingGif} width="300" height="200"/>
                         </div>
                     </Zoom>
                     <Zoom 

@@ -1,3 +1,4 @@
+import * as React from 'react';
 import PropTypes from 'prop-types';
 import { styled } from '@mui/material/styles';
 import { GiphyFetch } from "@giphy/js-fetch-api";
@@ -9,21 +10,27 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogActions from '@mui/material/DialogActions';
 import IconButton from '@mui/material/IconButton';
 import CloseIcon from '@mui/icons-material/Close';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 import Box from '@mui/material/Box';
 import {
     Grid,
     TextField,
     LinearProgress,
     Typography,
-    ImageList,
-    ImageListItem,
     Button,
 } from "@material-ui/core";
+
 import { useEffect, useState } from "react";
 
 import UploadGif from "./components/UploadGif";
-
 import useStyles from "./styles";
+import { setSharingGif, setSharingTextStyleId } from "../../helpers";
+import UploadService from "./services/UploadService";
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+    return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 const BootstrapDialog = styled(Dialog)(({ theme }) => ({
     '& .MuiDialogContent-root': {
@@ -138,8 +145,11 @@ export default function Animation() {
     const [openTextStyleDialog, setOpenTextStyleDialog] = useState(false);
     const [focusGif, setFocusGif] = useState("");
     const [focusTextStyle, setFocusTextStyle] = useState("");
+    const [focusTextStyleId, setFocusTextStyleId] = useState(0);
     const [choosingGif, setChoosingGif] = useState("");
-    const [choosingTextStyle, setChoosingTextStyle] = useState("");
+    const [choosingTextStyleId, setChoosingTextStyleId] = useState("");
+    const [openSnackbar, setOpenSnackbar] = useState(false);
+    const [uploadedGifs, setUploadedGifs] = useState(undefined);
 
     const classes = useStyles();
 
@@ -148,8 +158,9 @@ export default function Animation() {
         setOpenGifDialog(true);
     };
 
-    const handleOpenTextStyleDialog = (url) => {
+    const handleOpenTextStyleDialog = (url, id) => {
         setFocusTextStyle(url);
+        setFocusTextStyleId(id);
         setOpenTextStyleDialog(true);
     };
       
@@ -163,10 +174,12 @@ export default function Animation() {
 
     const handleChooseGif = () => {
         setChoosingGif(focusGif);
+        setOpenSnackbar(true);
     }
 
     const handleChooseTextStyle = () => {
-        setChoosingTextStyle(focusTextStyle);
+        setChoosingTextStyleId(focusTextStyleId);
+        setOpenSnackbar(true);
     }
 
     const GifsList = (props) => {
@@ -215,6 +228,47 @@ export default function Animation() {
         return (
             <div className={classes.root}>
                 <Box className={classes.imageList}>
+                    {props.gifs.map((item, index) => {
+                        const url = item.url;
+                        return (
+                            <ImageButton
+                                focusRipple
+                                key={url}
+                                style={{
+                                    width: "25%"
+                                }}
+                                onClick={() => handleOpenTextStyleDialog(url, index)}
+                            >
+                                <ImageSrc style={{ backgroundImage: `url(${url})` }} />
+                                <ImageBackdrop className="MuiImageBackdrop-root" />
+                                <Image>
+                                    <Typography
+                                    component="span"
+                                    variant="subtitle1"
+                                    color="inherit"
+                                    sx={{
+                                        position: 'relative',
+                                        p: 4,
+                                        pt: 2,
+                                        pb: (theme) => `calc(${theme.spacing(1)} + 6px)`,
+                                    }}
+                                    >
+                                        Click to choose
+                                        <ImageMarked className="MuiImageMarked-root" />
+                                    </Typography>
+                                </Image>
+                            </ImageButton>
+                        );
+                    })}
+                </Box>
+          </div>
+        );
+    };
+
+    const UploadedGifsList = (props) => {
+        return (
+            <div className={classes.root}>
+                <Box className={classes.imageList}>
                     {props.gifs.map((item) => {
                         const url = item.url;
                         return (
@@ -224,7 +278,7 @@ export default function Animation() {
                                 style={{
                                     width: "25%"
                                 }}
-                                onClick={() => handleOpenTextStyleDialog(url)}
+                                onClick={() => handleOpenGifDialog(url)}
                             >
                                 <ImageSrc style={{ backgroundImage: `url(${url})` }} />
                                 <ImageBackdrop className="MuiImageBackdrop-root" />
@@ -255,17 +309,36 @@ export default function Animation() {
     const getGifs = async (keyword) => {
         const res = await gf.search(keyword, { limit: 16 });
         setGifs(values => res.data);
-        setTimeout(() => setLoadingGifs(false), 5000);
+        setTimeout(() => setLoadingGifs(false), 2000);
     }
 
     const getGifTexts = async (text) => {
         const res = await gf.animate(text, { limit: 16 })
         setGifTexts(values => res.data);
-        setTimeout(() => setLoadingGifTexts(false), 5000);
+        setTimeout(() => setLoadingGifTexts(false), 2000);
     }
 
     const handleInputChange = (event) => {
         setKeyword(event.target.value);
+    };
+
+    const handleSave = () => {
+        setSharingGif(choosingGif);
+        setSharingTextStyleId(choosingTextStyleId);
+        setOpenSnackbar(true);
+
+        UploadService.postSettings({
+            gifUrl: choosingGif,
+            textStyleId: choosingTextStyleId,
+        })
+        .catch(error => console.log(error));
+    }
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setOpenSnackbar(false);
     };
 
     useEffect(() => {
@@ -274,6 +347,14 @@ export default function Animation() {
         setLoadingGifTexts(values => true);
         getGifTexts(keyword);
     }, [keyword]);
+
+    useEffect(() => {
+        UploadService.getGifFiles()
+          .then((response) => {
+            setUploadedGifs((values) => response.data);
+          })
+          .catch((error) => console.log(error));
+    }, []);
 
     return (
         <>
@@ -294,20 +375,40 @@ export default function Animation() {
                         />
                     </div>
                 </Grid>
-                <Grid item xs={12}>
-                    <Typography variant="h5" color="textSecondary" noWrap>
-                        Choose Your Favorite Gif
-                    </Typography>
-                    {!loadingGifs && (<GifsList gifs={gifs} />)}
-                    {!!loadingGifs && (<LinearProgress />)}
+                <Grid item container xs={12} spacing={2}>
+                    <Grid item xs={12}>
+                        <Typography variant="h5" color="textSecondary" noWrap>
+                            Choose Your Favorite Gif
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        {!loadingGifs && (<GifsList gifs={gifs} />)}
+                        {!!loadingGifs && (<LinearProgress />)}
+                    </Grid>
                 </Grid>
-                <Grid item xs={12}>
-                    <Typography variant="h5" color="textSecondary" noWrap>
-                        Choose Your Favorite Text Style
-                    </Typography>
-                    {!loadingGifTexts && (<GifTextsList gifs={gifTexts} />)}
-                    {!!loadingGifTexts && (<LinearProgress />)}
+                <Grid item container xs={12} spacing={2}>
+                    <Grid item xs={12}>
+                        <Typography variant="h5" color="textSecondary" noWrap>
+                            Choose Your Favorite Text Style
+                        </Typography>
+                    </Grid>
+                    <Grid item xs={12}>
+                        {!loadingGifTexts && (<GifTextsList gifs={gifTexts} />)}
+                        {!!loadingGifTexts && (<LinearProgress />)}
+                    </Grid>
                 </Grid>
+                {uploadedGifs && (
+                    <Grid item container xs={12} spacing={2}>
+                        <Grid item xs={12}>
+                            <Typography variant="h5" color="textSecondary" noWrap>
+                                Choose Your Uploaded Gif
+                            </Typography>
+                        </Grid>
+                        <Grid item xs={12}>
+                            <UploadedGifsList gifs={uploadedGifs}/>
+                        </Grid>
+                    </Grid>
+                )}
                 <Grid item container xs={12} spacing={2}>
                     <Grid item xs={12}>
                         <Typography variant="h5" color="textSecondary" noWrap>
@@ -325,7 +426,7 @@ export default function Animation() {
                             justifyContent: "center",
                         }}
                     >
-                        <Button variant="contained" color="primary" size="large">
+                        <Button variant="contained" color="primary" size="large" onClick={handleSave}>
                             Save settings
                         </Button>
                     </div>
@@ -365,6 +466,11 @@ export default function Animation() {
                 </Button>
                 </DialogActions>
             </BootstrapDialog>
+            <Snackbar open={openSnackbar} autoHideDuration={1000} onClose={handleCloseSnackbar}>
+                <Alert onClose={handleCloseSnackbar} severity="success" sx={{ width: '100%' }}>
+                    Successfully saved your choice!
+                </Alert>
+            </Snackbar>
         </>
     );
 }
