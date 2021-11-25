@@ -7,12 +7,15 @@ import {
 } from "react-stomp-hooks";
 
 import { getSharingGif, getSharingTextStyleId } from "../../helpers";
+import axios from "axios";
 
 export default function Genurl() {
     const SubscribingComponent = () => {
         const gf = new GiphyFetch("vmqVD48zw7QGC3hKatE5bUSA0cZdXhyM");
         const [gifTexts, setGifTexts] = useState([]);
         const [waiting, setWaiting] = useState(true);
+        const [savedGif, setSavedGif] = useState("");
+        const [savedTextStyleId, setSavedTextStyleId] = useState(0);
         
         const ws = useRef(null);
 
@@ -36,7 +39,7 @@ export default function Genurl() {
 
         const TextList = (props) => {
             const items = props.gifs.map((itemData, index) => {
-                if (index == sharingTextStyleId)
+                if (index == (sharingTextStyleId ? sharingTextStyleId : savedTextStyleId))
                     return <Item url={itemData.url} />;
                 return <div></div>
             });
@@ -54,6 +57,21 @@ export default function Genurl() {
             setTimeout(() => getGifTexts("Cam on ban B da donate 700000 dong"), 9000);
         }, []);*/
 
+        useEffect(() => {
+            axios.get("https://web-donate.herokuapp.com/setting")
+            .then(response => {
+                if (response.status == "200") {
+                    response.data.map(item => {
+                        if (item.id == 1) {
+                            setSavedGif(values => item.gifUrl);
+                            setSavedTextStyleId(values => item.textStyleId);
+                        }
+                    })
+                }
+            })
+            .catch(error => console.log(error));
+        }, []);
+
         return (
             <> 
                 <div style={{
@@ -68,7 +86,7 @@ export default function Genurl() {
                         timeout={{enter: 1500, exit: 200}}
                     >
                         <div>
-                            <img src={sharingGif} width="300" height="200"/>
+                            <img src={sharingGif ? sharingGif : savedGif} width="300" height="200"/>
                         </div>
                     </Zoom>
                     <Zoom 
