@@ -21,14 +21,6 @@ class UploadService {
   getMp3Files() {
     return http.get("/files/mp3");
   }
-
-  postSettings(data) {
-    return http.post("/setting", JSON.stringify(data), {
-      headers: {
-        "Content-Type": "application/json",
-      }
-    })
-  }
 }
 
 export default new UploadService();
