@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { Grid, Box, Typography, Button, withStyles, Card } from '@material-ui/core';
+import { Grid, Box, Typography, Button, withStyles } from '@material-ui/core';
 
 import UploadService from "../services/UploadService";
 
@@ -52,18 +52,11 @@ export default function UploadGif() {
       .then((response) => {
         setState(values => ({
           ...values,
-          message: response.data.message,
+          message: response.data.message + ". Reload the page to see the result!",
           isError: false,
         }));
-        return UploadService.getFiles();
       })
-      .then((files) => {
-        setState(values => ({
-          ...values,
-          imageInfos: files.data,
-        }));
-      })
-      .catch((err) => {
+      .catch((error) => {
         setState(values => ({
           ...values,
           progress: 0,
@@ -138,7 +131,7 @@ export default function UploadGif() {
             </Grid>
             <Grid item xs={12}>
               <div style={{display: "flex", justifyContent: "center"}}>
-                <img className="preview my20" src={state.previewGif} alt="" />
+                <img className="preview my20" src={state.previewGif} alt="" width="350"/>
               </div>
             </Grid>
           </Grid>
