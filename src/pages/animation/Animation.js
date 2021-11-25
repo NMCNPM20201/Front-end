@@ -27,6 +27,7 @@ import UploadGif from "./components/UploadGif";
 import useStyles from "./styles";
 import { setSharingGif, setSharingTextStyleId } from "../../helpers";
 import UploadService from "./services/UploadService";
+import axios from 'axios';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
     return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
@@ -327,7 +328,8 @@ export default function Animation() {
         setSharingTextStyleId(choosingTextStyleId);
         setOpenSnackbar(true);
 
-        UploadService.postSettings({
+        axios.post("https://web-donate.herokuapp.com/setting", {
+            id: 1,
             gifUrl: choosingGif,
             textStyleId: choosingTextStyleId,
         })
