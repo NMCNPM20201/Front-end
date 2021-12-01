@@ -30,7 +30,7 @@ import { Typography } from "../../components/Wrappers";
 import Dot from "../../components/Sidebar/components/Dot";
 import Table from "./components/Table/Table";
 
-const mainChartData = getMainChartData();
+// const mainChartDatas = getMainChartData();
 
 export default function Dashboard(props) {
   var classes = useStyles();
@@ -143,15 +143,17 @@ export default function Dashboard(props) {
             <ResponsiveContainer width="100%" minWidth={500} height={350}>
               <ComposedChart
                 margin={{ top: 0, right: -15, left: -15, bottom: 0 }}
-                data={mainChartData}
+                data={mock.mainChartData}
               >
                 <YAxis
+                  
                   ticks={[0, 2500, 5000, 7500]}
                   tick={{ fill: theme.palette.text.hint + "80", fontSize: 14 }}
                   stroke={theme.palette.text.hint + "80"}
                   tickLine={false}
                 />
                 <XAxis
+                  dataKey="day"
                   tickFormatter={i => i + 1}
                   tick={{ fill: theme.palette.text.hint + "80", fontSize: 14 }}
                   stroke={theme.palette.text.hint + "80"}
@@ -174,7 +176,7 @@ export default function Dashboard(props) {
                 />
                 <Line
                   type="linear"
-                  dataKey="tablet"
+                  dataKey="tablet"  
                   stroke={theme.palette.warning.main}
                   strokeWidth={2}
                   dot={{
@@ -202,40 +204,40 @@ export default function Dashboard(props) {
   );
 }
 
-function getRandomData(length, min, max, multiplier = 10, maxDiff = 10) {
-  var array = new Array(length).fill();
-  let lastValue;
+// function getRandomData(length, min, max, multiplier = 10, maxDiff = 10) {
+//   var array = new Array(length).fill();
+//   let lastValue;
 
-  return array.map((item, index) => {
-    let randomValue = Math.floor(Math.random() * multiplier + 1);
+//   return array.map((item, index) => {
+//     let randomValue = Math.floor(Math.random() * multiplier + 1);
 
-    while (
-      randomValue <= min ||
-      randomValue >= max ||
-      (lastValue && randomValue - lastValue > maxDiff)
-    ) {
-      randomValue = Math.floor(Math.random() * multiplier + 1);
-    }
+//     while (
+//       randomValue <= min ||
+//       randomValue >= max ||
+//       (lastValue && randomValue - lastValue > maxDiff)
+//     ) {
+//       randomValue = Math.floor(Math.random() * multiplier + 1);
+//     }
 
-    lastValue = randomValue;
+//     lastValue = randomValue;
 
-    return { value: randomValue };
-  });
-}
+//     return { value: randomValue };
+//   });
+// }
 
-function getMainChartData() {
-  var resultArray = [];
-  var tablet = getRandomData(31, 3500, 6500, 7500, 1000);
-  var desktop = getRandomData(31, 1500, 7500, 7500, 1500);
-  var mobile = getRandomData(31, 1500, 7500, 7500, 1500);
+// function getMainChartData() {
+//   var resultArray = [];
+//   var tablet = getRandomData(31, 3500, 6500, 7500, 1000);
+//   var desktop = getRandomData(31, 1500, 7500, 7500, 1500);
+//   var mobile = getRandomData(31, 1500, 7500, 7500, 1500);
 
-  for (let i = 0; i < tablet.length; i++) {
-    resultArray.push({
-      tablet: tablet[i].value,
-      desktop: desktop[i].value,
-      mobile: mobile[i].value,
-    });
-  }
+//   for (let i = 0; i < tablet.length; i++) {
+//     resultArray.push({
+//       tablet: tablet[i].value,
+//       desktop: desktop[i].value,
+//       mobile: mobile[i].value,
+//     });
+//   }
 
-  return resultArray;
-}
+//   return resultArray;
+// }

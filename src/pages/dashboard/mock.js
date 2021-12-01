@@ -1,5 +1,39 @@
-const mock = {
-  data: [
+var dataAPI = "http://localhost:3000/data" 
+var tableAPI="http://localhost:3000/table"
+var mainChartDataAPI="http://localhost:3000/mainChartData"
+function getTable (){
+  fetch(tableAPI)
+      .then(function(response){
+          return response.json();
+      })
+      .then(function(dataTable) {
+       mock.table = dataTable;
+      });
+};
+function getData (){
+  fetch(dataAPI)
+      .then(function(response){
+          return response.json();
+      })
+      .then(function(data) {
+       mock.data = data;
+      });
+};
+function getMainChartData (){
+  fetch(mainChartDataAPI)
+      .then(function(response){
+          return response.json();
+      })
+      .then(function(mainChartData) {
+       mock.mainChartData = mainChartData;
+      });
+};
+getData();
+getTable ();
+getMainChartData();
+
+var mock = {
+   data: [
     {
       "day": "Jan",
       "Momo banking": 1000000,
@@ -61,43 +95,237 @@ const mock = {
       "Other": 1600000,
     },
   ],
-  table: [
+    table: [
     {
       id: 0,
-      name: "Mark Otto",
-      bankingNum: "1234567891",
-      date: "11 May 2017",
-      money: "$25 224.2",
+      name: "",
+      bankingNum: "",
+      date: "",
+      money: "",
     },
     {
       id: 1,
-      name: "Jacob Thornton",
-      bankingNum: "1234567892",
-      date: "4 Jun 2017",
-      money: "$1 254.2",
+      name: "",
+      bankingNum: "",
+      date: "",
+      money: "",
     },
     {
       id: 2,
-      name: "Larry the Bird",
-      bankingNum: "1234567893",
-      date: "27 Aug 2017",
-      money: "$1 570.0",
+      name: "",
+      bankingNum: "",
+      date: "",
+      money: "",
     },
     {
       id: 3,
-      name: "Joseph May",
-      bankingNum: "1234567894",
-      date: "19 Feb 2018",
-      money: "$5 224.5",
+      name: "",
+      bankingNum: "",
+      date: "",
+      money: "",
     },
     {
       id: 4,
-      name: "Peter Horadnia",
-      bankingNum: "1234567895",
-      date: "1 Mar 2018",
-      money: "$43 594.7",
+      name: "",
+      bankingNum: "",
+      date: "",
+      money: "",
+    }
+  ],
+  mainChartData:[
+    {
+      day: 0,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 1,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 2,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 3,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 4,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 5,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 6,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 7,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 8,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 9,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 10,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 11,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 12,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 13,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 14,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 15,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 16,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 17,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 18,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 19,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 20,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 21,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 22,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 23,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 24,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 25,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 26,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 27,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 28,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 29,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
+    },
+    {
+      day: 30,
+      mobile: 5000,
+      tablet: 5000,
+      desktop: 5000,
     }
   ]
 };
+// var abc;
+// getCourses (dataAPI,abc);
+// getCourses (tableAPI,mock.table);
+// console.log(abc);
+// mock.data=abc;
+// console.log(mock.data);
 
 export default mock;
