@@ -23,19 +23,17 @@ import {
 import useStyles from "./styles";
 
 // components
-import mock from "./mock";
+import data from "./data.js";
 import Widget from "../../components/Widget";
 import PageTitle from "../../components/PageTitle";
 import { Typography } from "../../components/Wrappers";
 import Dot from "../../components/Sidebar/components/Dot";
 import Table from "./components/Table/Table";
 
-// const mainChartDatas = getMainChartData();
 
 export default function Dashboard(props) {
   var classes = useStyles();
   var theme = useTheme();
-
   return (
     <>
       <PageTitle title="Dashboard"/>
@@ -73,7 +71,7 @@ export default function Dashboard(props) {
             }
           >
             <ResponsiveContainer width="100%" minWidth={500} height={350}>
-              <BarChart width={730} height={250} data={mock.data}>
+                <BarChart width={730} height={250} data={data.Data}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="day" />
                 <YAxis />
@@ -143,7 +141,7 @@ export default function Dashboard(props) {
             <ResponsiveContainer width="100%" minWidth={500} height={350}>
               <ComposedChart
                 margin={{ top: 0, right: -15, left: -15, bottom: 0 }}
-                data={mock.mainChartData}
+                data={data.mainChartData}
               >
                 <YAxis
                   
@@ -196,7 +194,7 @@ export default function Dashboard(props) {
             noBodyPadding
             bodyClass={classes.tableWidget}
           >
-            <Table data={mock.table} />
+            <Table data={data.table}/>
           </Widget>
         </Grid>
       </Grid>

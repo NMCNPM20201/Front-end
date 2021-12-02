@@ -49,18 +49,29 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
-let USERS = [], STATUSES = ['Active', 'Pending', 'Blocked'];
-for(let i=0;i<14;i++) {
-    USERS[i] = {
-        name: faker.name.findName(),
-        email: faker.internet.email(),
-        phone: faker.phone.phoneNumber(),
-        jobTitle: faker.name.jobTitle(),
-        company: faker.company.companyName(),
-        joinDate: faker.date.past().toLocaleDateString('en-US'),
-        status: STATUSES[Math.floor(Math.random() * STATUSES.length)]
-    }
-}
+var USERS = [];
+function getDataHistory (){
+  fetch('http://localhost:3000/history')
+      .then(function(response){
+          return response.json();
+      })
+      .then(function(data) {
+        USERS = data;
+      });
+};
+getDataHistory ();
+// , STATUSES = ['Active', 'Pending', 'Blocked'];
+// for(let i=0;i<20;i++) {
+//     USERS[i] = {
+//         name: faker.name.findName(),
+//         email: faker.internet.email(),
+//         phone: faker.phone.phoneNumber(),
+//         jobTitle: faker.name.jobTitle(),
+//         company: faker.company.companyName(),
+//         joinDate: faker.date.past().toLocaleDateString('en-US'),
+//         status: STATUSES[Math.floor(Math.random() * STATUSES.length)]
+//     }
+// }
 
 function MTable() {
   const classes = useStyles();
