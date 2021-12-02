@@ -26,7 +26,7 @@ import { useEffect, useState } from "react";
 import UploadGif from "./components/UploadGif";
 import useStyles from "./styles";
 import { setSharingGif, setSharingTextStyleId } from "../../helpers";
-import UploadService from "./services/UploadService";
+import UploadService from "../../services/UploadService";
 import axios from 'axios';
 
 const Alert = React.forwardRef(function Alert(props, ref) {

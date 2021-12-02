@@ -1,4 +1,4 @@
-import http from "../http_common/HTTPCommon";
+import http from "./http_common/HTTPCommon";
 
 class UploadService {
   upload(file, onUploadProgress) {

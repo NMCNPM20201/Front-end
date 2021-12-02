@@ -37,7 +37,8 @@
     "react-toastify": "^7.0.3",
     "recharts": "^2.0.4",
     "tinycolor2": "^1.4.2",
-    "axios": "^0.24.0"
+    "axios": "^0.24.0",
+    "material-ui-audio-player": "^1.7.1"
   },
   "scripts": {
     "start": "react-scripts start",

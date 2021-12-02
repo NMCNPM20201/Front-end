@@ -6,7 +6,7 @@ import {
     useSubscription,
 } from "react-stomp-hooks";
 
-import { getSharingGif, getSharingTextStyleId } from "../../helpers";
+import { getSharingGif, getSharingTextStyleId, getSharingSound } from "../../helpers";
 import axios from "axios";
 
 export default function Genurl() {
@@ -18,15 +18,20 @@ export default function Genurl() {
         const [savedTextStyleId, setSavedTextStyleId] = useState(0);
         
         const ws = useRef(null);
+        const audio = useRef(null);
 
         const sharingGif = getSharingGif();
         const sharingTextStyleId = getSharingTextStyleId();
+        const sharingSound = getSharingSound();
 
         const getGifTexts = async (text) => {
             const res = await gf.animate(text, { limit: 16 })
             setGifTexts(values => res.data);
-            setWaiting(values => false);
-            setTimeout(() => setWaiting(values => true), 5000);
+            audio.current = new Audio(sharingSound);
+            audio.current.play();
+            setTimeout(() => audio.current.pause(), 10000);
+            setTimeout(() => setWaiting(values => false), 5000);
+            setTimeout(() => setWaiting(values => true), 12000);
         }
 
         const Item = (props) => {
@@ -53,8 +58,8 @@ export default function Genurl() {
 
         useSubscription("/topic/message", async (message) => await onMessage(message));
         /*useEffect(() => {
-            getGifTexts("Cam on ban A da donate 100000 dong");
-            setTimeout(() => getGifTexts("Cam on ban B da donate 700000 dong"), 9000);
+            getGifTexts("Cam on ban A da donate 100000 dong" + sharingSound);
+            setTimeout(() => getGifTexts("Cam on ban B da donate 700000 dong"), 15000);
         }, []);*/
 
         useEffect(() => {
@@ -101,6 +106,7 @@ export default function Genurl() {
                         </div>
                     </Zoom>
                 </div>
+                
             </>
         );
     }

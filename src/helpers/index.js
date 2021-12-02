@@ -23,3 +23,16 @@ export const getSharingTextStyleId = () => {
     } 
     return undefined;
 };
+
+export const setSharingSound = (url) => {
+    if (typeof window !== "undefined") localStorage.setItem("CHOOSING_SOUND", url);
+};
+  
+export const getSharingSound = () => {
+    if (typeof window !== "undefined") {
+        return !!localStorage.getItem("CHOOSING_SOUND")
+        ? localStorage.getItem("CHOOSING_SOUND")
+        : undefined;
+    } 
+    return undefined;
+};
