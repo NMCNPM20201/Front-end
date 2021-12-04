@@ -1,5 +1,5 @@
 var dataAPI = "http://localhost:3000/data" 
-var tableAPI="https://web-donate.herokuapp.com/donate?fbclid=IwAR38DvF-bNWfqGais2HU9ejTTOoZhmApDgRXQVsx5ufF_pTiRrRe-ljRM5o"
+var tableAPI="http://localhost:3000/table"
 var mainChartDataAPI="http://localhost:3000/mainChartData"
 function getTable (){
   fetch(tableAPI)
@@ -7,15 +7,16 @@ function getTable (){
           return response.json();
       })
       .then(function(dataTables) {
-       data.table = dataTables.map(dataTable=>
-          dataTable= {
-            id: dataTable.id,
-            name: dataTable.nameDonate.nameId,
-            bankingNum: dataTable.bankingNum,
-            date: dataTable.date,
-            money: dataTable.money
-          }
-        );
+      //  data.table = dataTables.map(dataTable=>
+      //     dataTable= {
+      //       id: dataTable.id,
+      //       name: dataTable.nameDonate.nameId,
+      //       bankingNum: dataTable.bankingNum,
+      //       date: dataTable.date,
+      //       money: dataTable.money
+      //     }
+      //   );
+      data.table=dataTables;
       });
 };
 function getData (){

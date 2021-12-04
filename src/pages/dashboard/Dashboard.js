@@ -5,7 +5,8 @@ import {
   OutlinedInput,
   MenuItem,
 } from "@material-ui/core";
-import { useTheme } from "@material-ui/styles";
+import { useTheme  } from "@material-ui/styles";
+import { createTheme } from '@mui/material/styles';
 import {
   ResponsiveContainer,
   ComposedChart,
@@ -30,16 +31,23 @@ import { Typography } from "../../components/Wrappers";
 import Dot from "../../components/Sidebar/components/Dot";
 import Table from "./components/Table/Table";
 
-
 export default function Dashboard(props) {
   var classes = useStyles();
   var theme = useTheme();
+  const them = createTheme({
+    palette: {
+      background: {
+        dark: '#424242',
+      },
+    },
+  });
   return (
     <>
-      <PageTitle title="Dashboard"/>
-      <Grid container spacing={4}>
+      <PageTitle bodyClass={classes.body}  title="Dashboard"/>
+      <Grid elevation={0} container spacing={4}>
         <Grid item xs={12}>
           <Widget
+            elevation={0}
             bodyClass={classes.mainChartBody}
             header={
               <div className={classes.mainChartHeader}>
@@ -51,6 +59,7 @@ export default function Dashboard(props) {
                   Monthly Bar Chart
                 </Typography>
                 <Select
+                className={classes.selectYear}
                   value="0"
                   input={
                     <OutlinedInput
@@ -108,8 +117,9 @@ export default function Dashboard(props) {
                     </Typography>
                   </div>
                 </div>
-                <Select
+                <Select 
                   value="0"
+                  className={classes.selectMonth}
                   //onChange={e => setMainChartState(e.target.value)}
                   input={
                     <OutlinedInput
@@ -160,7 +170,7 @@ export default function Dashboard(props) {
                 <Area
                   type="natural"
                   dataKey="desktop"
-                  fill={theme.palette.background.light}
+                  fill={them.palette.background.dark}
                   strokeWidth={0}
                   activeDot={false}
                 />
@@ -187,15 +197,23 @@ export default function Dashboard(props) {
             </ResponsiveContainer>
           </Widget>
         </Grid>
-        <Grid item xs={12}>
+        <Grid  item xs={12}>
           <Widget
-            title="Monthly Top Donation"
             upperTitle
             noBodyPadding
             bodyClass={classes.tableWidget}
+            header={
+              <Typography
+                  variant="h5"
+                  color="text"
+                  colorBrightness="secondary"
+                >
+                Monthly To Donation
+                </Typography>
+            }
           >
             <Table data={data.table}/>
-          </Widget>
+          </Widget>   
         </Grid>
       </Grid>
     </>

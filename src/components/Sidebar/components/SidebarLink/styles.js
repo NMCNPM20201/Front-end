@@ -57,6 +57,6 @@ export default makeStyles(theme => ({
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(4),
     height: 1,
-    backgroundColor: "#D8D8D880",
+    backgroundColor: "#fff",
   },
 }));

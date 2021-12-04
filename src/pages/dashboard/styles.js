@@ -41,7 +41,11 @@ export default makeStyles(theme => ({
     flexDirection: "column",
     justifyContent: "space-between",
   },
+  monthlyTopDonation:{
+    backgroundColor:'#000 !important !important !important'
+  },
   tableWidget: {
+    backgroundColor:'#000 !important',
     overflowX: "auto",
   },
   progressBarPrimary: {
@@ -126,5 +130,11 @@ export default makeStyles(theme => ({
   secondary: {
     backgroundColor: theme.palette.secondary.main,
     color: '#fff',
-  }
+  },
+  selectMonth: {
+    color: '#fff !important',
+  },
+  selectYear: {
+    color: '#fff !important',
+  },
 }));

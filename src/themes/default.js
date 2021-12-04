@@ -120,7 +120,7 @@ const defaultTheme = {
     MuiTableCell: {
       root: {
         borderBottom: "1px solid rgba(224, 224, 224, .5)",
-        paddingLeft: 24
+        paddingLeft: 24,
       },
       head: {
         fontSize: "0.95rem",

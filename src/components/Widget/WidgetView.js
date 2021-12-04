@@ -80,14 +80,16 @@ const Widget = ({
 const styles = theme => ({
   widgetWrapper: {
     display: "flex",
-    minHeight: "100%"
+    minHeight: "100%",
+    backgroundColor:"#000 !important"
   },
   widgetHeader: {
     padding: theme.spacing.unit * 3,
     paddingBottom: theme.spacing.unit,
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    backgroundColor:"#000 !important"
   },
   widgetRoot: {
     boxShadow: theme.customShadows.widget

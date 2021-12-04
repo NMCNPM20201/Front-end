@@ -31,27 +31,27 @@ import {
 } from "../../context/LayoutContext";
 
 const structure = [
-  { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
+  { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon color="primary" /> },
   {
     id: 1,
     label: "Animation",
     link: "/app/animation",
-    icon: <FlutterDashIcon />,
+    icon: <FlutterDashIcon color="primary" />,
   },
-  { id: 2, label: "History", link: "/app/tables", icon: <HistoryEduIcon /> },
-  { id: 3, label: "General Settings", link: "/app/settings", icon: <Settings />},
-  { id: 4, label: "Sound Settings", link: "/app/soundSettings", icon: <HeadsetMic />},
+  { id: 2, label: "History", link: "/app/tables", icon: <HistoryEduIcon color="primary" /> },
+  { id: 3, label: "General Settings", link: "/app/settings", icon: <Settings color="primary"/>},
+  { id: 4, label: "Sound Settings", link: "/app/soundSettings", icon: <HeadsetMic color="primary"/>},
   {
     id: 5,
     label: "Notifications",
     link: "/app/notifications",
-    icon: <NotificationsIcon />,
+    icon: <NotificationsIcon color="primary"/>,
   },
   {
     id: 6,
     label: "UI Elements",
     link: "/app/ui",
-    icon: <UIElementsIcon />,
+    icon: <UIElementsIcon color="primary"/>,
     children: [
       { label: "Icons", link: "/app/ui/icons" },
       { label: "Charts", link: "/app/ui/charts" },
@@ -106,7 +106,7 @@ function Sidebar({ location }) {
       </div>
       <List className={classes.sidebarList}>
         {structure.map(link => (
-          <SidebarLink
+          <SidebarLink className={classes.sidebarList}
             key={link.id}
             location={location}
             isSidebarOpened={isSidebarOpened}
