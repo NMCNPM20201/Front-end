@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   AppBar,
   Toolbar,
@@ -12,6 +12,11 @@ import {
   ArrowBack as ArrowBackIcon,
 } from "@material-ui/icons";
 import classNames from "classnames";
+
+import {
+  StompSessionProvider,
+  useSubscription,
+} from "react-stomp-hooks";
 
 // styles
 import useStyles from "./styles";
@@ -51,116 +56,142 @@ const notifications = [
 ];
 
 export default function Header(props) {
-  var classes = useStyles();
+  const SubscribingComponent = () => {
+    const [notificationsMenu, setNotificationsMenu] = useState(null);
+    const [notificationsData, setNotificationsData] = useState([]);
+    const [unreadNotifications, setUnreadNotifications] = useState(0);
 
-  // global
-  var layoutState = useLayoutState();
-  var layoutDispatch = useLayoutDispatch();
+    const classes = useStyles();
+    const layoutState = useLayoutState();
+    const layoutDispatch = useLayoutDispatch();
 
-  // local
-  var [notificationsMenu, setNotificationsMenu] = useState(null);
-  var [isNotificationsUnread, setIsNotificationsUnread] = useState(true);
-  var [isSearchOpen, setSearchOpen] = useState(false);
-  var [notificationsData, setNotificationsData] = useState([]);
-  var ws = useRef(null);
-
-  const onMessage = (event) => {
-    let recv = JSON.parse(event.data);
-    setNotificationsData((values) => {
-      let newData = [...values];
-      newData.push({
-        color: "primary",
-        type: "notification",
-        message: recv.data,
+    const onMessage = async (msg) => {
+      setNotificationsData((values) => {
+        let newData = [...values];
+        newData.unshift({
+          color: "primary",
+          type: "notification",
+          message: msg.body,
+        });
+        if (newData.length > 5) {
+          newData.splice(newData.length - 1, 1);
+        }
+        return newData;
       });
-      if (newData.length > 5) {
-        newData = newData.slice(1);
-      }
-      return newData;
-    });
+      setUnreadNotifications(values => values + 1);
+    }
+
+    /*const setMessage = (msg) => {
+      setNotificationsData((values) => {
+        let newData = [...values];
+        newData.unshift({
+          color: "primary",
+          type: "notification",
+          message: msg,
+        });
+        if (newData.length > 5) {
+          newData.splice(newData.length - 1, 1);
+        }
+        return newData;
+      });
+      setUnreadNotifications(values => values + 1);
+    }*/
+  
+    useSubscription("/topic/message", async (message) => await onMessage(message));
+    /*useEffect(() => {
+      setMessage("Cam on ban A da donate 100000 dong");
+      setTimeout(() => setMessage("Cam on ban B da donate 200000 dong"), 3000);
+      setTimeout(() => setMessage("Cam on ban B da donate 300000 dong"), 6000);
+      setTimeout(() => setMessage("Cam on ban B da donate 400000 dong"), 9000);
+      setTimeout(() => setMessage("Cam on ban B da donate 500000 dong"), 12000);
+      setTimeout(() => setMessage("Cam on ban B da donate 600000 dong"), 15000);
+    }, []);*/
+
+    return (
+      <AppBar position="fixed" className={classes.appBar}>
+        <Toolbar className={classes.toolbar}>
+          <IconButton
+            color="inherit"
+            onClick={() => toggleSidebar(layoutDispatch)}
+            className={classNames(
+              classes.headerMenuButtonSandwich,
+              classes.headerMenuButtonCollapse,
+            )}
+          >
+            {layoutState.isSidebarOpened ? (
+              <ArrowBackIcon
+                classes={{
+                  root: classNames(
+                    classes.headerIcon,
+                    classes.headerIconCollapse,
+                  ),
+                }}
+              />
+            ) : (
+              <MenuIcon
+                classes={{
+                  root: classNames(
+                    classes.headerIcon,
+                    classes.headerIconCollapse,
+                  ),
+                }}
+              />
+            )}
+          </IconButton>
+          <Typography variant="h6" weight="medium" className={classes.logotype}>
+            Donation GIFs Webapp
+          </Typography>
+          <div className={classes.grow} />
+          <IconButton
+            color="inherit"
+            aria-haspopup="true"
+            aria-controls="mail-menu"
+            onClick={e => {
+              if (unreadNotifications) {
+                setNotificationsMenu(e.currentTarget);
+                setUnreadNotifications(0);
+              }
+            }}
+            className={classes.headerMenuButton}
+          >
+            <Badge
+              badgeContent={unreadNotifications ? unreadNotifications : null}
+              color="warning"
+            >
+              <NotificationsIcon classes={{ root: classes.headerIcon }} />
+            </Badge>
+          </IconButton>
+          <Menu
+            id="notifications-menu"
+            open={Boolean(notificationsMenu)}
+            anchorEl={notificationsMenu}
+            onClose={() => setNotificationsMenu(null)}
+            className={classes.headerMenu}
+            disableAutoFocusItem
+          >
+            {notificationsData.map(notification => (
+              <MenuItem
+                /*key={notification.id}*/
+                onClick={() => { setNotificationsMenu(null); setUnreadNotifications(0); }}
+                className={classes.headerMenuItem}
+              >
+                <Notification {...notification} typographyVariant="inherit" />
+              </MenuItem>
+            ))}
+          </Menu>
+        </Toolbar>
+      </AppBar>
+    );
   }
 
-  /*useEffect(() => {
-    ws.current = new WebSocket("localhost:3000");
-    ws.current.onmessage = onMessage;
-    const interval = setInterval(() => ws.current.send("echo"), 1000);
-    return () => {
-      ws.current.close();
-      clearInterval(interval);
-    }
-  }, []);*/
-
   return (
-    <AppBar position="fixed" className={classes.appBar}>
-      <Toolbar className={classes.toolbar}>
-        <IconButton
-          color="inherit"
-          onClick={() => toggleSidebar(layoutDispatch)}
-          className={classNames(
-            classes.headerMenuButtonSandwich,
-            classes.headerMenuButtonCollapse,
-          )}
-        >
-          {layoutState.isSidebarOpened ? (
-            <ArrowBackIcon
-              classes={{
-                root: classNames(
-                  classes.headerIcon,
-                  classes.headerIconCollapse,
-                ),
-              }}
-            />
-          ) : (
-            <MenuIcon
-              classes={{
-                root: classNames(
-                  classes.headerIcon,
-                  classes.headerIconCollapse,
-                ),
-              }}
-            />
-          )}
-        </IconButton>
-        <Typography variant="h6" weight="medium" className={classes.logotype}>
-          Donation GIFs Webapp
-        </Typography>
-        <div className={classes.grow} />
-        <IconButton
-          color="inherit"
-          aria-haspopup="true"
-          aria-controls="mail-menu"
-          onClick={e => {
-            setNotificationsMenu(e.currentTarget);
-            setIsNotificationsUnread(false);
-          }}
-          className={classes.headerMenuButton}
-        >
-          <Badge
-            badgeContent={isNotificationsUnread ? notifications.length : null}
-            color="warning"
-          >
-            <NotificationsIcon classes={{ root: classes.headerIcon }} />
-          </Badge>
-        </IconButton>
-        <Menu
-          id="notifications-menu"
-          open={Boolean(notificationsMenu)}
-          anchorEl={notificationsMenu}
-          onClose={() => setNotificationsMenu(null)}
-          className={classes.headerMenu}
-          disableAutoFocusItem
-        >
-          {notifications/* {notificationsData} */.map(notification => (
-            <MenuItem
-              /*key={notification.id}*/
-              onClick={() => setNotificationsMenu(null)}
-              className={classes.headerMenuItem}
-            >
-              <Notification {...notification} typographyVariant="inherit" />
-            </MenuItem>
-          ))}
-        </Menu>
-      </Toolbar>
-    </AppBar>
+    <StompSessionProvider
+        url={"http://localhost:8080/gs-guide-websocket"}
+        debug={(str) => {
+            console.log(str);
+        }}
+    >
+      <SubscribingComponent />
+    </StompSessionProvider>
   );
 }

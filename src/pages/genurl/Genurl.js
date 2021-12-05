@@ -16,8 +16,8 @@ export default function Genurl() {
         const [waiting, setWaiting] = useState(true);
         const [savedGif, setSavedGif] = useState("");
         const [savedTextStyleId, setSavedTextStyleId] = useState(0);
+        const [savedSound, setSavedSound] = useState("");
         
-        const ws = useRef(null);
         const audio = useRef(null);
 
         const sharingGif = getSharingGif();
@@ -27,11 +27,6 @@ export default function Genurl() {
         const getGifTexts = async (text) => {
             const res = await gf.animate(text, { limit: 16 })
             setGifTexts(values => res.data);
-            audio.current = new Audio(sharingSound);
-            audio.current.play();
-            setTimeout(() => audio.current.pause(), 10000);
-            setTimeout(() => setWaiting(values => false), 5000);
-            setTimeout(() => setWaiting(values => true), 12000);
         }
 
         const Item = (props) => {
@@ -56,11 +51,19 @@ export default function Genurl() {
             await getGifTexts(msg.body);
         }
 
-        useSubscription("/topic/message", async (message) => await onMessage(message)); 
+        useSubscription("/topic/message", async (message) => await onMessage(message));
         /*useEffect(() => {
-            getGifTexts("Cam on ban A da donate 100000 dong" + sharingSound);
+            getGifTexts("Cam on ban A da donate 100000 dong");
             setTimeout(() => getGifTexts("Cam on ban B da donate 700000 dong"), 15000);
         }, []);*/
+
+        useEffect(() => {
+            audio.current = new Audio(sharingSound ? sharingSound : savedSound);
+            setTimeout(() => audio.current.play(), 5000);
+            setTimeout(() => audio.current.pause(), 12500);
+            setTimeout(() => setWaiting(values => false), 5000);
+            setTimeout(() => setWaiting(values => true), 12500);
+        }, [gifTexts]);
 
         useEffect(() => {
             axios.get("https://web-donate.herokuapp.com/setting")
@@ -70,6 +73,7 @@ export default function Genurl() {
                         if (item.id == 1) {
                             setSavedGif(values => item.gifUrl);
                             setSavedTextStyleId(values => item.textStyleId);
+                            setSavedSound(values => item.soundUrl);
                         }
                     })
                 }
@@ -114,7 +118,7 @@ export default function Genurl() {
     return (
         <>
             <StompSessionProvider
-                url={"http://localhost:8080/gs-guide-websocket"}
+                url={"https://web-donate.herokuapp.com/gs-guide-websocket"}
                 debug={(str) => {
                     console.log(str);
                 }}
