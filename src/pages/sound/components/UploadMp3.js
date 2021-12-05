@@ -21,7 +21,6 @@ const BorderLinearProgress = withStyles((theme) => ({
 export default function UploadGif() {
   const [state, setState] = useState({
     currentFile: undefined,
-    previewGif: undefined,
     progress: 0,
     message: "",
     isError: false,
@@ -31,7 +30,6 @@ export default function UploadGif() {
     setState(values => ({
       ...values,
       currentFile: event.target.files[0],
-      previewGif: URL.createObjectURL(event.target.files[0]),
       progress: 0,
       message: "",
     }));
@@ -60,7 +58,7 @@ export default function UploadGif() {
         setState(values => ({
           ...values,
           progress: 0,
-          message: "Could not upload the gif!",
+          message: "Could not upload file!",
           currentFile: undefined,
           isError: true
         }));
@@ -83,7 +81,7 @@ export default function UploadGif() {
               className="btn-choose"
               variant="outlined"
               component="span" >
-                Choose your Gif
+                Choose your Mp3 file
             </Button>
           </label>
         </Grid>
@@ -122,20 +120,6 @@ export default function UploadGif() {
             </Box>)
           }
         </Grid>
-        {state.previewGif && (
-          <Grid item container xs={12} spacing={2}>
-            <Grid item xs={12}>
-              <Typography variant="h5" color="textSecondary" noWrap>
-                Preview Gif
-              </Typography>
-            </Grid>
-            <Grid item xs={12}>
-              <div style={{display: "flex", justifyContent: "center"}}>
-                <img className="preview my20" src={state.previewGif} alt="" width="350"/>
-              </div>
-            </Grid>
-          </Grid>
-        )}
       </Grid>
     </>
   );

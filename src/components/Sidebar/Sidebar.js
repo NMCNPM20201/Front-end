@@ -19,7 +19,6 @@ import useStyles from "./styles";
 
 // components
 import SidebarLink from "./components/SidebarLink/SidebarLink";
-import Dot from "./components/Dot";
 
 // context
 import {
@@ -38,23 +37,12 @@ const structure = [
   },
   { id: 2, label: "Tables", link: "/app/tables", icon: <TableIcon /> },
   { id: 3, label: "Settings", link: "/app/settings", icon: <Settings />},
-  { id: 4, label: "SoundSettings", link: "/app/soundSettings", icon: <Settings />},
+  { id: 4, label: "Sound", link: "/app/sound", icon: <Settings />},
   {
     id: 5,
     label: "Notifications",
     link: "/app/notifications",
     icon: <NotificationsIcon />,
-  },
-  {
-    id: 6,
-    label: "UI Elements",
-    link: "/app/ui",
-    icon: <UIElementsIcon />,
-    children: [
-      { label: "Icons", link: "/app/ui/icons" },
-      { label: "Charts", link: "/app/ui/charts" },
-      { label: "Maps", link: "/app/ui/maps" },
-    ],
   },
 ];
 
