@@ -18,6 +18,8 @@ import { setSharingSound } from '../../helpers';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core';
 import AudioPlayer from 'material-ui-audio-player';
 
+import axios from "axios";
+
 const muiTheme = createMuiTheme({});
 
 //-----------------------------------------
@@ -158,6 +160,8 @@ function MultilineTextFields() {
 function Sound() {
   const [uploadedFiles, setUploadedFiles] = useState(undefined);
   const [choosingSound, setChoosingSound] = useState("");
+  const [savedGif, setSavedGif] = useState("");
+  const [savedTextStyleId, setSavedTextStyleId] = useState(0); 
 
   const handleClick = (url) => {
     alert("Chọn thành công!");
@@ -168,12 +172,13 @@ function Sound() {
     alert("Lưu thành công!");
     setSharingSound(choosingSound);
 
-    /*axios.post("https://web-donate.herokuapp.com/setting", {
+    axios.post("https://web-donate.herokuapp.com/setting", {
         id: 1,
-        gifUrl: choosingGif,
-        textStyleId: choosingTextStyleId,
+        gifUrl: savedGif,
+        textStyleId: savedTextStyleId,
+        soundUrl: choosingSound,
     })
-    .catch(error => console.log(error));*/
+    .catch(error => console.log(error));
   }
 
   const UploadedFilesList = (props) => {
@@ -205,6 +210,21 @@ function Sound() {
       })
       .catch((error) => console.log(error));
   }, []);
+
+  useEffect(() => {
+    axios.get("https://web-donate.herokuapp.com/setting")
+    .then(response => {
+        if (response.status == "200") {
+            response.data.map(item => {
+                if (item.id == 1) {
+                    setSavedGif(values => item.gifUrl);
+                    setSavedTextStyleId(values => item.textStyleId);
+                }
+            })
+        }
+    })
+    .catch(error => console.log(error));
+}, []);
 
   return (
     <>

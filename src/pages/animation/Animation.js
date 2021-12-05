@@ -154,6 +154,8 @@ export default function Animation() {
 
     const classes = useStyles();
 
+    const [savedSound, setSavedSound] = useState("");
+
     const handleOpenGifDialog = (url) => {
         setFocusGif(url);
         setOpenGifDialog(true);
@@ -332,6 +334,7 @@ export default function Animation() {
             id: 1,
             gifUrl: choosingGif,
             textStyleId: choosingTextStyleId,
+            soundUrl: savedSound,
         })
         .catch(error => console.log(error));
     }
@@ -356,6 +359,20 @@ export default function Animation() {
             setUploadedGifs((values) => response.data);
           })
           .catch((error) => console.log(error));
+    }, []);
+
+    useEffect(() => {
+        axios.get("https://web-donate.herokuapp.com/setting")
+        .then(response => {
+            if (response.status == "200") {
+                response.data.map(item => {
+                    if (item.id == 1) {
+                        setSavedSound(values => item.soundUrl);
+                    }
+                })
+            }
+        })
+        .catch(error => console.log(error));
     }, []);
 
     return (
