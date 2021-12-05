@@ -56,7 +56,7 @@ export default function Genurl() {
             await getGifTexts(msg.body);
         }
 
-        useSubscription("/topic/message", async (message) => await onMessage(message));
+        useSubscription("/topic/message", async (message) => await onMessage(message)); 
         /*useEffect(() => {
             getGifTexts("Cam on ban A da donate 100000 dong" + sharingSound);
             setTimeout(() => getGifTexts("Cam on ban B da donate 700000 dong"), 15000);
