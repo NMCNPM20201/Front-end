@@ -58,12 +58,17 @@ export default function Genurl() {
 
         useSubscription("/topic/message", async (message) => await onMessage(message));
         /*useEffect(() => {
+<<<<<<< HEAD
             const msg = '{ "name": "A", "money": "1000000đ", "content": "Chúc anh livestream vui vẻ, không feed mạng nào !!!" }';
             const obj = JSON.parse(msg);
             const text = "Cảm ơn " + obj.name + " đã donate " + obj.money + "\n" + obj.content; 
             setContent(values => obj.content);
             getGifTexts(text);
             setTimeout(() => getGifTexts("Cam on ban B da donate 700000 dong"), 17500);
+=======
+            getGifTexts("Cam on ban A da donate 100000 dong");
+            setTimeout(() => getGifTexts("Cam on ban B da donate 700000 dong"), 15000);
+>>>>>>> 91887115748eb59aca0f95ae57fc1a910f599afe
         }, []);*/
 
         useEffect(() => {
