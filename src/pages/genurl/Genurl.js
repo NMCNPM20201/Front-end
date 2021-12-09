@@ -17,8 +17,10 @@ export default function Genurl() {
         const [savedGif, setSavedGif] = useState("");
         const [savedTextStyleId, setSavedTextStyleId] = useState(0);
         const [savedSound, setSavedSound] = useState("");
+        const [content, setContent] = useState("");
         
         const audio = useRef(null);
+        const speaking = useRef(null);
 
         const sharingGif = getSharingGif();
         const sharingTextStyleId = getSharingTextStyleId();
@@ -32,7 +34,7 @@ export default function Genurl() {
         const Item = (props) => {
             return (
                 <div className="gif-item">
-                    <img src={props.url} width="600" height="300"/>
+                    <img src={props.url} />
                 </div>
             );
         }
@@ -48,21 +50,30 @@ export default function Genurl() {
 
         const onMessage = async (msg) => {
             setWaiting(values => true);
-            await getGifTexts(msg.body);
+            const obj = JSON.parse(msg.body);
+            const text = "Cảm ơn " + obj.name + " đã donate " + obj.money + "\n" + obj.content; 
+            setContent(values => obj.content);
+            await getGifTexts(text);
         }
 
-        //useSubscription("/topic/message", async (message) => await onMessage(message));
-        useEffect(() => {
-            getGifTexts("Cam on ban A da donate 100000 dong");
-            setTimeout(() => getGifTexts("Cam on ban B da donate 700000 dong"), 15000);
-        }, []);
+        useSubscription("/topic/message", async (message) => await onMessage(message));
+        /*useEffect(() => {
+            const msg = '{ "name": "A", "money": "1000000đ", "content": "Chúc anh livestream vui vẻ, không feed mạng nào !!!" }';
+            const obj = JSON.parse(msg);
+            const text = "Cảm ơn " + obj.name + " đã donate " + obj.money + "\n" + obj.content; 
+            setContent(values => obj.content);
+            getGifTexts(text);
+            setTimeout(() => getGifTexts("Cam on ban B da donate 700000 dong"), 17500);
+        }, []);*/
 
         useEffect(() => {
             audio.current = new Audio(sharingSound ? sharingSound : savedSound);
+            speaking.current = new Audio(`https://web-donate.herokuapp.com/text_to_speech?text=${content}`);
             setTimeout(() => audio.current.play(), 5000);
             setTimeout(() => audio.current.pause(), 12500);
+            setTimeout(() => speaking.current.play(), 12600);
             setTimeout(() => setWaiting(values => false), 5000);
-            setTimeout(() => setWaiting(values => true), 12500);
+            setTimeout(() => setWaiting(values => true), 16500);
         }, [gifTexts]);
 
         useEffect(() => {
@@ -110,7 +121,6 @@ export default function Genurl() {
                         </div>
                     </Zoom>
                 </div>
-                
             </>
         );
     }
@@ -118,7 +128,7 @@ export default function Genurl() {
     return (
         <>
             <StompSessionProvider
-                url={"http://localhost:8080/gs-guide-websocket"}
+                url={"https://web-donate.herokuapp.com/gs-guide-websocket"}
                 debug={(str) => {
                     console.log(str);
                 }}

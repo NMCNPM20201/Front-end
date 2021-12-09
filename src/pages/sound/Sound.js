@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './styles.css';
 import Button from '@material-ui/core/Button';
-import SaveIcon from '@material-ui/icons/Save';
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
@@ -22,139 +21,133 @@ import axios from "axios";
 
 const muiTheme = createMuiTheme({});
 
-//-----------------------------------------
-const useStyles0 = makeStyles({
-  root: {
-    width: 500,
-  },
-});
-
-function ContinuousSlider() {
-  const classes = useStyles0();
-  const [value, setValue] = React.useState(30);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  return (
-    <div className={classes.root}>
-      <Typography id="continuous-slider" gutterBottom>
-        Volume
-      </Typography>
-      <Grid container spacing={2}>
-        <Grid item>
-          <VolumeDown />
-        </Grid>
-        <Grid item xs>
-          <Slider value={value} onChange={handleChange} aria-labelledby="continuous-slider" />
-        </Grid>
-        <Grid item>
-          <VolumeUp />
-        </Grid>
-      </Grid>
-      
-    </div>
-  );
-}
-//-----------------------------------------
-const useStyles1 = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
+const TestSpeaking = () => {
+  const useStyles = makeStyles((theme) => ({
+    slider: {
+      width: 500,
     },
-  },
-}));
-
-function ContainedButtons() {
-  const classes = useStyles1();
-
-  return (
-    <div className={classes.root}>
-      <Button variant="contained">Speak</Button>
-      <Button variant="contained" startIcon = {<SaveIcon />}>
-        Save settings
-      </Button>
-    </div>
-  );
-}
-//-----------------------------------------
-const useStyles2 = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      width: '50ch',
-      
+    button: {
+      '& > *': {
+        margin: theme.spacing(1),
+      },
     },
-  },
-}));
-
-function BasicTextFields() {
-  const classes = useStyles2();
-
-  return (
-    <form className={classes.root} noValidate autoComplete="off">
-      <TextField 
-        id="outlined-basic" 
-        label="Type something to test speaking voice" 
-        variant="outlined" 
-        color = "primary" />
-    </form>
-  );
-}
-
-//-----------------------------------------
-const voices = [
-  {
-    value: 'VNFMV',
-    label: 'Vietnamese Female Voice',
-  },
-  {
-    value: 'VNMV',
-    label: 'Vietnamese Male Voice',
-  },
-];
-const useStyles3 = makeStyles((theme) => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: '25ch',
+    text: {
+      '& > *': {
+        margin: theme.spacing(1),
+        width: '50ch',
+      },
     },
-  },
-}));
-function MultilineTextFields() {
-  const classes = useStyles3();
-  const [voice, setVoice] = React.useState('VNFMV');
+    multilineText: {
+      '& .MuiTextField-root': {
+        margin: theme.spacing(1),
+        width: '25ch',
+      },
+    },
+  }));
+  
+  const classes = useStyles();
 
-  const handleChange = (event) => {
-    setVoice(event.target.value);
-  };
+  const [text, setText] = useState("");
 
-  return (
-    <form className={classes.root} noValidate autoComplete="off">
-      <div>
-      <TextField
-          id="outlined-select-currency-native"
-          select
-          label="Choose Voice"
-          value={voice}
-          onChange={handleChange}
-          SelectProps={{
-            native: true,
-          }}
-          helperText="Please select your preference voice"
-          variant="outlined"
-        >
-          {voices.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-        </TextField>
+  function ContinuousSlider() {
+    const [value, setValue] = React.useState(30);
+  
+    const handleChange = (event, newValue) => {
+      setValue(newValue);
+    };
+  
+    return (
+      <div className={classes.slider}>
+        <Typography id="continuous-slider" gutterBottom>
+          Volume
+        </Typography>
+        <Grid container spacing={2}>
+          <Grid item>
+            <VolumeDown />
+          </Grid>
+          <Grid item xs>
+            <Slider value={value} onChange={handleChange} aria-labelledby="continuous-slider" />
+          </Grid>
+          <Grid item>
+            <VolumeUp />
+          </Grid>
+        </Grid>
       </div>
-    </form>
     );
   }
+
+  const handleClick = () => {
+    const audio = new Audio(`https://web-donate.herokuapp.com/text_to_speech?text=${text}`);
+    audio.play();
+  }
+  
+  const voices = [
+    {
+      value: 'VNFMV',
+      label: 'Vietnamese Female Voice',
+    },
+    {
+      value: 'VNMV',
+      label: 'Vietnamese Male Voice',
+    },
+  ];
+
+  function MultilineTextFields() {
+    const [voice, setVoice] = React.useState('VNFMV');
+  
+    const handleChange = (event) => {
+      setVoice(event.target.value);
+    };
+  
+    return (
+      <form className={classes.multilineText} noValidate autoComplete="off">
+        <div>
+        <TextField
+            id="outlined-select-currency-native"
+            select
+            label="Choose Voice"
+            value={voice}
+            onChange={handleChange}
+            SelectProps={{
+              native: true,
+            }}
+            helperText="Please select your preference voice"
+            variant="outlined"
+          >
+            {voices.map((option) => (
+              <option key={option.value} value={option.value}>
+                {option.label}
+              </option>
+            ))}
+          </TextField>
+        </div>
+      </form>
+    );
+  }
+
+  const handleInputChange = (event) => {
+    setText(event.target.value);
+  }
+
+  return (
+    <>
+      <form className={classes.text} noValidate autoComplete="off">
+        <TextField 
+          id="outlined-basic" 
+          label="Type something to test speaking voice" 
+          variant="outlined" 
+          color="primary"
+          value={text}
+          onChange={handleInputChange}
+          spellCheck="false" />
+      </form>
+      <ContinuousSlider />
+      <div className={classes.button}>
+        <Button variant="contained" onClick={handleClick}>Test speaking</Button>
+      </div>
+    </>
+  );
+}
 
 //-----------------------------------------
 function Sound() {
@@ -240,10 +233,7 @@ function Sound() {
             <div className="App">
               <header className="App-header">
                 Test your speaking voice
-                <BasicTextFields />
-                <ContinuousSlider />
-                <ContainedButtons />
-                <MultilineTextFields />
+                <TestSpeaking />
               </header>
             </div>
           </Grid>
