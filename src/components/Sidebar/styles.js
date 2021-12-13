@@ -46,9 +46,9 @@ export default makeStyles(theme => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
-  /* sidebarList: {
+  sidebarList: {
     marginTop: theme.spacing(6),
-  }, */
+  }, 
   mobileBackButton: {
     marginTop: theme.spacing(0.5),
     marginLeft: 18,
@@ -59,7 +59,7 @@ export default makeStyles(theme => ({
       display: "none",
     },
   },
-  sidebarList: {
-    color: '#fff !important'
-  }
+  // sidebarList: {
+  //   color: '#fff !important'
+  // }
 }));

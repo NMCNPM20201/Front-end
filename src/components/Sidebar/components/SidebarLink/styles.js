@@ -6,15 +6,20 @@ export default makeStyles(theme => ({
     "&:hover, &:focus": {
       backgroundColor: theme.palette.background.light,
     },
+    
   },
   externalLink: {
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    
+    
   },
   linkActive: {
     backgroundColor: theme.palette.background.light,
+    
+    
   },
   linkNested: {
     paddingLeft: 0,
@@ -29,34 +34,41 @@ export default makeStyles(theme => ({
     width: 24,
     display: "flex",
     justifyContent: "center",
+    
   },
   linkIconActive: {
     color: theme.palette.primary.main,
+    
   },
   linkText: {
     padding: 0,
     color: theme.palette.text.secondary + "CC",
     transition: theme.transitions.create(["opacity", "color"]),
     fontSize: 16,
+    
   },
   linkTextActive: {
     color: theme.palette.text.primary,
+    
   },
   linkTextHidden: {
     opacity: 0,
+    
   },
   nestedList: {
     paddingLeft: theme.spacing(2) + 30,
+    
   },
   sectionTitle: {
     marginLeft: theme.spacing(4.5),
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
+    backgroundColor: "#fff"
   },
   divider: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(4),
     height: 1,
-    backgroundColor: "#fff",
+    // backgroundColor: "#fff !important",
   },
 }));
