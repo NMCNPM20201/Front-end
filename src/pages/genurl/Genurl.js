@@ -18,7 +18,7 @@ export default function Genurl() {
             const res = await gf.animate(text, { limit: 1 })
             setGifTexts(values => res.data);
             setWaiting(values => false);
-            setTimeout(() => setWaiting(values => true), 7000);
+            setTimeout(() => setWaiting(values => true), 200000);
         }
 
         const Item = (props) => {
