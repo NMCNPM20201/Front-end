@@ -1,0 +1,6 @@
+{
+    "name": "SoundSettings",
+    "version": "0.0.0",
+    "main": "SoundSettings.js",
+    "private": true
+  }

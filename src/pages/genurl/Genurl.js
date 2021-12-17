@@ -6,19 +6,31 @@ import {
     useSubscription,
 } from "react-stomp-hooks";
 
+import { getSharingGif, getSharingTextStyleId } from "../../helpers";
+import axios from "axios";
+
 export default function Genurl() {
     const SubscribingComponent = () => {
         const gf = new GiphyFetch("vmqVD48zw7QGC3hKatE5bUSA0cZdXhyM");
         const [gifTexts, setGifTexts] = useState([]);
         const [waiting, setWaiting] = useState(true);
-
+        const [savedGif, setSavedGif] = useState("");
+        const [savedTextStyleId, setSavedTextStyleId] = useState(0);
+        
         const ws = useRef(null);
 
+        const sharingGif = getSharingGif();
+        const sharingTextStyleId = getSharingTextStyleId();
+
         const getGifTexts = async (text) => {
-            const res = await gf.animate(text, { limit: 1 })
+            const res = await gf.animate(text, { limit: 16 })
             setGifTexts(values => res.data);
             setWaiting(values => false);
+<<<<<<< HEAD
             setTimeout(() => setWaiting(values => true), 200000);
+=======
+            setTimeout(() => setWaiting(values => true), 5000);
+>>>>>>> 87d210fb260badc46fe28ea4b617e0a9ebff697b
         }
 
         const Item = (props) => {
@@ -30,8 +42,10 @@ export default function Genurl() {
         }
 
         const TextList = (props) => {
-            const items = props.gifs.map((itemData) => {
-                return <Item url={itemData.url} />;
+            const items = props.gifs.map((itemData, index) => {
+                if (index == (sharingTextStyleId ? sharingTextStyleId : savedTextStyleId))
+                    return <Item url={itemData.url} />;
+                return <div></div>
             });
             return <div className="text-container">{items}</div>;
         };
@@ -47,6 +61,21 @@ export default function Genurl() {
             setTimeout(() => getGifTexts("Cam on ban B da donate 700000 dong"), 9000);
         }, []);*/
 
+        useEffect(() => {
+            axios.get("https://web-donate.herokuapp.com/setting")
+            .then(response => {
+                if (response.status == "200") {
+                    response.data.map(item => {
+                        if (item.id == 1) {
+                            setSavedGif(values => item.gifUrl);
+                            setSavedTextStyleId(values => item.textStyleId);
+                        }
+                    })
+                }
+            })
+            .catch(error => console.log(error));
+        }, []);
+
         return (
             <> 
                 <div style={{
@@ -61,7 +90,7 @@ export default function Genurl() {
                         timeout={{enter: 1500, exit: 200}}
                     >
                         <div>
-                            <img src="https://i.pinimg.com/originals/18/55/9c/18559ccfe163425e8328d4255049b817.gif" width="300" height="200"/>
+                            <img src={sharingGif ? sharingGif : savedGif} width="300" height="200"/>
                         </div>
                     </Zoom>
                     <Zoom 
