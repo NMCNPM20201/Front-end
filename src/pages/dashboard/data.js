@@ -1,6 +1,6 @@
 var dataAPI = "http://localhost:3000/data" 
 var tableAPI="http://localhost:3000/table"
-var mainChartDataAPI="http://localhost:3000/mainChartData"
+var mainChartDataAPI="https://web-donate.herokuapp.com/donate/total_donate_by_month?year=2021&month=12"
 function getTable (){
   fetch(tableAPI)
       .then(function(response){
@@ -33,8 +33,16 @@ function getMainChartData (){
       .then(function(response){
           return response.json();
       })
-      .then(function(mainChartData) {
-        data.mainChartData = mainChartData;
+      .then(function(mainChartDatas) {
+        data.mainChart = mainChartDatas.map(mainChartData=>
+          mainChartData = {
+            day: mainChartData.day,
+            mobile: mainChartData.total_donate,
+            tablet: 5000,
+            desktop: 5000
+          }
+        );
+        // data.mainChartData = mainChartData;
       });
 };
   

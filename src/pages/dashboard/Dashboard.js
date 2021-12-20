@@ -151,7 +151,7 @@ export default function Dashboard(props) {
             <ResponsiveContainer width="100%" minWidth={500} height={350}>
               <ComposedChart
                 margin={{ top: 0, right: -15, left: -15, bottom: 0 }}
-                data={data.mainChartData}
+                data={data.mainChart}
               >
                 <YAxis
                   

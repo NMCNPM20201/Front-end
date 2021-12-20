@@ -28,7 +28,10 @@ import ArrowDropDownCircleTwoToneIcon from '@mui/icons-material/ArrowDropDownCir
 import { SnackbarProvider, useSnackbar } from 'notistack';
 import Tooltip from '@mui/material/Tooltip';
 import HelpIcon from '@material-ui/icons/Help';
-
+import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
+import ClearIcon from '@mui/icons-material/Clear';
+import IconButton from '@material-ui/core/IconButton';
+import axios from 'axios';
 const useStyles = makeStyles((theme) => ({
   cssOutlinedInput: {
     '&$cssFocused $notchedOutline': {
@@ -138,75 +141,12 @@ function a11yProps(index) {
   };
 }
 //---Min Amount-FormRow1---//
-function NumberFormatCustom(props) {
-  const { inputRef, onChange, ...other } = props;
 
-  return (
-    <NumberFormat
-      {...other}
-      getInputRef={inputRef}
-      onValueChange={(values) => {
-        onChange({
-          target: {
-            name: props.name,
-            value: values.value,
-          },
-        });
-      }}
-      thousandSeparator
-      isNumericString
-      prefix="$"
-    />
-  );
-}
-
-NumberFormatCustom.propTypes = {
-  inputRef: PropTypes.func.isRequired,
-  name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
-
-function FormattedInputs() {
-  const classes = useStyles();
-  const [values, setValues] = React.useState({
-    numberformat: '',
-  });
-
-  const handleChange = (event) => {
-    setValues({
-      ...values,
-      [event.target.name]: event.target.value,
-    });
-  };
-
-  return (
-    <div className={classes.root2}>
-      
-      <TextField 
-       className="borderText"
-        variant="outlined"
-        value={values.numberformat}
-        onChange={handleChange}
-        name="numberformat"
-        id="formatted-numberformat-input"
-        InputProps={{
-          inputComponent: NumberFormatCustom,
-          classes: {
-            root: classes.cssOutlinedInput,
-            notchedOutline: classes.notchedOutline,
-            input: classes.multilineColor
-          },
-        }
-      }
-      />
-    </div>
-  );
-}
 
 //-----Show Top Donation-FormRow2-------//
 
-function ControlledRadioButtonsGroup() {
-  const [value, setValue] = React.useState('disabled');
+function ControlledRadioButtonsGroup({data}) {
+  const [value, setValue] = React.useState(`${data}`);
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -227,211 +167,24 @@ function ControlledRadioButtonsGroup() {
   );
 }
 
-//----Setting Soundtrack-FormRow6----//
-const useStyles0 = makeStyles({
-  root: {
-    width: 500,
-  },
-});
-
-function ContinuousSlider() {
-  const classes = useStyles0();
-  const [value, setValue] = React.useState(30);
-
-  const handleChange = (event, newValue) => {
-    setValue(newValue);
-  };
-
-  return (
-    <div className={classes.root}>
-      <Typography id="continuous-slider" gutterBottom>
-        Volume
-      </Typography>
-      <Grid container spacing={2}>
-        <Grid item>
-          <VolumeDown />
-        </Grid>
-        <Grid item xs>
-          <Slider value={value} onChange={handleChange} aria-labelledby="continuous-slider" />
-        </Grid>
-        <Grid item>
-          <VolumeUp />
-        </Grid>
-      </Grid>
-    </div>
-  );
-}
-//-----------------------------------------
-const useStyles1 = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-    },
-  },
-}));
-
-function ContainedButtons() {
-  const classes = useStyles1();
-
-  return (
-    <div className={classes.root}>
-      <Button variant="contained">Speak</Button>
-      <Button variant="contained" startIcon = {<SaveIcon />}>
-        Save
-      </Button>
-      <Button variant="contained" component="label">
-        Upload File
-       <input type="file" hidden/>
-        </Button>
-    </div>
-  );
-}
-//-----------------------------------------
-const useStyles2 = makeStyles((theme) => ({
-  root: {
-    '& > *': {
-      margin: theme.spacing(1),
-      width: '50ch',
-      
-    },
-  },
-  cssOutlinedInput: {
-    '&$cssFocused $notchedOutline': {
-      borderColor: '#e3e8eb !important'
-    }
-  },
-  notchedOutline: {
-    // height:'50px',
-    borderWidth: '0.25px',
-    borderColor: '#e3e8eb !important'
-  },
-  multilineColor:{
-    color:'white'
-  },
-  
-}));
-
-function BasicTextFields() {
-  const classes = useStyles2();
-
-  return (
-    <form className={classes.root} noValidate autoComplete="off">
-      <TextField 
-        id="outlined-basic" 
-        label="Type to test Voice" 
-        variant="outlined" 
-        color = "primary"
-        InputProps={{
-          classes: {
-            root: classes.cssOutlinedInput,
-            notchedOutline: classes.notchedOutline,
-            input: classes.multilineColor
-          },
-        }}
-         />
-        
-    </form>
-  );
-}
-
-//-----------------------------------------
-const voices = [
-  {
-    value: 'VNFMV',
-    label: 'Vietnamese Female Voice',
-  },
-  {
-    value: 'VNMV',
-    label: 'Vietnamese Male Voice',
-  },
-];
-const useStyles3 = makeStyles((theme) => ({
-  root: {
-    '& .MuiTextField-root': {
-      margin: theme.spacing(1),
-      width: '25ch',
-    },
-  },
-  cssOutlinedInput: {
-    '&$cssFocused $notchedOutline': {
-      borderColor: '#e3e8eb !important'
-    }
-  },
-  notchedOutline: {
-    // height:'50px',
-    borderWidth: '0.25px',
-    borderColor: '#e3e8eb !important'
-  },
-  multilineColor:{
-    color:'white'
-  },
-}));
-function MultilineTextFields() {
-  const classes = useStyles3();
-  const [voice, setVoice] = React.useState('VNFMV');
-
-  const handleChange = (event) => {
-    setVoice(event.target.value);
-  };
-
-  return (
-    <form className={classes.root} noValidate autoComplete="off">
-      <div>
-      <TextField
-          id="outlined-select-currency-native"
-          select
-          label="Choose Voice"
-          value={voice}
-          onChange={handleChange}
-          SelectProps={{
-            native: true,
-          }}
-          helperText="Please select your perference voice"
-          variant="outlined"
-          InputProps={{
-            classes: {
-              root: classes.cssOutlinedInput,
-              notchedOutline: classes.notchedOutline,
-              input: classes.multilineColor
-            },
-          }}
-        >
-          {voices.map((option) => (
-            <option key={option.value} value={option.value}>
-              {option.label}
-            </option>
-          ))}
-          
-        </TextField>
-      </div>
-    </form>
-    );
-  }
-
-//-----------------------------------------
-function SettingSound() {
-  return (
-    <div className="SettingSound">
-      <header className="SettingSound-header">
-        Speak setting
-        <BasicTextFields />
-        <ContinuousSlider />
-        <ContainedButtons />
-        <MultilineTextFields />
-      </header>
-    </div>
-  );
-}
-
 //-------SaveSettings---------
-function NodeSave() {
+function NodeSave({Datasave}) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const handleClickVariant = (variant) => () => {
     // variant could be success, error, warning, info, or default
     enqueueSnackbar('Successfully saved!', { variant });
+    SaveData();
   };
-
+  function SaveData(){
+    axios.put(`${settingsAPI}/${Datasave.IdData+""}`, {
+        MinAmount: Datasave.values1 ,
+        ShowTopDonation: Datasave.values2,
+        MessageTemplate: Datasave.values3,
+        AlertDuration: Datasave.values4, 
+        AlertTextDelay :Datasave.values5
+      });
+  }
   return (
     <React.Fragment>
           <Button
@@ -447,19 +200,121 @@ function NodeSave() {
   );
 }
 
-function SaveSettings() {
+function SaveSettings({DataSave}) {
   return (
     <SnackbarProvider maxSnack={3}>
-      <NodeSave />
+      <NodeSave  Datasave={DataSave} />
     </SnackbarProvider>
+  );
+}
+
+const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, ref) {
+  const { onChange, ...other } = props;
+
+  return (
+    <NumberFormat
+      {...other}
+      getInputRef={ref}
+      onValueChange={(values) => {
+        onChange({
+          target: {
+            name: props.name,
+            value: values.value,
+          },
+        });
+      }}
+      thousandSeparator
+      isNumericString
+      prefix="$"
+    />
+  );
+});
+
+NumberFormatCustom.propTypes = {
+  name: PropTypes.string.isRequired,
+  onChange: PropTypes.func.isRequired,
+};
+
+function FormattedInputs() {
+  const classes = useStyles();
+  const [values, setValues] = React.useState('1320');
+  return (
+    <Box
+      sx={{
+        '& > :not(style)': {
+          m: 1,
+        },
+      }}
+    >
+      <TextField
+        className="borderText"
+        variant="outlined"
+        value={values}
+        onChange={(event) =>setValues(event.target.value)}
+        name="numberformat"
+        id="formatted-numberformat-input"
+        InputProps={{
+          inputComponent: NumberFormatCustom,
+          classes: {
+            root: classes.cssOutlinedInput,
+            notchedOutline: classes.notchedOutline,
+            input: classes.multilineColor
+          },
+        }
+      }
+      />
+    </Box>
   );
 }
 
 //--------FormRow---------------------------------
 
-function NestedGrid() {
+function NestedGrid({data}) {
   const classes = useStyles();
-  
+  // const [values, setValues] = React.useState('1320');
+  // const [values1, setValues1] = React.useState('100');
+  const [values, setValues] = React.useState({
+      values1: data.MinAmount  ,
+      values2: data.ShowTopDonation,
+      values3: data.MessageTemplate,
+      values4: data.AlertDuration, 
+      values5 :data.AlertTextDelay,
+      IdData :data.id
+  });
+  const handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+  function FormattedInputs() {
+    const [valuess, setValuess] = React.useState('1320');
+    return (
+      <Box
+        sx={{
+          '& > :not(style)': {
+            m: 1,
+          },
+        }}
+      >
+        <TextField
+          className="borderText"
+          variant="outlined"
+          value={values.values1}
+          // onChange={(event) =>setValuess(event.target.value)}
+          onChange={handleChange('values1')}
+          name="numberformat"
+          id="formatted-numberformat-input"
+          InputProps={{
+            inputComponent: NumberFormatCustom,
+            classes: {
+              root: classes.cssOutlinedInput,
+              notchedOutline: classes.notchedOutline,
+              input: classes.multilineColor
+            },
+          }
+        }
+        />
+      </Box>
+    );
+  }
   function FormRow1() {
     return (
       <React.Fragment>
@@ -467,7 +322,9 @@ function NestedGrid() {
           <Paper elevation={0} className={classes.paper}>Min Amount</Paper>
         </Grid>
         <Grid item xs={3}>
+        <div className={classes.root2}>
         <FormattedInputs/>
+        </div>
         </Grid>
         <Grid item xs={1}>
         <Tooltip
@@ -486,7 +343,17 @@ function NestedGrid() {
           <Paper elevation={0} className={classes.paper}>Show Top Donation</Paper>
         </Grid>
         <Grid item xs={2}>
-          <ControlledRadioButtonsGroup/>
+        <FormControl component="fieldset">
+      <RadioGroup
+        aria-label="gender"
+        name="controlled-radio-buttons-group"
+        value={values.values2}
+        onChange={handleChange('values2')}
+      >
+        <FormControlLabel value="disabled" control={<Radio />} label="  Disabled" />
+        <FormControlLabel value="enabled" control={<Radio />} label="  Enabled" />
+      </RadioGroup>
+    </FormControl>
         </Grid>
         <Grid item xs={1}>
         <Tooltip title="Add" arrow>
@@ -508,7 +375,10 @@ function NestedGrid() {
         variant="outlined" 
         type="text" id="MessageTemplate"
         name="MessageTemplate" 
-        defaultValue = "{name} donated {amount}!" 
+        // defaultValue = "{name} donated {amount}!" 
+        // defaultValue = {data.MessageTemplate}
+        value={values.values3}
+        onChange={handleChange('values3')}
         InputProps={{
           classes: {
             root: classes.cssOutlinedInput,
@@ -538,7 +408,9 @@ function NestedGrid() {
         <Grid className="SliderAlert" item xs={7}>
             <Slider 
               max="30"
-              defaultValue={0}
+              // defaultValue={data.AlertDuration}
+              value={values.values4}
+              onChange={handleChange('values4')}
               aria-label="Default" 
               valueLabelDisplay="on" 
             />
@@ -561,7 +433,9 @@ function NestedGrid() {
           <Slider
             max="30"
             size="big"
-            defaultValue={0}
+            defaultValue={data.AlertTextDelay}
+            value={values.values5}
+            onChange={handleChange('values5')}
             aria-label="Default" 
             valueLabelDisplay="on" 
           />
@@ -576,56 +450,14 @@ function NestedGrid() {
   }
   function FormRow6() {
     return (
-      <React.Fragment  >
-        <Grid item xs={11}>
-        <Accordion className="Form-Row" elevation={0} >
-        <AccordionSummary
-          className="TypeSetting"
-          expandIcon={<ArrowDropDownCircleTwoToneIcon color="primary" />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <Typography>Setting Soundtrack</Typography>
-        </AccordionSummary>
-        <AccordionDetails className="TypeSetting" >
-        <SettingSound/>
-        </AccordionDetails>
-      </Accordion>
-        </Grid>
-      </React.Fragment>
-    );
-  }
-  // function FormRow7() {
-  //   return (
-  //     <React.Fragment>
-  //       <Grid item xs={11}>
-  //       <Accordion className="Form-Row" elevation={0} >
-  //       <AccordionSummary
-  //         className="TypeSetting"
-  //         expandIcon={<ExpandMoreIcon />}
-  //         aria-controls="panel2a-content"
-  //         id="panel2a-header"
-  //       >
-  //         <Typography>Setting anh Demo Animation</Typography>
-  //       </AccordionSummary>
-  //       <AccordionDetails className="TypeSetting">
-  //         <Typography>
-  //           anh Vinh
-  //         </Typography>
-  //       </AccordionDetails>
-  //     </Accordion>
-  //       </Grid>
-  //     </React.Fragment>
-  //   );
-  // }
-
-  function FormRow8() {
-    return (
-      <React.Fragment>
+      <React.Fragment >
+        
         <Grid 
           className="ButtonSave"
           item xs={11} >
-          <SaveSettings/>
+          <SaveSettings
+          DataSave={values}
+          />
         </Grid>
       </React.Fragment>
     );
@@ -650,43 +482,78 @@ function NestedGrid() {
           <FormRow5 />
         </Grid>
         <Grid container item xs={12} spacing={3}>
-          <FormRow6 />
-        </Grid>
-        {/* <Grid container item xs={12} spacing={3}>
-          <FormRow7 />
-        </Grid> */}
-        <Grid container item xs={12} spacing={3}>
-          <FormRow8 />
+          <FormRow6  />
         </Grid>
       </Grid>
     </div>
   );
 }
-
-
+//-----Ghep API--------
+var settingsAPI ="http://localhost:3000/setting"
 
 function SimpleTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
-
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
+ const [DataSettings, setDataSettings] = React.useState([]);
+ function GetDataSettings() {
+    axios.get(settingsAPI)
+      .then(res => {
+        setDataSettings(res.data);
+      })
+  };
+  React.useEffect(() => {
+    axios.get(settingsAPI)
+      .then(res => {
+        setDataSettings(res.data);
+      });
+  }, []);
+  function handleAddLevel() {
 
+    axios.post(settingsAPI, {
+      MinAmount: "0" ,
+      ShowTopDonation: 'disabled',
+      MessageTemplate: "{name} donated {amount}!",
+      AlertDuration: 0, 
+      AlertTextDelay :0
+    })
+    .then(function(){GetDataSettings();});
+  };
+  function deletePost() {
+    if(DataSettings.length!=1){
+    axios.delete(`${settingsAPI}/${DataSettings.length-1+""}`)
+    .then(function(){GetDataSettings();});
+    };
+  };
   return (
-    <div className={classes.root}>
+    <div className={classes.root} >
       <AppBar className={classes.Bar} position="static">
-        <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-          <Tab label="Donation Level 1" {...a11yProps(0)} />
-          <Tab label="Donation Level 2" {...a11yProps(1)} />
+        <Tabs id="html1" value={value} onChange={handleChange} aria-label="simple tabs example">
+          {DataSettings.map(DataSetting=>(
+          <Tab
+          onClick={GetDataSettings}
+           label="Donation Level " {...a11yProps(DataSetting.id)} />
+          ))
+          }
+          <IconButton color="primary"
+          onClick={deletePost}
+          >
+            <ClearIcon />
+          </IconButton>
+          <IconButton color="primary"
+          onClick={handleAddLevel}
+          >
+            <AddOutlinedIcon />
+          </IconButton>
         </Tabs>
       </AppBar>
-      <TabPanel value={value} index={0}>
-      <NestedGrid/>
-      </TabPanel>
-      <TabPanel value={value} index={1}>
-      <NestedGrid/>
-      </TabPanel>
+      {DataSettings.map(DataSetting=>(
+      <TabPanel value={value} index={DataSetting.id}>
+      <NestedGrid data={DataSetting} onClick={GetDataSettings} />
+      </TabPanel>))
+    }
     </div>
   );
 }
@@ -696,7 +563,7 @@ export default function Settings(){
   return(
     <div id="Body">
       <h1>DONATION SETTING</h1>
-      <SimpleTabs/>
+      <SimpleTabs />
     </div>
   );
 }

@@ -63,12 +63,12 @@ export default makeStyles(theme => ({
     marginLeft: theme.spacing(4.5),
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
-    backgroundColor: "#fff"
+    backgroundColor: "#fff !important"
   },
   divider: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(4),
     height: 1,
-    // backgroundColor: "#fff !important",
+    backgroundColor: "#fff !important",
   },
 }));
