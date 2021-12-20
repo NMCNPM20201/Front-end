@@ -186,7 +186,7 @@ export default function Header(props) {
 
   return (
     <StompSessionProvider
-        url={"http://localhost:8080/gs-guide-websocket"}
+        url={"https://web-donate.herokuapp.com/gs-guide-websocket"}
         debug={(str) => {
             console.log(str);
         }}
