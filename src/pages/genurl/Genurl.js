@@ -8,6 +8,7 @@ import {
 
 import { getSharingGif, getSharingTextStyleId, getSharingSound } from "../../helpers";
 import axios from "axios";
+import "./styles.css";
 
 export default function Genurl() {
     const SubscribingComponent = () => {
@@ -18,6 +19,7 @@ export default function Genurl() {
         const [savedTextStyleId, setSavedTextStyleId] = useState(0);
         const [savedSound, setSavedSound] = useState("");
         const [content, setContent] = useState("");
+        const [text, setText] = useState("");
         
         const audio = useRef(null);
         const speaking = useRef(null);
@@ -48,35 +50,44 @@ export default function Genurl() {
             return <div className="text-container">{items}</div>;
         };
 
+        const AnimatedText = () => {
+            return ( 
+                <div class="content">
+                    <h1 class="text_shadows" style={{ color: "red", fontWeight: "bold"}}>{text}</h1>
+                    <h1 class="text_shadows" style={{ color: "red", fontSize: "1rem"}}>{content}</h1>
+                </div>
+            );
+        }
+
         const onMessage = async (msg) => {
             setWaiting(values => true);
             const obj = JSON.parse(msg.body);
             const text = "Cảm ơn " + obj.name + " đã donate " + obj.money + "\n" + obj.content; 
             setContent(values => obj.content);
-            await getGifTexts(text);
+            setText(values => text);
+            //await getGifTexts(text);
         }
 
         useSubscription("/topic/message", async (message) => await onMessage(message));
         /*useEffect(() => {
-            const msg = '{ "name": "A", "money": "1000000đ", "content": "Chúc anh livestream vui vẻ, không feed mạng nào !!!" }';
+            const msg = '{ "name": "A", "money": "100000đ", "content": "Chúc anh livestream vui vẻ, không feed mạng nào !!!" }';
             const obj = JSON.parse(msg);
-            const text = "Cảm ơn " + obj.name + " đã donate " + obj.money + "\n" + obj.content; 
+            const text = "Cảm ơn " + obj.name + " đã donate " + obj.money; 
             setContent(values => obj.content);
-            getGifTexts(text);
-            setTimeout(() => getGifTexts("Cam on ban B da donate 700000 dong"), 17500);
-            getGifTexts("Cam on ban A da donate 100000 dong");
-            setTimeout(() => getGifTexts("Cam on ban B da donate 700000 dong"), 15000);
+            setText(values => text);
+            //getGifTexts(text);
+            //setTimeout(() => getGifTexts("Cam on ban B da donate 700000 dong"), 17000);
         }, []);*/
 
         useEffect(() => {
             audio.current = new Audio(sharingSound ? sharingSound : savedSound);
             speaking.current = new Audio(`https://web-donate.herokuapp.com/text_to_speech?text=${content}`);
-            setTimeout(() => audio.current.play(), 5000);
-            setTimeout(() => audio.current.pause(), 12500);
-            setTimeout(() => speaking.current.play(), 12600);
-            setTimeout(() => setWaiting(values => false), 5000);
-            setTimeout(() => setWaiting(values => true), 16500);
-        }, [gifTexts]);
+            setTimeout(() => audio.current.play(), 3000);
+            setTimeout(() => audio.current.pause(), 6000);
+            setTimeout(() => speaking.current.play(), 6100);
+            setTimeout(() => setWaiting(values => false), 3000);
+            setTimeout(() => setWaiting(values => true), 13500);
+        }, [text/*gifTexts*/]);
 
         useEffect(() => {
             axios.get("https://web-donate.herokuapp.com/setting")
@@ -97,7 +108,6 @@ export default function Genurl() {
         return (
             <> 
                 <div style={{
-                    height: "500px",
                     display: "flex",
                     flexDirection: "column",
                     justifyContent: "space-around",
@@ -108,18 +118,16 @@ export default function Genurl() {
                         timeout={{enter: 1500, exit: 200}}
                     >
                         <div>
-                            <img src={sharingGif ? sharingGif : savedGif} width="300" height="200"/>
+                            <img src={sharingGif ? sharingGif : savedGif} width="300" height="300"/>
                         </div>
                     </Zoom>
                     <Zoom 
                         in={!waiting}
                         timeout={{enter: 1500, exit: 200}}
                     >
-                        <div style={{
-                            position: "absolute",
-                            top: "48%",
-                        }}>
-                            <TextList gifs={gifTexts} />
+                        <div>
+                            <AnimatedText />
+                            {/*<TextList gifs={gifTexts} />*/}
                         </div>
                     </Zoom>
                 </div>
