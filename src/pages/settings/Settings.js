@@ -140,32 +140,6 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
-//---Min Amount-FormRow1---//
-
-
-//-----Show Top Donation-FormRow2-------//
-
-function ControlledRadioButtonsGroup({data}) {
-  const [value, setValue] = React.useState(`${data}`);
-
-  const handleChange = (event) => {
-    setValue(event.target.value);
-  };
-
-  return (
-    <FormControl component="fieldset">
-      <RadioGroup
-        aria-label="gender"
-        name="controlled-radio-buttons-group"
-        value={value}
-        onChange={handleChange}
-      >
-        <FormControlLabel value="disabled" control={<Radio />} label="  Disabled" />
-        <FormControlLabel value="enabled" control={<Radio />} label="  Enabled" />
-      </RadioGroup>
-    </FormControl>
-  );
-}
 
 //-------SaveSettings---------
 function NodeSave({Datasave}) {
@@ -208,6 +182,7 @@ function SaveSettings({DataSave}) {
   );
 }
 
+//--------FormRow---------------------------------
 const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, ref) {
   const { onChange, ...other } = props;
 
@@ -234,46 +209,11 @@ NumberFormatCustom.propTypes = {
   name: PropTypes.string.isRequired,
   onChange: PropTypes.func.isRequired,
 };
-
-function FormattedInputs() {
-  const classes = useStyles();
-  const [values, setValues] = React.useState('1320');
-  return (
-    <Box
-      sx={{
-        '& > :not(style)': {
-          m: 1,
-        },
-      }}
-    >
-      <TextField
-        className="borderText"
-        variant="outlined"
-        value={values}
-        onChange={(event) =>setValues(event.target.value)}
-        name="numberformat"
-        id="formatted-numberformat-input"
-        InputProps={{
-          inputComponent: NumberFormatCustom,
-          classes: {
-            root: classes.cssOutlinedInput,
-            notchedOutline: classes.notchedOutline,
-            input: classes.multilineColor
-          },
-        }
-      }
-      />
-    </Box>
-  );
-}
-
-//--------FormRow---------------------------------
-
 function NestedGrid({data}) {
   const classes = useStyles();
   // const [values, setValues] = React.useState('1320');
   // const [values1, setValues1] = React.useState('100');
-  const [values, setValues] = React.useState({
+  var [values, setValues] = React.useState({
       values1: data.MinAmount  ,
       values2: data.ShowTopDonation,
       values3: data.MessageTemplate,
@@ -281,13 +221,20 @@ function NestedGrid({data}) {
       values5 :data.AlertTextDelay,
       IdData :data.id
   });
-  const handleChange = (prop) => (event) => {
+  var handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
-  function FormattedInputs() {
-    const [valuess, setValuess] = React.useState('1320');
-    return (
-      <Box
+  return (
+    <div className={classes.root1}>
+      <Grid container spacing={5}>
+        <Grid container item xs={12} spacing={3}>
+        <React.Fragment>
+        <Grid item xs={3}>
+          <Paper elevation={0} className={classes.paper}>Min Amount</Paper>
+        </Grid>
+        <Grid item xs={3}>
+        <div className={classes.root2}>
+        <Box
         sx={{
           '& > :not(style)': {
             m: 1,
@@ -312,18 +259,7 @@ function NestedGrid({data}) {
           }
         }
         />
-      </Box>
-    );
-  }
-  function FormRow1() {
-    return (
-      <React.Fragment>
-        <Grid item xs={3}>
-          <Paper elevation={0} className={classes.paper}>Min Amount</Paper>
-        </Grid>
-        <Grid item xs={3}>
-        <div className={classes.root2}>
-        <FormattedInputs/>
+        </Box>
         </div>
         </Grid>
         <Grid item xs={1}>
@@ -334,11 +270,9 @@ function NestedGrid({data}) {
         </Tooltip>
         </Grid>
       </React.Fragment>
-    );
-  }
-  function FormRow2() {
-    return (
-      <React.Fragment>
+        </Grid>
+        <Grid container item xs={12} spacing={3}>
+        <React.Fragment>
         <Grid item xs={3}>
           <Paper elevation={0} className={classes.paper}>Show Top Donation</Paper>
         </Grid>
@@ -361,11 +295,9 @@ function NestedGrid({data}) {
         </Tooltip>
         </Grid>
       </React.Fragment>
-    );
-  }
-  function FormRow3() {
-    return (
-      <React.Fragment>
+        </Grid>
+        <Grid container item xs={12} spacing={3}>
+        <React.Fragment>
         <Grid item xs={3}>
           <Paper elevation={0} className={classes.paper}>Message Template</Paper>
         </Grid>
@@ -396,12 +328,9 @@ function NestedGrid({data}) {
         </Tooltip>
         </Grid>
       </React.Fragment>
-    );
-  }
-
-  function FormRow4() {
-    return (
-      <React.Fragment>
+        </Grid>
+        <Grid container item xs={12} spacing={3}>
+        <React.Fragment>
         <Grid item xs={3}>
           <Paper elevation={0} className={classes.paper}>Alert Duration</Paper>
         </Grid>
@@ -421,11 +350,9 @@ function NestedGrid({data}) {
         </Tooltip>
         </Grid>
       </React.Fragment>
-    );
-  }
-  function FormRow5() {
-    return (
-      <React.Fragment>
+        </Grid>
+        <Grid container item xs={12} spacing={3}>
+        <React.Fragment>
         <Grid item xs={3}>
           <Paper elevation={0} className={classes.paper}>Alert Text Delay</Paper>
         </Grid>
@@ -446,11 +373,9 @@ function NestedGrid({data}) {
         </Tooltip>
         </Grid>
       </React.Fragment>
-    );
-  }
-  function FormRow6() {
-    return (
-      <React.Fragment >
+        </Grid>
+        <Grid container item xs={12} spacing={3}>
+        <React.Fragment >
         
         <Grid 
           className="ButtonSave"
@@ -460,29 +385,6 @@ function NestedGrid({data}) {
           />
         </Grid>
       </React.Fragment>
-    );
-  }
-  
-  return (
-    <div className={classes.root1}>
-      <Grid container spacing={5}>
-        <Grid container item xs={12} spacing={3}>
-          <FormRow1 />
-        </Grid>
-        <Grid container item xs={12} spacing={3}>
-          <FormRow2 />
-        </Grid>
-        <Grid container item xs={12} spacing={3}>
-          <FormRow3 />
-        </Grid>
-        <Grid container item xs={12} spacing={3}>
-          <FormRow4 />
-        </Grid>
-        <Grid container item xs={12} spacing={3}>
-          <FormRow5 />
-        </Grid>
-        <Grid container item xs={12} spacing={3}>
-          <FormRow6  />
         </Grid>
       </Grid>
     </div>

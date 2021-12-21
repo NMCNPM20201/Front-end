@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import {
   Grid,
   Select,
@@ -30,7 +31,11 @@ import PageTitle from "../../components/PageTitle";
 import { Typography } from "../../components/Wrappers";
 import Dot from "../../components/Sidebar/components/Dot";
 import Table from "./components/Table/Table";
-
+//----API-------
+const MoMonthlyBarChartAPI ="http://localhost:3000/data"
+const MonthlyLineChartAPI ="http://localhost:3000/mainChartData"
+const MonthlyToDonationAPI ="http://localhost:3000/table"
+//---------------------------------
 export default function Dashboard(props) {
   var classes = useStyles();
   var theme = useTheme();
@@ -41,6 +46,35 @@ export default function Dashboard(props) {
       },
     },
   });
+  const [data1, setData1] = React.useState([]);
+  React.useEffect(() => {
+    axios.get(MoMonthlyBarChartAPI)
+      .then(res => {
+        setData1(res.data);
+      });
+  }, []);
+  const [data2, setData2] = React.useState([]);
+  React.useEffect(() => {
+    axios.get(MonthlyLineChartAPI)
+      .then(res => {
+        setData2(res.data);
+      });
+  }, []);
+  const [data3, setData3] = React.useState([
+    {
+      id: 0,
+      name: "",
+      bankingNum: "",
+      date: "",
+      money: "",
+    },
+  ]);
+  React.useEffect(() => {
+    axios.get(MonthlyToDonationAPI)
+      .then(res => {
+        setData3(res.data);
+      });
+  }, []);
   return (
     <>
       <PageTitle bodyClass={classes.body}  title="Dashboard"/>
@@ -80,7 +114,7 @@ export default function Dashboard(props) {
             }
           >
             <ResponsiveContainer width="100%" minWidth={500} height={350}>
-                <BarChart width={730} height={250} data={data.Data}>
+                <BarChart width={730} height={250} data={data1}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="day" />
                 <YAxis />
@@ -151,7 +185,7 @@ export default function Dashboard(props) {
             <ResponsiveContainer width="100%" minWidth={500} height={350}>
               <ComposedChart
                 margin={{ top: 0, right: -15, left: -15, bottom: 0 }}
-                data={data.mainChart}
+                data={data2}
               >
                 <YAxis
                   
@@ -212,7 +246,7 @@ export default function Dashboard(props) {
                 </Typography>
             }
           >
-            <Table data={data.table}/>
+            <Table data={data3}/>
           </Widget>   
         </Grid>
       </Grid>
