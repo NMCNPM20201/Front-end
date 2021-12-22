@@ -32,8 +32,8 @@ import { Typography } from "../../components/Wrappers";
 import Dot from "../../components/Sidebar/components/Dot";
 import Table from "./components/Table/Table";
 //----API-------
-const MoMonthlyBarChartAPI ="http://localhost:3000/data"
-const MonthlyLineChartAPI ="http://localhost:3000/mainChartData"
+const MoMonthlyBarChartAPI ="https://web-donate.herokuapp.com/donate/total_donate_by_year?year=2021"
+const MonthlyLineChartAPI ="https://web-donate.herokuapp.com/donate/total_donate_by_month?year=2021&month=12"
 const MonthlyToDonationAPI ="http://localhost:3000/table"
 //---------------------------------
 export default function Dashboard(props) {
@@ -50,14 +50,22 @@ export default function Dashboard(props) {
   React.useEffect(() => {
     axios.get(MoMonthlyBarChartAPI)
       .then(res => {
-        setData1(res.data);
+        setData1(res.data.map(d=>
+          d={
+            'Momo banking' : d.total_donate
+          }));
       });
   }, []);
   const [data2, setData2] = React.useState([]);
   React.useEffect(() => {
     axios.get(MonthlyLineChartAPI)
       .then(res => {
-        setData2(res.data);
+        setData2(res.data.map(d=>
+          d={
+            day:d.day-1,
+            tablet : d.total_donate,
+            desktop: 750000
+          }));
       });
   }, []);
   const [data3, setData3] = React.useState([
@@ -152,7 +160,7 @@ export default function Dashboard(props) {
                   </div>
                 </div>
                 <Select 
-                  value="0"
+                  value="11"
                   className={classes.selectMonth}
                   //onChange={e => setMainChartState(e.target.value)}
                   input={
@@ -189,7 +197,7 @@ export default function Dashboard(props) {
               >
                 <YAxis
                   
-                  ticks={[0, 2500, 5000, 7500]}
+                  ticks={[0, 500000, 1000000, 1500000]}
                   tick={{ fill: theme.palette.text.hint + "80", fontSize: 14 }}
                   stroke={theme.palette.text.hint + "80"}
                   tickLine={false}

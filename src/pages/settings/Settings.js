@@ -2,29 +2,22 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Box from '@material-ui/core/Box';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import './Settings.css';
 import TextField from '@material-ui/core/TextField';
 import NumberFormat from 'react-number-format';
 import Slider from "@mui/material/Slider";
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import  Button from '@material-ui/core/Button';
-import SaveIcon from '@material-ui/icons/Save';
-import VolumeDown from '@material-ui/icons/VolumeDown';
-import VolumeUp from '@material-ui/icons/VolumeUp';
 import classNames from 'classnames';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
-import ArrowDropDownCircleTwoToneIcon from '@mui/icons-material/ArrowDropDownCircleTwoTone';
 import { SnackbarProvider, useSnackbar } from 'notistack';
 import Tooltip from '@mui/material/Tooltip';
 import HelpIcon from '@material-ui/icons/Help';
@@ -183,32 +176,32 @@ function SaveSettings({DataSave}) {
 }
 
 //--------FormRow---------------------------------
-const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, ref) {
-  const { onChange, ...other } = props;
-
-  return (
-    <NumberFormat
-      {...other}
-      getInputRef={ref}
-      onValueChange={(values) => {
-        onChange({
-          target: {
-            name: props.name,
-            value: values.value,
-          },
-        });
-      }}
-      thousandSeparator
-      isNumericString
-      prefix="$"
-    />
-  );
-});
-
-NumberFormatCustom.propTypes = {
-  name: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
-};
+  const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, ref) {
+    const { onChange, ...other } = props;
+  
+    return (
+      <NumberFormat
+        {...other}
+        getInputRef={ref}
+        onValueChange={(values) => {
+          onChange({
+            target: {
+              name: props.name,
+              value: values.value,
+            },
+          });
+        }}
+        thousandSeparator
+        isNumericString
+        prefix="$"
+      />
+    );
+  });
+  
+  NumberFormatCustom.propTypes = {
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+  };
 function NestedGrid({data}) {
   const classes = useStyles();
   // const [values, setValues] = React.useState('1320');
@@ -391,7 +384,7 @@ function NestedGrid({data}) {
   );
 }
 //-----Ghep API--------
-var settingsAPI ="http://localhost:3000/setting"
+var settingsAPI ="https://web-donate.herokuapp.com/setting"
 
 function SimpleTabs() {
   const classes = useStyles();
@@ -415,6 +408,7 @@ function SimpleTabs() {
   function handleAddLevel() {
 
     axios.post(settingsAPI, {
+      id:3,
       MinAmount: "0" ,
       ShowTopDonation: 'disabled',
       MessageTemplate: "{name} donated {amount}!",
@@ -432,12 +426,21 @@ function SimpleTabs() {
   return (
     <div className={classes.root} >
       <AppBar className={classes.Bar} position="static">
-        <Tabs id="html1" value={value} onChange={handleChange} aria-label="simple tabs example">
-          {DataSettings.map(DataSetting=>(
-          <Tab
-          onClick={GetDataSettings}
-           label="Donation Level " {...a11yProps(DataSetting.id)} />
-          ))
+        <Tabs aria-label="simple tabs example"
+        value={value}
+        onChange={handleChange}
+        variant="scrollable"
+        scrollButtons
+        allowScrollButtonsMobile
+        textColor='inherit'
+        >
+          {DataSettings.map(function(DataSetting){
+            const Label= "Donation Level "+(DataSetting.id+1);
+            return(
+            <Tab
+            onClick={GetDataSettings}
+            label={Label} {...a11yProps(DataSetting.id)} />
+          );})
           }
           <IconButton color="primary"
           onClick={deletePost}
@@ -459,8 +462,6 @@ function SimpleTabs() {
     </div>
   );
 }
-
-
 export default function Settings(){
   return(
     <div id="Body">

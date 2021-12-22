@@ -1,4 +1,5 @@
 import React from 'react';
+import axios from 'axios';
 import { makeStyles } from '@material-ui/core/styles';
 import { 
     Table,
@@ -47,18 +48,6 @@ const useStyles = makeStyles((theme) => ({
         display: 'inline-block'
     }
   }));
-
-var USERS = [];
-function getDataHistory (){
-  fetch('http://localhost:3000/history')
-      .then(function(response){
-          return response.json();
-      })
-      .then(function(data) {
-        USERS = data;
-      });
-};
-getDataHistory ();
 // , STATUSES = ['Active', 'Pending', 'Blocked'];
 // for(let i=0;i<20;i++) {
 //     USERS[i] = {
@@ -85,49 +74,51 @@ function MTable() {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
-
+  const [USERS, setUSERS] = React.useState([]);
+  React.useEffect(() => {
+    axios.get('https://web-donate.herokuapp.com/donate/data_all_momo_donate')
+      .then(res => {
+        setUSERS(res.data.map(d=>
+          d={
+            nameID_Momo:d.nameID_Momo ,
+            money : d.money,
+            Message_Info:null,
+            joinDate:d.day+"/"+d.month+"/"+d.year,
+          }));
+      });
+  }, []);
   return (
     <TableContainer component={Paper} className={classes.tableContainer}>
       <Table className={classes.table} aria-label="simple table">
         <TableHead>
           <TableRow>
-            <TableCell className={classes.tableHeaderCell}>Donater</TableCell>
+            <TableCell className={classes.tableHeaderCell}>NameID_Momo"</TableCell>
+            <TableCell className={classes.tableHeaderCell}>Money</TableCell>
             <TableCell className={classes.tableHeaderCell}>Message Info</TableCell>
             <TableCell className={classes.tableHeaderCell}>Donate Date</TableCell>
-            <TableCell className={classes.tableHeaderCell}>Status</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {USERS.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-            <TableRow key={row.name}>
+            <TableRow key={row.nameID_Momo}>
               <TableCell>
                   <Grid container>
                       <Grid item lg={2}>
-                          <Avatar alt={row.name} src='.' className={classes.avatar}/>
+                          <Avatar alt={row.nameID_Momo} src='.' className={classes.avatar}/>
                       </Grid>
                       <Grid item lg={10}>
-                          <Typography className={classes.name}>{row.name}</Typography>
-                          <Typography color="textSecondary" variant="body2">{row.email}</Typography>
-                          <Typography color="textSecondary" variant="body2">{row.phone}</Typography>
+                          <Typography className={classes.name}>{row.nameID_Momo}</Typography>
+                          {/* <Typography color="textSecondary" variant="body2">{row.email}</Typography>
+                          <Typography color="textSecondary" variant="body2">{row.phone}</Typography> */}
                       </Grid>
                   </Grid>
                 </TableCell>
+              <TableCell>{row.money}</TableCell>
               <TableCell>
-                  <Typography color="primary" variant="subtitle2">{row.jobTitle}</Typography>
-                  <Typography color="textSecondary" variant="body2">{row.company}</Typography>
+                  <Typography color="primary" variant="subtitle2">{row.Message_Info}</Typography>
+                  {/* <Typography color="textSecondary" variant="body2">{row.company}</Typography> */}
                 </TableCell>
-              <TableCell>{row.joinDate}</TableCell>
-              <TableCell>
-                  <Typography 
-                    className={classes.status}
-                    style={{
-                        backgroundColor: 
-                        ((row.status === 'Active' && 'green') ||
-                        (row.status === 'Pending' && 'blue') ||
-                        (row.status === 'Blocked' && 'orange'))
-                    }}
-                  >{row.status}</Typography>
-                </TableCell>
+              <TableCell><Typography color="primary" variant="subtitle2">{row.joinDate}</Typography></TableCell>
             </TableRow>
           ))}
         </TableBody>
