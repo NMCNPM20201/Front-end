@@ -68,10 +68,11 @@ export default function Header(props) {
     const onMessage = async (msg) => {
       setNotificationsData((values) => {
         let newData = [...values];
+        const obj = JSON.parse(msg.body);
         newData.unshift({
           color: "primary",
           type: "notification",
-          message: msg.body,
+          message: obj.name + " vừa donate " + obj.money + " đồng",
         });
         if (newData.length > 5) {
           newData.splice(newData.length - 1, 1);
@@ -80,22 +81,6 @@ export default function Header(props) {
       });
       setUnreadNotifications(values => values + 1);
     }
-
-    /*const setMessage = (msg) => {
-      setNotificationsData((values) => {
-        let newData = [...values];
-        newData.unshift({
-          color: "primary",
-          type: "notification",
-          message: msg,
-        });
-        if (newData.length > 5) {
-          newData.splice(newData.length - 1, 1);
-        }
-        return newData;
-      });
-      setUnreadNotifications(values => values + 1);
-    }*/
   
     useSubscription("/topic/message", async (message) => await onMessage(message));
     /*useEffect(() => {
@@ -147,8 +132,8 @@ export default function Header(props) {
             aria-haspopup="true"
             aria-controls="mail-menu"
             onClick={e => {
+              setNotificationsMenu(e.currentTarget);
               if (unreadNotifications) {
-                setNotificationsMenu(e.currentTarget);
                 setUnreadNotifications(0);
               }
             }}

@@ -66,7 +66,7 @@ const SubscribingComponent = (props) => {
         setCountMessage(values => values + 1);
         setMessageQueue(values => {
             const obj = JSON.parse(msg.body);
-            const text = "Cảm ơn " + obj.name + " đã donate " + obj.money; 
+            const text = "Cảm ơn " + obj.name + " đã donate " + obj.money + " đồng"; 
             return [...values, {
                 id: countMessage,
                 content: obj.content,
@@ -111,7 +111,7 @@ const SubscribingComponent = (props) => {
                         setSavedTextStyleId(values => item.textStyleId);
                         setSavedSound(values => item.soundUrl);
                     }
-                })
+                });
             }
         })
         .catch(error => console.log(error));
