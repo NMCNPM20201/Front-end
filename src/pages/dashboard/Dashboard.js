@@ -19,13 +19,13 @@ import {
   Area,
   YAxis,
   XAxis,
+  Tooltip,
 } from "recharts";
 
 // styles
 import useStyles from "./styles";
 
 // components
-import data from "./data.js";
 import Widget from "../../components/Widget";
 import PageTitle from "../../components/PageTitle";
 import { Typography } from "../../components/Wrappers";
@@ -33,7 +33,6 @@ import Dot from "../../components/Sidebar/components/Dot";
 import Table from "./components/Table/Table";
 //----API-------
 const MoMonthlyBarChartAPI ="https://web-donate.herokuapp.com/donate/total_donate_by_year?year=2021"
-const MonthlyLineChartAPI ="https://web-donate.herokuapp.com/donate/total_donate_by_month?year=2021&month=12"
 const MonthlyToDonationAPI ="http://localhost:3000/table"
 //---------------------------------
 export default function Dashboard(props) {
@@ -48,7 +47,7 @@ export default function Dashboard(props) {
   });
   const [data1, setData1] = React.useState([]);
   React.useEffect(() => {
-    axios.get(MoMonthlyBarChartAPI)
+    axios.get("https://web-donate.herokuapp.com/donate/total_donate_by_year?year=2021")
       .then(res => {
         setData1(res.data.map(d=>
           d={
@@ -56,9 +55,18 @@ export default function Dashboard(props) {
           }));
       });
   }, []);
+  function getMonthlyBarChart(year){
+    axios.get("https://web-donate.herokuapp.com/donate/total_donate_by_year?year="+`${year}`)
+      .then(res => {
+        setData1(res.data.map(d=>
+          d={
+            'Momo banking' : d.total_donate
+          }));
+      });
+    };
   const [data2, setData2] = React.useState([]);
   React.useEffect(() => {
-    axios.get(MonthlyLineChartAPI)
+    axios.get("https://web-donate.herokuapp.com/donate/total_donate_by_month?year=2021&month="+`${mainChartState}`)
       .then(res => {
         setData2(res.data.map(d=>
           d={
@@ -68,6 +76,17 @@ export default function Dashboard(props) {
           }));
       });
   }, []);
+  function getMainChartState(month){
+    axios.get("https://web-donate.herokuapp.com/donate/total_donate_by_month?year=2021&month="+`${month}`)
+      .then(res => {
+        setData2(res.data.map(d=>
+          d={
+            day:d.day-1,
+            tablet : d.total_donate,
+            desktop: 750000
+          }));
+      });
+  }
   const [data3, setData3] = React.useState([
     {
       id: 0,
@@ -83,6 +102,16 @@ export default function Dashboard(props) {
         setData3(res.data);
       });
   }, []);
+  const [monthlyBarChart,setMonthlyBarChart]=React.useState('2021');
+  function handleChangeMonthlyBarChart(e){
+    setMonthlyBarChart(e.target.value);
+    getMonthlyBarChart(e.target.value);
+  }
+  const [mainChartState,setMainChartState]=React.useState('1');
+  function handleChangeMainChartState(e){
+    setMainChartState(e.target.value);
+    getMainChartState(e.target.value);
+  }
   return (
     <>
       <PageTitle bodyClass={classes.body}  title="Dashboard"/>
@@ -102,7 +131,8 @@ export default function Dashboard(props) {
                 </Typography>
                 <Select
                 className={classes.selectYear}
-                  value="0"
+                  value={monthlyBarChart}
+                  onChange={handleChangeMonthlyBarChart}
                   input={
                     <OutlinedInput
                       labelWidth={0}
@@ -114,9 +144,9 @@ export default function Dashboard(props) {
                   }
                   autoWidth
                 >
-                  <MenuItem value="0">2020</MenuItem>
-                  <MenuItem value="1">2021</MenuItem>
-                  <MenuItem value="2">2022</MenuItem>
+                  <MenuItem value="2021">2021</MenuItem>
+                  <MenuItem value="2022">2022</MenuItem>
+                  <MenuItem value="2023">2023</MenuItem>
                 </Select>
               </div>
             }
@@ -160,9 +190,10 @@ export default function Dashboard(props) {
                   </div>
                 </div>
                 <Select 
-                  value="11"
-                  className={classes.selectMonth}
-                  //onChange={e => setMainChartState(e.target.value)}
+                  sx={{ colorText: '#fff' }}
+                  value={mainChartState}
+                  className={classes.selectYear}
+                  onChange={handleChangeMainChartState}
                   input={
                     <OutlinedInput
                       labelWidth={0}
@@ -174,30 +205,31 @@ export default function Dashboard(props) {
                   }
                   autoWidth
                 >
-                  <MenuItem value="0">Jan</MenuItem>
-                  <MenuItem value="1">Feb</MenuItem>
-                  <MenuItem value="2">Mar</MenuItem>
-                  <MenuItem value="3">Apr</MenuItem>
-                  <MenuItem value="4">May</MenuItem>
-                  <MenuItem value="5">Jun</MenuItem>
-                  <MenuItem value="6">Jul</MenuItem>
-                  <MenuItem value="7">Aug</MenuItem>
-                  <MenuItem value="8">Sep</MenuItem>
-                  <MenuItem value="9">Oct</MenuItem>
-                  <MenuItem value="10">Nov</MenuItem>
-                  <MenuItem value="11">Dec</MenuItem>
+                  <MenuItem value="1">Jan</MenuItem>
+                  <MenuItem value="2">Feb</MenuItem>
+                  <MenuItem value="3">Mar</MenuItem>
+                  <MenuItem value="4">Apr</MenuItem>
+                  <MenuItem value="5">May</MenuItem>
+                  <MenuItem value="6">Jun</MenuItem>
+                  <MenuItem value="7">Jul</MenuItem>
+                  <MenuItem value="8">Aug</MenuItem>
+                  <MenuItem value="9">Sep</MenuItem>
+                  <MenuItem value="10">Oct</MenuItem>
+                  <MenuItem value="11">Nov</MenuItem>
+                  <MenuItem value="12">Dec</MenuItem>
                 </Select>
               </div>
             }
           >
             <ResponsiveContainer width="100%" minWidth={500} height={350}>
               <ComposedChart
-                margin={{ top: 0, right: -15, left: -15, bottom: 0 }}
+                margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
                 data={data2}
+
               >
                 <YAxis
                   
-                  ticks={[0, 500000, 1000000, 1500000]}
+                  ticks={[0,250000, 500000,750000, 1000000,1250000, 1500000]}
                   tick={{ fill: theme.palette.text.hint + "80", fontSize: 14 }}
                   stroke={theme.palette.text.hint + "80"}
                   tickLine={false}
@@ -235,6 +267,7 @@ export default function Dashboard(props) {
                     fill: theme.palette.warning.main,
                   }}
                 />
+                <Tooltip />
               </ComposedChart>
             </ResponsiveContainer>
           </Widget>

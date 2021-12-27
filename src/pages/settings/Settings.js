@@ -135,7 +135,7 @@ function a11yProps(index) {
 }
 
 //-------SaveSettings---------
-function NodeSave({Datasave}) {
+function NodeSave({dataSave}) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const handleClickVariant = (variant) => () => {
@@ -144,12 +144,13 @@ function NodeSave({Datasave}) {
     SaveData();
   };
   function SaveData(){
-    axios.put(`${settingsAPI}/${Datasave.IdData+""}`, {
-        MinAmount: Datasave.values1 ,
-        ShowTopDonation: Datasave.values2,
-        MessageTemplate: Datasave.values3,
-        AlertDuration: Datasave.values4, 
-        AlertTextDelay :Datasave.values5
+    axios.put(`${settingsAPI}`, {
+        id: dataSave.IdData,
+        money: dataSave.values1 ,
+        shopTopDonation: dataSave.values2,
+        template: dataSave.values3,
+        alertDuration: dataSave.values4, 
+        alertTextDelay :dataSave.values5
       });
   }
   return (
@@ -170,7 +171,7 @@ function NodeSave({Datasave}) {
 function SaveSettings({DataSave}) {
   return (
     <SnackbarProvider maxSnack={3}>
-      <NodeSave  Datasave={DataSave} />
+      <NodeSave  dataSave={DataSave} />
     </SnackbarProvider>
   );
 }
@@ -207,11 +208,11 @@ function NestedGrid({data}) {
   // const [values, setValues] = React.useState('1320');
   // const [values1, setValues1] = React.useState('100');
   var [values, setValues] = React.useState({
-      values1: data.MinAmount  ,
-      values2: data.ShowTopDonation,
-      values3: data.MessageTemplate,
-      values4: data.AlertDuration, 
-      values5 :data.AlertTextDelay,
+      values1: data.money  ,
+      values2: data.shopTopDonation,
+      values3: data.template,
+      values4: data.alertDuration, 
+      values5 :data.alertTextDelay,
       IdData :data.id
   });
   var handleChange = (prop) => (event) => {
@@ -267,7 +268,7 @@ function NestedGrid({data}) {
         <Grid container item xs={12} spacing={3}>
         <React.Fragment>
         <Grid item xs={3}>
-          <Paper elevation={0} className={classes.paper}>Show Top Donation</Paper>
+          <Paper elevation={0} className={classes.paper}>Show Donation</Paper>
         </Grid>
         <Grid item xs={2}>
         <FormControl component="fieldset">
@@ -277,13 +278,13 @@ function NestedGrid({data}) {
         value={values.values2}
         onChange={handleChange('values2')}
       >
-        <FormControlLabel value="disabled" control={<Radio />} label="  Disabled" />
-        <FormControlLabel value="enabled" control={<Radio />} label="  Enabled" />
+        <FormControlLabel value='false' control={<Radio />} label="  Disabled" />
+        <FormControlLabel value='true' control={<Radio />} label="  Enabled" />
       </RadioGroup>
     </FormControl>
         </Grid>
         <Grid item xs={1}>
-        <Tooltip title="Add" arrow>
+        <Tooltip title="Is it possible to show notifications on the screen?" arrow>
         <HelpIcon color="action" />
         </Tooltip>
         </Grid>
@@ -408,20 +409,20 @@ function SimpleTabs() {
   function handleAddLevel() {
 
     axios.post(settingsAPI, {
-      id:3,
-      MinAmount: "0" ,
-      ShowTopDonation: 'disabled',
-      MessageTemplate: "{name} donated {amount}!",
-      AlertDuration: 0, 
-      AlertTextDelay :0
+      id:DataSettings.length+1,
+      template:"{name} donated {amount}!",
+      alertDuration: 3, 
+        alertTextDelay :1
     })
     .then(function(){GetDataSettings();});
   };
   function deletePost() {
     if(DataSettings.length!=1){
-    axios.delete(`${settingsAPI}/${DataSettings.length-1+""}`)
+    axios({ method: 'delete', url: `${settingsAPI}`, data:DataSettings.length, headers: {
+      'Content-Type': 'application/json; charset=utf-8'
+    }})
     .then(function(){GetDataSettings();});
-    };
+  };
   };
   return (
     <div className={classes.root} >
@@ -435,11 +436,11 @@ function SimpleTabs() {
         textColor='inherit'
         >
           {DataSettings.map(function(DataSetting){
-            const Label= "Donation Level "+(DataSetting.id+1);
+            const Label= "Donation Level "+(DataSetting.id);
             return(
             <Tab
             onClick={GetDataSettings}
-            label={Label} {...a11yProps(DataSetting.id)} />
+            label={Label} {...a11yProps(DataSetting.id-1)} />
           );})
           }
           <IconButton color="primary"
@@ -455,7 +456,7 @@ function SimpleTabs() {
         </Tabs>
       </AppBar>
       {DataSettings.map(DataSetting=>(
-      <TabPanel value={value} index={DataSetting.id}>
+      <TabPanel value={value} index={DataSetting.id-1}>
       <NestedGrid data={DataSetting} onClick={GetDataSettings} />
       </TabPanel>))
     }
