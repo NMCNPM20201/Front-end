@@ -71,7 +71,7 @@ export default function Dashboard(props) {
         setData2(res.data.map(d=>
           d={
             day:d.day-1,
-            tablet : d.total_donate,
+            'Momo banking': d.total_donate,
             desktop: 750000
           }));
       });
@@ -82,7 +82,7 @@ export default function Dashboard(props) {
         setData2(res.data.map(d=>
           d={
             day:d.day-1,
-            tablet : d.total_donate,
+            'Momo banking' : d.total_donate,
             desktop: 750000
           }));
       });
@@ -156,6 +156,7 @@ export default function Dashboard(props) {
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="day" />
                 <YAxis />
+                <Tooltip />
                 <Legend />
                 <Bar dataKey="Momo banking" fill="#8884d8" />
                 <Bar dataKey="Other" fill="#82ca9d" />
@@ -258,7 +259,7 @@ export default function Dashboard(props) {
                 />
                 <Line
                   type="linear"
-                  dataKey="tablet"  
+                  dataKey="Momo banking"  
                   stroke={theme.palette.warning.main}
                   strokeWidth={2}
                   dot={{
@@ -294,41 +295,3 @@ export default function Dashboard(props) {
     </>
   );
 }
-
-// function getRandomData(length, min, max, multiplier = 10, maxDiff = 10) {
-//   var array = new Array(length).fill();
-//   let lastValue;
-
-//   return array.map((item, index) => {
-//     let randomValue = Math.floor(Math.random() * multiplier + 1);
-
-//     while (
-//       randomValue <= min ||
-//       randomValue >= max ||
-//       (lastValue && randomValue - lastValue > maxDiff)
-//     ) {
-//       randomValue = Math.floor(Math.random() * multiplier + 1);
-//     }
-
-//     lastValue = randomValue;
-
-//     return { value: randomValue };
-//   });
-// }
-
-// function getMainChartData() {
-//   var resultArray = [];
-//   var tablet = getRandomData(31, 3500, 6500, 7500, 1000);
-//   var desktop = getRandomData(31, 1500, 7500, 7500, 1500);
-//   var mobile = getRandomData(31, 1500, 7500, 7500, 1500);
-
-//   for (let i = 0; i < tablet.length; i++) {
-//     resultArray.push({
-//       tablet: tablet[i].value,
-//       desktop: desktop[i].value,
-//       mobile: mobile[i].value,
-//     });
-//   }
-
-//   return resultArray;
-// }

@@ -138,10 +138,22 @@ function a11yProps(index) {
 function NodeSave({dataSave}) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
+  const [min, setMin] = React.useState(1000);
+  React.useEffect(() => {
+    axios.get(settingsAPI)
+      .then(res => {
+        if(dataSave.IdData==1){ setMin(0);}
+        else {setMin(res.data[dataSave.IdData-2].money);};
+      });
+  }, []);
   const handleClickVariant = (variant) => () => {
-    // variant could be success, error, warning, info, or default
-    enqueueSnackbar('Successfully saved!', { variant });
-    SaveData();
+        if(dataSave.values1>min){
+          enqueueSnackbar('Successfully saved!', { variant });
+          SaveData();
+          }
+          else{
+            enqueueSnackbar('Illegal Min Amount!', { variant });
+          }
   };
   function SaveData(){
     axios.put(`${settingsAPI}`, {
@@ -156,7 +168,7 @@ function NodeSave({dataSave}) {
   return (
     <React.Fragment>
           <Button
-            onClick={handleClickVariant('success')}
+            onClick={dataSave.values1>min?handleClickVariant('success'):handleClickVariant('error')}
             variant="contained"
             color="primary"
             disableRipple
@@ -390,6 +402,7 @@ var settingsAPI ="https://web-donate.herokuapp.com/setting"
 function SimpleTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const [functionIsRunning,setFunctionIsRunning]=React.useState(false);
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
@@ -407,22 +420,30 @@ function SimpleTabs() {
       });
   }, []);
   function handleAddLevel() {
-
-    axios.post(settingsAPI, {
-      id:DataSettings.length+1,
-      template:"{name} donated {amount}!",
-      alertDuration: 3, 
+    if (!functionIsRunning) {
+      setFunctionIsRunning(true);
+      axios.post(settingsAPI, {
+        id:DataSettings.length+1,
+        template:"{name} donated {amount}!",
+        alertDuration: 3, 
         alertTextDelay :1
     })
-    .then(function(){GetDataSettings();});
+    .then(function(){GetDataSettings();})
+    .then(function(){setTimeout(() => setFunctionIsRunning(false), 900);});
+    
+    }
   };
   function deletePost() {
+    if (!functionIsRunning) {
+      setFunctionIsRunning(true);
     if(DataSettings.length!=1){
     axios({ method: 'delete', url: `${settingsAPI}`, data:DataSettings.length, headers: {
       'Content-Type': 'application/json; charset=utf-8'
     }})
-    .then(function(){GetDataSettings();});
-  };
+    .then(function(){GetDataSettings();})
+    .then(function(){setTimeout(() => setFunctionIsRunning(false), 900);});
+    };
+    };
   };
   return (
     <div className={classes.root} >
