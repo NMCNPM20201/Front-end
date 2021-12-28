@@ -72,7 +72,7 @@ export default function Dashboard(props) {
           d={
             day:d.day-1,
             'Momo banking': d.total_donate,
-            desktop: 750000
+            desktop: 500000
           }));
       });
   }, []);
@@ -83,7 +83,7 @@ export default function Dashboard(props) {
           d={
             day:d.day-1,
             'Momo banking' : d.total_donate,
-            desktop: 750000
+            desktop: 500000
           }));
       });
   }
@@ -230,10 +230,10 @@ export default function Dashboard(props) {
               >
                 <YAxis
                   
-                  ticks={[0,250000, 500000,750000, 1000000,1250000, 1500000]}
-                  tick={{ fill: theme.palette.text.hint + "80", fontSize: 14 }}
-                  stroke={theme.palette.text.hint + "80"}
-                  tickLine={false}
+                  // ticks={[0,250000, 500000,750000, 1000000,1250000, 1500000]}
+                  // tick={{ fill: theme.palette.text.hint + "80", fontSize: 14 }}
+                  // stroke={theme.palette.text.hint + "80"}
+                  // tickLine={false}
                 />
                 <XAxis
                   dataKey="day"
