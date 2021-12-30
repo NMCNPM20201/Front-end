@@ -29,7 +29,7 @@ export default function News() {
                 style={{
                     background: "linear-gradient(#E89B00, #FFBC00, #FFDE5D)",
                     color: color,
-                    fontSize: "18px",
+                    fontSize: "3vh",
                     borderStyle: "double",
                     border: "2px solid gray",
                     fontWeight: "bold",
