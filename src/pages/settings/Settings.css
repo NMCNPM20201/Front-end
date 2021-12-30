@@ -11,7 +11,11 @@
 
     }
     .borderText{
+<<<<<<< HEAD
       width: 90%;
+=======
+      width: 100%;
+>>>>>>> Hiep
       line-height: 100px !important;
     
     }

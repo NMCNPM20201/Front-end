@@ -8,7 +8,11 @@ import {
   Chip
 } from "@material-ui/core";
 import useStyles from "../../styles";
+<<<<<<< HEAD
 
+=======
+import './style.css';
+>>>>>>> Hiep
 const states = {
   sent: "success",
   pending: "warning",
@@ -21,6 +25,7 @@ export default function TableComponent({ data }) {
   keys.shift(); // delete "id" key
 
   return (
+<<<<<<< HEAD
     <Table className="mb-0">
       <TableHead>
         <TableRow>
@@ -36,6 +41,21 @@ export default function TableComponent({ data }) {
             <TableCell>{bankingNum}</TableCell>
             <TableCell>{date}</TableCell>
             <TableCell>{money}</TableCell>
+=======
+    <Table className="-mb0">
+      <TableHead>
+        <TableRow>
+          
+          <TableCell className="colorWord" >NAME ID MOMO</TableCell>
+          <TableCell className="colorWord" >SUM MONEY</TableCell>
+        </TableRow>
+      </TableHead>
+      <TableBody>
+        {data.map(({ nameID_Momo, sumMoney}) => (
+          <TableRow>
+            <TableCell className="pl-3 fw-normal colorWord">{nameID_Momo}</TableCell>
+            <TableCell className="colorWord">{sumMoney}</TableCell>
+>>>>>>> Hiep
           </TableRow>
         ))}
       </TableBody>

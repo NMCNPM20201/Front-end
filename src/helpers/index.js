@@ -23,6 +23,7 @@ export const getSharingTextStyleId = () => {
     } 
     return undefined;
 };
+<<<<<<< HEAD
 
 export const setSharingSound = (url) => {
     if (typeof window !== "undefined") localStorage.setItem("CHOOSING_SOUND", url);
@@ -36,3 +37,5 @@ export const getSharingSound = () => {
     } 
     return undefined;
 };
+=======
+>>>>>>> Hiep

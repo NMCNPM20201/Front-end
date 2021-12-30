@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from "react";
 import { Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
@@ -62,3 +63,14 @@ export default function Tables() {
     </>
   );
 }
+=======
+import MTable from './MTable'
+
+function Tables() {
+  return (
+    <MTable />
+  );
+}
+
+export default Tables;
+>>>>>>> Hiep

@@ -5,6 +5,10 @@ export default makeStyles(theme => ({
     display: "flex",
     maxWidth: "100vw",
     overflowX: "hidden",
+<<<<<<< HEAD
+=======
+    
+>>>>>>> Hiep
   },
   content: {
     flexGrow: 1,

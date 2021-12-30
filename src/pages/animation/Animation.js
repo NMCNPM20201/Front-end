@@ -26,7 +26,11 @@ import { useEffect, useState } from "react";
 import UploadGif from "./components/UploadGif";
 import useStyles from "./styles";
 import { setSharingGif, setSharingTextStyleId } from "../../helpers";
+<<<<<<< HEAD
 import UploadService from "../../services/UploadService";
+=======
+import UploadService from "./services/UploadService";
+>>>>>>> Hiep
 import axios from 'axios';
 
 const Alert = React.forwardRef(function Alert(props, ref) {
@@ -154,8 +158,11 @@ export default function Animation() {
 
     const classes = useStyles();
 
+<<<<<<< HEAD
     const [savedSound, setSavedSound] = useState("");
 
+=======
+>>>>>>> Hiep
     const handleOpenGifDialog = (url) => {
         setFocusGif(url);
         setOpenGifDialog(true);
@@ -334,7 +341,10 @@ export default function Animation() {
             id: 1,
             gifUrl: choosingGif,
             textStyleId: choosingTextStyleId,
+<<<<<<< HEAD
             soundUrl: savedSound,
+=======
+>>>>>>> Hiep
         })
         .catch(error => console.log(error));
     }
@@ -361,6 +371,7 @@ export default function Animation() {
           .catch((error) => console.log(error));
     }, []);
 
+<<<<<<< HEAD
     useEffect(() => {
         axios.get("https://web-donate.herokuapp.com/setting")
         .then(response => {
@@ -375,6 +386,8 @@ export default function Animation() {
         .catch(error => console.log(error));
     }, []);
 
+=======
+>>>>>>> Hiep
     return (
         <>
             <PageTitle title="Animation Settings"/>

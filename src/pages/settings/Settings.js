@@ -2,15 +2,22 @@ import * as React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
+<<<<<<< HEAD
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Box from '@material-ui/core/Box';
+=======
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
+import Box from '@mui/material/Box';
+>>>>>>> Hiep
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import './Settings.css';
 import TextField from '@material-ui/core/TextField';
 import NumberFormat from 'react-number-format';
 import Slider from "@mui/material/Slider";
+<<<<<<< HEAD
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
@@ -19,16 +26,30 @@ import  Button from '@material-ui/core/Button';
 import SaveIcon from '@material-ui/icons/Save';
 import VolumeDown from '@material-ui/icons/VolumeDown';
 import VolumeUp from '@material-ui/icons/VolumeUp';
+=======
+import Typography from '@mui/material/Typography';
+import  Button from '@material-ui/core/Button';
+>>>>>>> Hiep
 import classNames from 'classnames';
 import Radio from '@mui/material/Radio';
 import RadioGroup from '@mui/material/RadioGroup';
 import FormControlLabel from '@mui/material/FormControlLabel';
 import FormControl from '@mui/material/FormControl';
+<<<<<<< HEAD
 import ArrowDropDownCircleTwoToneIcon from '@mui/icons-material/ArrowDropDownCircleTwoTone';
 import { SnackbarProvider, useSnackbar } from 'notistack';
 import Tooltip from '@mui/material/Tooltip';
 import HelpIcon from '@material-ui/icons/Help';
 
+=======
+import { SnackbarProvider, useSnackbar } from 'notistack';
+import Tooltip from '@mui/material/Tooltip';
+import HelpIcon from '@material-ui/icons/Help';
+import AddOutlinedIcon from '@material-ui/icons/AddOutlined';
+import ClearIcon from '@mui/icons-material/Clear';
+import IconButton from '@material-ui/core/IconButton';
+import axios from 'axios';
+>>>>>>> Hiep
 const useStyles = makeStyles((theme) => ({
   cssOutlinedInput: {
     '&$cssFocused $notchedOutline': {
@@ -137,6 +158,7 @@ function a11yProps(index) {
     'aria-controls': `simple-tabpanel-${index}`,
   };
 }
+<<<<<<< HEAD
 //---Min Amount-FormRow1---//
 function NumberFormatCustom(props) {
   const { inputRef, onChange, ...other } = props;
@@ -436,6 +458,47 @@ function NodeSave() {
     <React.Fragment>
           <Button
             onClick={handleClickVariant('success')}
+=======
+
+//-------SaveSettings---------
+function NodeSave({dataSave}) {
+  const classes = useStyles();
+  const { enqueueSnackbar } = useSnackbar();
+  const [min, setMin] = React.useState(1000);
+  const [max, setMax] = React.useState(1000);
+  React.useEffect(() => {
+    axios.get(settingsAPI)
+      .then(res => {
+        if(dataSave.IdData==1){ setMin(0);}
+        else {setMin(res.data[dataSave.IdData-2].money);};
+        if(dataSave.IdData==res.data.length) setMax(100000000000000000000000000000);
+        else setMax(res.data[dataSave.IdData].money);
+      });
+  }, []);
+  const handleClickVariant = (variant) => () => {
+        if(dataSave.values1>min){
+          enqueueSnackbar('Successfully saved!', { variant });
+          SaveData();
+          }
+          else{
+            enqueueSnackbar('Illegal Min Amount!', { variant });
+          }
+  };
+  function SaveData(){
+    axios.put(`${settingsAPI}`, {
+        id: dataSave.IdData,
+        money: dataSave.values1 ,
+        shopTopDonation: dataSave.values2,
+        template: dataSave.values3,
+        alertDuration: dataSave.values4, 
+        alertTextDelay :dataSave.values5
+      });
+  }
+  return (
+    <React.Fragment>
+          <Button
+            onClick={dataSave.values1>min&&dataSave.values1<max?handleClickVariant('success'):handleClickVariant('error')}
+>>>>>>> Hiep
             variant="contained"
             color="primary"
             disableRipple
@@ -447,15 +510,23 @@ function NodeSave() {
   );
 }
 
+<<<<<<< HEAD
 function SaveSettings() {
   return (
     <SnackbarProvider maxSnack={3}>
       <NodeSave />
+=======
+function SaveSettings({DataSave}) {
+  return (
+    <SnackbarProvider maxSnack={3}>
+      <NodeSave  dataSave={DataSave} />
+>>>>>>> Hiep
     </SnackbarProvider>
   );
 }
 
 //--------FormRow---------------------------------
+<<<<<<< HEAD
 
 function NestedGrid() {
   const classes = useStyles();
@@ -463,11 +534,90 @@ function NestedGrid() {
   function FormRow1() {
     return (
       <React.Fragment>
+=======
+  const NumberFormatCustom = React.forwardRef(function NumberFormatCustom(props, ref) {
+    const { onChange, ...other } = props;
+  
+    return (
+      <NumberFormat
+        {...other}
+        getInputRef={ref}
+        onValueChange={(values) => {
+          onChange({
+            target: {
+              name: props.name,
+              value: values.value,
+            },
+          });
+        }}
+        thousandSeparator
+        isNumericString
+        prefix="$"
+      />
+    );
+  });
+  
+  NumberFormatCustom.propTypes = {
+    name: PropTypes.string.isRequired,
+    onChange: PropTypes.func.isRequired,
+  };
+function NestedGrid({data}) {
+  const classes = useStyles();
+  // const [values, setValues] = React.useState('1320');
+  // const [values1, setValues1] = React.useState('100');
+  var [values, setValues] = React.useState({
+      values1: data.money  ,
+      values2: data.shopTopDonation,
+      values3: data.template,
+      values4: data.alertDuration, 
+      values5 :data.alertTextDelay,
+      IdData :data.id
+  });
+  var handleChange = (prop) => (event) => {
+    setValues({ ...values, [prop]: event.target.value });
+  };
+  return (
+    <div className={classes.root1}>
+      <Grid container spacing={5}>
+        <Grid container item xs={12} spacing={3}>
+        <React.Fragment>
+>>>>>>> Hiep
         <Grid item xs={3}>
           <Paper elevation={0} className={classes.paper}>Min Amount</Paper>
         </Grid>
         <Grid item xs={3}>
+<<<<<<< HEAD
         <FormattedInputs/>
+=======
+        <div className={classes.root2}>
+        <Box
+        sx={{
+          '& > :not(style)': {
+            m: 1,
+          },
+        }}
+      >
+        <TextField
+          className="borderText"
+          variant="outlined"
+          value={values.values1}
+          // onChange={(event) =>setValuess(event.target.value)}
+          onChange={handleChange('values1')}
+          name="numberformat"
+          id="formatted-numberformat-input"
+          InputProps={{
+            inputComponent: NumberFormatCustom,
+            classes: {
+              root: classes.cssOutlinedInput,
+              notchedOutline: classes.notchedOutline,
+              input: classes.multilineColor
+            },
+          }
+        }
+        />
+        </Box>
+        </div>
+>>>>>>> Hiep
         </Grid>
         <Grid item xs={1}>
         <Tooltip
@@ -477,6 +627,7 @@ function NestedGrid() {
         </Tooltip>
         </Grid>
       </React.Fragment>
+<<<<<<< HEAD
     );
   }
   function FormRow2() {
@@ -490,15 +641,44 @@ function NestedGrid() {
         </Grid>
         <Grid item xs={1}>
         <Tooltip title="Add" arrow>
+=======
+        </Grid>
+        <Grid container item xs={12} spacing={3}>
+        <React.Fragment>
+        <Grid item xs={3}>
+          <Paper elevation={0} className={classes.paper}>Show Donation</Paper>
+        </Grid>
+        <Grid item xs={2}>
+        <FormControl component="fieldset">
+      <RadioGroup
+        aria-label="gender"
+        name="controlled-radio-buttons-group"
+        value={values.values2}
+        onChange={handleChange('values2')}
+      >
+        <FormControlLabel value='false' control={<Radio />} label="  Disabled" />
+        <FormControlLabel value='true' control={<Radio />} label="  Enabled" />
+      </RadioGroup>
+    </FormControl>
+        </Grid>
+        <Grid item xs={1}>
+        <Tooltip title="Is it possible to show notifications on the screen?" arrow>
+>>>>>>> Hiep
         <HelpIcon color="action" />
         </Tooltip>
         </Grid>
       </React.Fragment>
+<<<<<<< HEAD
     );
   }
   function FormRow3() {
     return (
       <React.Fragment>
+=======
+        </Grid>
+        <Grid container item xs={12} spacing={3}>
+        <React.Fragment>
+>>>>>>> Hiep
         <Grid item xs={3}>
           <Paper elevation={0} className={classes.paper}>Message Template</Paper>
         </Grid>
@@ -508,7 +688,14 @@ function NestedGrid() {
         variant="outlined" 
         type="text" id="MessageTemplate"
         name="MessageTemplate" 
+<<<<<<< HEAD
         defaultValue = "{name} donated {amount}!" 
+=======
+        // defaultValue = "{name} donated {amount}!" 
+        // defaultValue = {data.MessageTemplate}
+        value={values.values3}
+        onChange={handleChange('values3')}
+>>>>>>> Hiep
         InputProps={{
           classes: {
             root: classes.cssOutlinedInput,
@@ -526,19 +713,31 @@ function NestedGrid() {
         </Tooltip>
         </Grid>
       </React.Fragment>
+<<<<<<< HEAD
     );
   }
 
   function FormRow4() {
     return (
       <React.Fragment>
+=======
+        </Grid>
+        <Grid container item xs={12} spacing={3}>
+        <React.Fragment>
+>>>>>>> Hiep
         <Grid item xs={3}>
           <Paper elevation={0} className={classes.paper}>Alert Duration</Paper>
         </Grid>
         <Grid className="SliderAlert" item xs={7}>
             <Slider 
               max="30"
+<<<<<<< HEAD
               defaultValue={0}
+=======
+              // defaultValue={data.AlertDuration}
+              value={values.values4}
+              onChange={handleChange('values4')}
+>>>>>>> Hiep
               aria-label="Default" 
               valueLabelDisplay="on" 
             />
@@ -549,11 +748,17 @@ function NestedGrid() {
         </Tooltip>
         </Grid>
       </React.Fragment>
+<<<<<<< HEAD
     );
   }
   function FormRow5() {
     return (
       <React.Fragment>
+=======
+        </Grid>
+        <Grid container item xs={12} spacing={3}>
+        <React.Fragment>
+>>>>>>> Hiep
         <Grid item xs={3}>
           <Paper elevation={0} className={classes.paper}>Alert Text Delay</Paper>
         </Grid>
@@ -561,7 +766,13 @@ function NestedGrid() {
           <Slider
             max="30"
             size="big"
+<<<<<<< HEAD
             defaultValue={0}
+=======
+            defaultValue={data.AlertTextDelay}
+            value={values.values5}
+            onChange={handleChange('values5')}
+>>>>>>> Hiep
             aria-label="Default" 
             valueLabelDisplay="on" 
           />
@@ -572,6 +783,7 @@ function NestedGrid() {
         </Tooltip>
         </Grid>
       </React.Fragment>
+<<<<<<< HEAD
     );
   }
   function FormRow6() {
@@ -657,17 +869,37 @@ function NestedGrid() {
         </Grid> */}
         <Grid container item xs={12} spacing={3}>
           <FormRow8 />
+=======
+        </Grid>
+        <Grid container item xs={12} spacing={3}>
+        <React.Fragment >
+        
+        <Grid 
+          className="ButtonSave"
+          item xs={11} >
+          <SaveSettings
+          DataSave={values}
+          />
+        </Grid>
+      </React.Fragment>
+>>>>>>> Hiep
         </Grid>
       </Grid>
     </div>
   );
 }
+<<<<<<< HEAD
 
 
+=======
+//-----Ghep API--------
+var settingsAPI ="https://web-donate.herokuapp.com/setting"
+>>>>>>> Hiep
 
 function SimpleTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+<<<<<<< HEAD
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
@@ -692,11 +924,99 @@ function SimpleTabs() {
 }
 
 
+=======
+  const [functionIsRunning,setFunctionIsRunning]=React.useState(false);
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+ const [DataSettings, setDataSettings] = React.useState([]);
+ function GetDataSettings() {
+    axios.get(settingsAPI)
+      .then(res => {
+        setDataSettings(res.data);
+      })
+  };
+  React.useEffect(() => {
+    axios.get(settingsAPI)
+      .then(res => {
+        setDataSettings(res.data);
+      });
+  }, []);
+  function handleAddLevel() {
+    if (!functionIsRunning) {
+      setFunctionIsRunning(true);
+      axios.post(settingsAPI, {
+        id:DataSettings.length+1,
+        template:"{name} donated {amount}!",
+        alertDuration: 3, 
+        alertTextDelay :1
+    })
+    .then(function(){GetDataSettings();})
+    .then(function(){setTimeout(() => setFunctionIsRunning(false), 900);});
+    
+    }
+  };
+  function deletePost() {
+    if (!functionIsRunning) {
+      setFunctionIsRunning(true);
+    if(DataSettings.length!=1){
+    axios({ method: 'delete', url: `${settingsAPI}`, data:DataSettings.length, headers: {
+      'Content-Type': 'application/json; charset=utf-8'
+    }})
+    .then(function(){GetDataSettings();})
+    .then(function(){setTimeout(() => setFunctionIsRunning(false), 900);});
+    };
+    };
+  };
+  return (
+    <div className={classes.root} >
+      <AppBar className={classes.Bar} position="static">
+        <Tabs aria-label="simple tabs example"
+        value={value}
+        onChange={handleChange}
+        variant="scrollable"
+        scrollButtons
+        allowScrollButtonsMobile
+        textColor='inherit'
+        >
+          {DataSettings.map(function(DataSetting){
+            const Label= "Donation Level "+(DataSetting.id);
+            return(
+            <Tab
+            onClick={GetDataSettings}
+            label={Label} {...a11yProps(DataSetting.id-1)} />
+          );})
+          }
+          <IconButton color="primary"
+          onClick={deletePost}
+          >
+            <ClearIcon />
+          </IconButton>
+          <IconButton color="primary"
+          onClick={handleAddLevel}
+          >
+            <AddOutlinedIcon />
+          </IconButton>
+        </Tabs>
+      </AppBar>
+      {DataSettings.map(DataSetting=>(
+      <TabPanel value={value} index={DataSetting.id-1}>
+      <NestedGrid data={DataSetting} onClick={GetDataSettings} />
+      </TabPanel>))
+    }
+    </div>
+  );
+}
+>>>>>>> Hiep
 export default function Settings(){
   return(
     <div id="Body">
       <h1>DONATION SETTING</h1>
+<<<<<<< HEAD
       <SimpleTabs/>
+=======
+      <SimpleTabs />
+>>>>>>> Hiep
     </div>
   );
 }
