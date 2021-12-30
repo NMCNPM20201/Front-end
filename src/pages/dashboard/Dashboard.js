@@ -32,7 +32,6 @@ import { Typography } from "../../components/Wrappers";
 import Dot from "../../components/Sidebar/components/Dot";
 import Table from "./components/Table/Table";
 //----API-------
-const MoMonthlyBarChartAPI ="https://web-donate.herokuapp.com/donate/total_donate_by_year?year=2021"
 const MonthlyToDonationAPI ="http://localhost:3000/table"
 //---------------------------------
 export default function Dashboard(props) {
@@ -45,9 +44,10 @@ export default function Dashboard(props) {
       },
     },
   });
+  const dateObj = new Date();
   const [data1, setData1] = React.useState([]);
   React.useEffect(() => {
-    axios.get("https://web-donate.herokuapp.com/donate/total_donate_by_year?year=2021")
+    axios.get("https://web-donate.herokuapp.com/donate/total_donate_by_year?year="+`${monthlyBarChart}`)
       .then(res => {
         setData1(res.data.map(d=>
           d={
@@ -89,25 +89,28 @@ export default function Dashboard(props) {
   }
   const [data3, setData3] = React.useState([
     {
-      id: 0,
-      name: "",
-      bankingNum: "",
-      date: "",
-      money: "",
+    nameID_Momo: "No Name",
+    sumMoney: 0
     },
   ]);
   React.useEffect(() => {
-    axios.get(MonthlyToDonationAPI)
+    axios.get("https://web-donate.herokuapp.com/donate/top_donate_by_day?day="+dateObj.getUTCDate()+"&month="+dateObj.getUTCMonth()+1+"&year="+dateObj.getUTCFullYear())
       .then(res => {
-        setData3(res.data);
+        if(res.data.length!=0){
+        setData3(res.data.map(d=>
+          d={
+            nameID_Momo: d.nameID_Momo,
+            sumMoney: d.sumMoney
+          }));
+        };
       });
   }, []);
-  const [monthlyBarChart,setMonthlyBarChart]=React.useState('2021');
+  const [monthlyBarChart,setMonthlyBarChart]=React.useState(dateObj.getUTCFullYear());
   function handleChangeMonthlyBarChart(e){
     setMonthlyBarChart(e.target.value);
     getMonthlyBarChart(e.target.value);
   }
-  const [mainChartState,setMainChartState]=React.useState('1');
+  const [mainChartState,setMainChartState]=React.useState(dateObj.getUTCMonth()+1);
   function handleChangeMainChartState(e){
     setMainChartState(e.target.value);
     getMainChartState(e.target.value);

@@ -24,18 +24,16 @@ export default function TableComponent({ data }) {
     <Table className="-mb0">
       <TableHead>
         <TableRow>
-          {keys.map(key => (
-            <TableCell className="colorWord" key={key}>{key}</TableCell>
-          ))}
+          
+          <TableCell className="colorWord" >NAME ID MOMO</TableCell>
+          <TableCell className="colorWord" >SUM MONEY</TableCell>
         </TableRow>
       </TableHead>
       <TableBody>
-        {data.map(({ id, name, bankingNum, date, money}) => (
-          <TableRow key={id}>
-            <TableCell className="pl-3 fw-normal colorWord">{name}</TableCell>
-            <TableCell className="colorWord">{bankingNum}</TableCell>
-            <TableCell className="colorWord">{date}</TableCell>
-            <TableCell className="colorWord">{money}</TableCell>
+        {data.map(({ nameID_Momo, sumMoney}) => (
+          <TableRow>
+            <TableCell className="pl-3 fw-normal colorWord">{nameID_Momo}</TableCell>
+            <TableCell className="colorWord">{sumMoney}</TableCell>
           </TableRow>
         ))}
       </TableBody>

@@ -139,11 +139,14 @@ function NodeSave({dataSave}) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
   const [min, setMin] = React.useState(1000);
+  const [max, setMax] = React.useState(1000);
   React.useEffect(() => {
     axios.get(settingsAPI)
       .then(res => {
         if(dataSave.IdData==1){ setMin(0);}
         else {setMin(res.data[dataSave.IdData-2].money);};
+        if(dataSave.IdData==res.data.length) setMax(100000000000000000000000000000);
+        else setMax(res.data[dataSave.IdData].money);
       });
   }, []);
   const handleClickVariant = (variant) => () => {
@@ -168,7 +171,7 @@ function NodeSave({dataSave}) {
   return (
     <React.Fragment>
           <Button
-            onClick={dataSave.values1>min?handleClickVariant('success'):handleClickVariant('error')}
+            onClick={dataSave.values1>min&&dataSave.values1<max?handleClickVariant('success'):handleClickVariant('error')}
             variant="contained"
             color="primary"
             disableRipple
