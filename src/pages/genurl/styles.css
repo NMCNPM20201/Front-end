@@ -26,16 +26,17 @@
 }
 
 .text_shadows {
-  text-shadow: 3px 3px 0 var(--color-secondary), 6px 6px 0 var(--color-tertiary),
-    9px 9px var(--color-quaternary), 12px 12px 0 var(--color-quinary);
+  text-shadow: 3px 3px 0 var(--color-secondary)/*, 6px 6px 0 var(--color-tertiary),
+    9px 9px var(--color-quaternary), 12px 12px 0 var(--color-quinary)*/;
+  /*text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;*/
   font-family: bungee, sans-serif;
   font-weight: 400;
   text-transform: uppercase;
-  font-size: calc(1rem + 2vw);
+  font-size: calc(1rem + 1.2vw);
   text-align: center;
   margin: 0;
-  animation: shadows 1.3s ease-in infinite, move 1.3s ease-in infinite;
-  letter-spacing: 0.4rem;
+  /*animation: shadows 1.3s ease-in infinite, move 1.3s ease-in infinite;*/
+  letter-spacing: 0.1rem;
 }
 
 @keyframes shadows {
