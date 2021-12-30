@@ -3,10 +3,7 @@ import { HashRouter, Route, Switch, Redirect } from "react-router-dom";
 import Layout from "./Layout";
 import Error from "../pages/error";
 import Genurl from "../pages/genurl";
-<<<<<<< HEAD
 import News from "../pages/news";
-=======
->>>>>>> Hiep
 
 function App() {
 
@@ -30,10 +27,7 @@ function App() {
           render={() => <Redirect to="/app/dashboard" />}
         />
         <Route exact path="/genurl" component={Genurl} />
-<<<<<<< HEAD
         <Route exact path="/news" component={News} />
-=======
->>>>>>> Hiep
         <PrivateRoute path="/app" component={Layout} />
         <Route component={Error} />
       </Switch>

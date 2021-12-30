@@ -14,10 +14,7 @@ export default makeStyles(theme => ({
     width: drawerWidth,
     flexShrink: 0,
     whiteSpace: "nowrap",
-<<<<<<< HEAD
-=======
     backgroundColor:'#000 !important'
->>>>>>> Hiep
   },
   drawerOpen: {
     width: drawerWidth,
@@ -25,20 +22,14 @@ export default makeStyles(theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen,
     }),
-<<<<<<< HEAD
-=======
     backgroundColor:'#000 !important',
->>>>>>> Hiep
   },
   drawerClose: {
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
-<<<<<<< HEAD
-=======
     backgroundColor:'#000 !important',
->>>>>>> Hiep
     overflowX: "hidden",
     width: theme.spacing(7) + 40,
     [theme.breakpoints.down("sm")]: {
@@ -55,15 +46,9 @@ export default makeStyles(theme => ({
     flexGrow: 1,
     padding: theme.spacing(3),
   },
-<<<<<<< HEAD
-  /* sidebarList: {
-    marginTop: theme.spacing(6),
-  }, */
-=======
   sidebarList: {
     marginTop: theme.spacing(6),
   }, 
->>>>>>> Hiep
   mobileBackButton: {
     marginTop: theme.spacing(0.5),
     marginLeft: 18,
@@ -74,10 +59,7 @@ export default makeStyles(theme => ({
       display: "none",
     },
   },
-<<<<<<< HEAD
-=======
   // sidebarList: {
   //   color: '#fff !important'
   // }
->>>>>>> Hiep
 }));

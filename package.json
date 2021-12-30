@@ -9,17 +9,10 @@
     "node-fetch": "^2.6.1"
   },
   "dependencies": {
-<<<<<<< HEAD
-    "@giphy/js-fetch-api": "^4.1.2",
-    "@material-ui/core": "^4.12.3",
-    "@emotion/react": "^11.6.0",
-    "@emotion/styled": "^11.6.0",
-=======
     "@emotion/react": "^11.6.0",
     "@emotion/styled": "^11.6.0",
     "@giphy/js-fetch-api": "^4.1.2",
     "@material-ui/core": "^4.12.3",
->>>>>>> Hiep
     "@material-ui/icons": "^4.11.2",
     "@material-ui/styles": "^4.11.3",
     "@mdi/js": "^5.9.55",
@@ -28,13 +21,7 @@
     "@mui/material": "^5.1.1",
     "@mui/styles": "^5.1.1",
     "apexcharts": "^3.24.0",
-<<<<<<< HEAD
-    "classnames": "^2.2.6",
-=======
-    "axios": "^0.24.0",
-    "classnames": "^2.2.6",
     "faker": "^5.5.3",
->>>>>>> Hiep
     "font-awesome": "^4.7.0",
     "mui-datatables": "^3.7.4",
     "notistack": "^2.0.3",
@@ -49,13 +36,9 @@
     "react-syntax-highlighter": "^15.4.3",
     "react-toastify": "^7.0.3",
     "recharts": "^2.0.4",
-<<<<<<< HEAD
     "tinycolor2": "^1.4.2",
     "axios": "^0.24.0",
     "material-ui-audio-player": "^1.7.1"
-=======
-    "tinycolor2": "^1.4.2"
->>>>>>> Hiep
   },
   "scripts": {
     "start": "react-scripts start",

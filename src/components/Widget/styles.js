@@ -11,27 +11,18 @@ export default makeStyles(theme => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-<<<<<<< HEAD
-  },
-  widgetRoot: {
-    boxShadow: theme.customShadows.widget,
-=======
     backgroundColor:'#000 !important',
     color:'#fff !important'
   },
   widgetRoot: {
     boxShadow: theme.customShadows.widget,
     
->>>>>>> Hiep
   },
   widgetBody: {
     paddingBottom: theme.spacing(3),
     paddingRight: theme.spacing(3),
     paddingLeft: theme.spacing(3),
-<<<<<<< HEAD
-=======
     backgroundColor:'#000 !important',
->>>>>>> Hiep
   },
   noPadding: {
     padding: 0,

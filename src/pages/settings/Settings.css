@@ -1,21 +1,17 @@
-    *{padding: 0;
-        margin: 0;
-        box-sizing:border-box;
+    *{
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
     }
     #Body{
         width: 100%;
-        min-height: 1000px;
         background-color: #17242d;
         margin: auto;
         color: #fff !important;
 
     }
     .borderText{
-<<<<<<< HEAD
-      width: 90%;
-=======
       width: 100%;
->>>>>>> Hiep
       line-height: 100px !important;
     
     }

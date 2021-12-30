@@ -25,19 +25,9 @@ import Sidebar from "../Sidebar";
 
 // pages
 import Dashboard from "../../pages/dashboard";
-import Notifications from "../../pages/notifications";
-<<<<<<< HEAD
 import Settings from "../../pages/settings";
 import Sound from "../../pages/sound";
 import Tables from "../../pages/tables";
-=======
-import Maps from "../../pages/maps";
-import Settings from "../../pages/settings";
-import SoundSettings from "../../pages/soundSettings";
-import Tables from "../../pages/tables";
-import Icons from "../../pages/icons";
-import Charts from "../../pages/charts";
->>>>>>> Hiep
 import Animation from "../../pages/animation";
 
 // context
@@ -64,24 +54,13 @@ function Layout(props) {
               <Route path="/app/dashboard" component={Dashboard} />
               <Route path="/app/animation" component={Animation} />
               <Route path="/app/tables" component={Tables} />
-<<<<<<< HEAD
               <Route path="/app/sound" component={Sound} />
-=======
-              <Route path="/app/soundSettings" component={SoundSettings} />
->>>>>>> Hiep
               <Route path="/app/settings" component={Settings} />
-              <Route path="/app/notifications" component={Notifications} />
               <Route
                 exact
                 path="/app/ui"
                 render={() => <Redirect to="/app/ui/icons" />}
               />
-<<<<<<< HEAD
-=======
-              <Route path="/app/ui/maps" component={Maps} />
-              <Route path="/app/ui/icons" component={Icons} />
-              <Route path="/app/ui/charts" component={Charts} />
->>>>>>> Hiep
             </Switch>
             <Box
               mt={5}
