@@ -37,11 +37,8 @@
     "react-toastify": "^7.0.3",
     "recharts": "^2.0.4",
     "tinycolor2": "^1.4.2",
-<<<<<<< HEAD
-    "yarn": "^1.22.17"
-=======
+    "yarn": "^1.22.17",
     "axios": "^0.24.0"
->>>>>>> 87d210fb260badc46fe28ea4b617e0a9ebff697b
   },
   "scripts": {
     "start": "react-scripts start",
