@@ -42,10 +42,10 @@ export default makeStyles(theme => ({
     justifyContent: "space-between",
   },
   monthlyTopDonation:{
-    backgroundColor:'#000 !important !important !important'
+    backgroundColor:'#09161D !important !important !important'
   },
   tableWidget: {
-    backgroundColor:'#000 !important',
+    backgroundColor:'#09161D !important',
     overflowX: "auto",
   },
   progressBarPrimary: {

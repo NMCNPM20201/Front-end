@@ -11,7 +11,7 @@ export default makeStyles(theme => ({
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
-    backgroundColor:'#000 !important',
+    backgroundColor:'#0A0A0F !important',
     color:'#fff !important'
   },
   widgetRoot: {
@@ -22,7 +22,7 @@ export default makeStyles(theme => ({
     paddingBottom: theme.spacing(3),
     paddingRight: theme.spacing(3),
     paddingLeft: theme.spacing(3),
-    backgroundColor:'#000 !important',
+    backgroundColor:'#0A0A0F !important',
   },
   noPadding: {
     padding: 0,
