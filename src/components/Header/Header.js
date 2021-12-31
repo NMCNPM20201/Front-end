@@ -93,7 +93,7 @@ export default function Header(props) {
     }, []);*/
 
     return (
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar position="fixed" className={classes.appBar} style={{zIndex: "1250"}}>
         <Toolbar className={classes.toolbar}>
           <IconButton
             color="inherit"
@@ -133,9 +133,7 @@ export default function Header(props) {
             aria-controls="mail-menu"
             onClick={e => {
               setNotificationsMenu(e.currentTarget);
-              if (unreadNotifications) {
-                setUnreadNotifications(0);
-              }
+              if (unreadNotifications) setUnreadNotifications(0);
             }}
             className={classes.headerMenuButton}
           >
