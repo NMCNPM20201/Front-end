@@ -310,15 +310,15 @@ export default function Animation() {
     };
 
     const getGifs = async (keyword) => {
-        const res = await gf.search(keyword, { limit: 16 });
+        const res = await gf.search(keyword, { limit: 32 });
         setGifs(values => res.data);
-        setTimeout(() => setLoadingGifs(false), 2000);
+        setTimeout(() => setLoadingGifs(false), 1000);
     }
 
     const getGifTexts = async (text) => {
-        const res = await gf.animate(text, { limit: 16 })
+        const res = await gf.animate(text, { limit: 32 })
         setGifTexts(values => res.data);
-        setTimeout(() => setLoadingGifTexts(false), 2000);
+        setTimeout(() => setLoadingGifTexts(false), 1000);
     }
 
     const handleInputChange = (event) => {
@@ -397,7 +397,7 @@ export default function Animation() {
                 <Grid item container xs={12} spacing={2}>
                     <Grid item xs={12}>
                         <Typography variant="h5" color="textSecondary" noWrap>
-                            Choose Your Favorite Gif
+                            <p style={{color: "#ADC2C4"}}>Choose Your Favorite Gif</p>
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
@@ -405,7 +405,7 @@ export default function Animation() {
                         {!!loadingGifs && (<LinearProgress />)}
                     </Grid>
                 </Grid>
-                <Grid item container xs={12} spacing={2}>
+                {/*<Grid item container xs={12} spacing={2}>
                     <Grid item xs={12}>
                         <Typography variant="h5" color="textSecondary" noWrap>
                             Choose Your Favorite Text Style
@@ -415,12 +415,12 @@ export default function Animation() {
                         {!loadingGifTexts && (<GifTextsList gifs={gifTexts} />)}
                         {!!loadingGifTexts && (<LinearProgress />)}
                     </Grid>
-                </Grid>
+                </Grid>*/}
                 {uploadedGifs && (
                     <Grid item container xs={12} spacing={2}>
                         <Grid item xs={12}>
                             <Typography variant="h5" color="textSecondary" noWrap>
-                                Choose Your Uploaded Gif
+                                <p style={{color: "#ADC2C4"}}>Choose Your Uploaded Gif</p>
                             </Typography>
                         </Grid>
                         <Grid item xs={12}>
@@ -431,7 +431,7 @@ export default function Animation() {
                 <Grid item container xs={12} spacing={2}>
                     <Grid item xs={12}>
                         <Typography variant="h5" color="textSecondary" noWrap>
-                            Upload your Gif
+                            <p style={{color: "#ADC2C4"}}>Upload your Gifs</p>
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>

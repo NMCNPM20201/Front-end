@@ -94,8 +94,9 @@ export default function Dashboard(props) {
     },
   ]);
   React.useEffect(() => {
-    axios.get("https://web-donate.herokuapp.com/donate/top_donate_by_day?day="+dateObj.getUTCDate()+"&month="+dateObj.getUTCMonth()+1+"&year="+dateObj.getUTCFullYear())
+    axios.get("https://web-donate.herokuapp.com/donate/top_donate_by_day?day="+dateObj.getUTCDate()+"&month="+(dateObj.getUTCMonth()+1)+"&year="+dateObj.getUTCFullYear())
       .then(res => {
+        console.log(res.data.length);
         if(res.data.length!=0){
         setData3(res.data.map(d=>
           d={
@@ -117,7 +118,7 @@ export default function Dashboard(props) {
   }
   return (
     <>
-      <PageTitle bodyClass={classes.body}  title="Dashboard"/>
+      <PageTitle bodyClass={classes.body} title="Dashboard"/>
       <Grid elevation={0} container spacing={4}>
         <Grid item xs={12}>
           <Widget

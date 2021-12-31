@@ -78,6 +78,7 @@ export default function UploadGif() {
               accept="image/*"
               onChange={onSelectFile} />
             <Button
+              style={{color: "#A0A7AA", border: "1px solid #A0A7AA"}}
               className="btn-choose"
               variant="outlined"
               component="span" >
@@ -91,15 +92,14 @@ export default function UploadGif() {
           </div>
         </Grid>
         <Grid item xs={12}>
-          <Button
+            {state.currentFile && (<Button
             className="btn-upload"
             color="primary"
             variant="contained"
             component="span"
-            disabled={!state.currentFile}
             onClick={onUpload}>
             Upload
-          </Button>
+          </Button>)}
         </Grid>
         {state.message && (
           <Grid item xs={12}>

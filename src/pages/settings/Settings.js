@@ -139,19 +139,19 @@ function a11yProps(index) {
 function NodeSave({dataSave}) {
   const classes = useStyles();
   const { enqueueSnackbar } = useSnackbar();
-  const [min, setMin] = React.useState(1000);
-  const [max, setMax] = React.useState(1000);
-  React.useEffect(() => {
-    axios.get(settingsAPI)
-      .then(res => {
-        if(dataSave.IdData==1){ setMin(0);}
-        else {setMin(res.data[dataSave.IdData-2].money);};
-        if(dataSave.IdData==res.data.length) setMax(100000000000000000000000000000);
-        else setMax(res.data[dataSave.IdData].money);
-      });
-  }, []);
+  // const [min, setMin] = React.useState(1000);
+  // const [max, setMax] = React.useState(1000);
+  // React.useEffect(() => {
+  //   axios.get(settingsAPI)
+  //     .then(res => {
+  //       if(dataSave.IdData==1){ setMin(0);}
+  //       else {setMin(res.data[dataSave.IdData-2].money);};
+  //       if(dataSave.IdData==res.data.length) setMax(100000000000000000000000000000);
+  //       else setMax(res.data[dataSave.IdData].money);
+  //     });
+  // }, []);
   const handleClickVariant = (variant) => () => {
-        if(dataSave.values1>min){
+        if(dataSave.values1>dataSave.min&&dataSave.values1<dataSave.max){
           enqueueSnackbar('Successfully saved!', { variant });
           SaveData();
           }
@@ -172,13 +172,14 @@ function NodeSave({dataSave}) {
   return (
     <React.Fragment>
       <Button
-        onClick={dataSave.values1>min&&dataSave.values1<max?handleClickVariant('success'):handleClickVariant('error')}
+        onClick={dataSave.values1>dataSave.min&&dataSave.values1<dataSave.max?handleClickVariant('success'):handleClickVariant('error')}
         variant="contained"
         color="primary"
         disableRipple
-        className={classNames(classes.margin, classes.bootstrapRoot)}
+        //className={classNames(classes.margin, classes.bootstrapRoot)}
+        style={{}}
         >
-        SAVE SETTINGS
+        Save Settings
       </Button>
     </React.Fragment>
   );
@@ -229,7 +230,9 @@ function NestedGrid({data}) {
       values3: data.template,
       values4: data.alertDuration, 
       values5 :data.alertTextDelay,
-      IdData :data.id
+      IdData :data.id,
+      min:data.min,
+      max:data.max,
   });
   var handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -306,6 +309,7 @@ function NestedGrid({data}) {
         </Grid>
         <Grid item xs={8}>
         <TextField 
+        spellCheck="false"
         className="borderText"
         variant="outlined" 
         type="text" id="MessageTemplate"
@@ -407,13 +411,33 @@ function SimpleTabs() {
  function GetDataSettings() {
     axios.get(settingsAPI)
       .then(res => {
-        setDataSettings(res.data);
+        setDataSettings(res.data.map(data=>
+          data={
+            money: data.money  ,
+            shopTopDonation: data.shopTopDonation,
+            template: data.template,
+            alertDuration: data.alertDuration, 
+            alertTextDelay :data.alertTextDelay,
+            id :data.id,
+            min:data.id!=1?res.data[data.id-2].money:0,
+            max:data.id!=res.data.length?res.data[data.id].money:10000000000,
+          }));
       })
   };
   React.useEffect(() => {
     axios.get(settingsAPI)
       .then(res => {
-        setDataSettings(res.data);
+        setDataSettings(res.data.map(data=>
+          data={
+            money: data.money  ,
+            shopTopDonation: data.shopTopDonation,
+            template: data.template,
+            alertDuration: data.alertDuration, 
+            alertTextDelay :data.alertTextDelay,
+            id :data.id,
+            min:data.id!=1?res.data[data.id-2].money:0,
+            max:data.id!=res.data.length?res.data[data.id].money:10000000000,
+          }));
       });
   }, []);
   function handleAddLevel() {
