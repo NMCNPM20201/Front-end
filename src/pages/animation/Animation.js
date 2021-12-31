@@ -397,7 +397,7 @@ export default function Animation() {
                 <Grid item container xs={12} spacing={2}>
                     <Grid item xs={12}>
                         <Typography variant="h5" color="textSecondary" noWrap>
-                            Choose Your Favorite Gif
+                            <p style={{color: "#ADC2C4"}}>Choose Your Favorite Gif</p>
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>
@@ -420,7 +420,7 @@ export default function Animation() {
                     <Grid item container xs={12} spacing={2}>
                         <Grid item xs={12}>
                             <Typography variant="h5" color="textSecondary" noWrap>
-                                Choose Your Uploaded Gif
+                                <p style={{color: "#ADC2C4"}}>Choose Your Uploaded Gif</p>
                             </Typography>
                         </Grid>
                         <Grid item xs={12}>
@@ -431,7 +431,7 @@ export default function Animation() {
                 <Grid item container xs={12} spacing={2}>
                     <Grid item xs={12}>
                         <Typography variant="h5" color="textSecondary" noWrap>
-                            Upload your Gif
+                            <p style={{color: "#ADC2C4"}}>Upload your Gifs</p>
                         </Typography>
                     </Grid>
                     <Grid item xs={12}>

@@ -8,7 +8,7 @@ export default makeStyles(theme => ({
     marginTop: theme.spacing(5),
   },
   typo: {
-    color: theme.palette.text.hint,
+    color: "#ffffff"/*theme.palette.text.hint*/,
   },
   button: {
     boxShadow: theme.customShadows.widget,

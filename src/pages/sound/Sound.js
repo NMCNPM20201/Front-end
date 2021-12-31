@@ -226,12 +226,12 @@ function Sound() {
         <Grid container item spacing={4} xs={12}>
           <Grid item xs={12}>
             <Typography variant="h5" color="textSecondary" noWrap>
-                Speaking Voice Settings
+              <p style={{color: "#ADC2C4"}}>Speaking Voice Settings</p>
             </Typography>
           </Grid>
           <Grid item xs={12}>
             <div className="App">
-              <header className="App-header">
+              <header className="App-header" style={{color: "#217E95"}}>
                 Test your speaking voice
                 <TestSpeaking />
               </header>
@@ -242,7 +242,7 @@ function Sound() {
           <Grid container item xs={12} spacing={4}>
               <Grid item xs={12}>
                 <Typography variant="h5" color="textSecondary" noWrap>
-                  Choose Your Uploaded Alert Sound
+                  <p style={{color: "#ADC2C4"}}>Choose Your Uploaded Alert Sound</p>
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -253,7 +253,7 @@ function Sound() {
         <Grid container item spacing={4} xs={12}>
           <Grid item xs={12}>
             <Typography variant="h5" color="textSecondary" noWrap>
-              Upload Your Alert Sound
+              <p style={{color: "#ADC2C4"}}>Upload Your Alert Sound</p>
             </Typography>
           </Grid>
           <Grid item xs={12}>

@@ -118,7 +118,7 @@ export default function Dashboard(props) {
   }
   return (
     <>
-      <PageTitle bodyClass={classes.body}  title="Dashboard"/>
+      <PageTitle bodyClass={classes.body} title="Dashboard"/>
       <Grid elevation={0} container spacing={4}>
         <Grid item xs={12}>
           <Widget

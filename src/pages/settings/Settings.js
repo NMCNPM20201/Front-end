@@ -171,15 +171,16 @@ function NodeSave({dataSave}) {
   }
   return (
     <React.Fragment>
-          <Button
-            onClick={dataSave.values1>dataSave.min&&dataSave.values1<dataSave.max?handleClickVariant('success'):handleClickVariant('error')}
-            variant="contained"
-            color="primary"
-            disableRipple
-            className={classNames(classes.margin, classes.bootstrapRoot)}
-            >
-            Save Settings
-          </Button>
+      <Button
+        onClick={dataSave.values1>dataSave.min&&dataSave.values1<dataSave.max?handleClickVariant('success'):handleClickVariant('error')}
+        variant="contained"
+        color="primary"
+        disableRipple
+        //className={classNames(classes.margin, classes.bootstrapRoot)}
+        style={{}}
+        >
+        Save Settings
+      </Button>
     </React.Fragment>
   );
 }
@@ -308,6 +309,7 @@ function NestedGrid({data}) {
         </Grid>
         <Grid item xs={8}>
         <TextField 
+        spellCheck="false"
         className="borderText"
         variant="outlined" 
         type="text" id="MessageTemplate"
