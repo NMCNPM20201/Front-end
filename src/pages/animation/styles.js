@@ -8,6 +8,19 @@ export default makeStyles((theme) => ({
       overflow: 'hidden',
       backgroundColor: theme.palette.background.paper,
     },
+    cssOutlinedInput: {
+      '&$cssFocused $notchedOutline': {
+        //borderColor: '#e3e8eb !important'
+      }
+    },
+    notchedOutline: {
+      // height:'50px',
+      borderWidth: '0.25px',
+      //borderColor: '#e3e8eb !important'
+    },
+    multilineColor:{
+      color:'white'
+    },
     imageList: {
       minWidth: 300, 
       width: '100%',

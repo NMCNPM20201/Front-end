@@ -43,6 +43,19 @@ const TestSpeaking = () => {
         width: '25ch',
       },
     },
+    cssOutlinedInput: {
+      '&$cssFocused $notchedOutline': {
+        borderColor: '#3F51B5 !important'
+      }
+    },
+    notchedOutline: {
+      // height:'50px',
+      borderWidth: '2px',
+      borderColor: '#3F51B5 !important'
+    },
+    multilineColor:{
+      color:'white'
+    },
   }));
   
   const classes = useStyles();
@@ -139,11 +152,19 @@ const TestSpeaking = () => {
           color="primary"
           value={text}
           onChange={handleInputChange}
-          spellCheck="false" />
+          spellCheck="false" 
+          InputProps={{
+            classes: {
+              root: classes.cssOutlinedInput,
+              notchedOutline: classes.notchedOutline,
+              input: classes.multilineColor
+            },
+          }}
+        />
       </form>
       <ContinuousSlider />
       <div className={classes.button}>
-        <Button variant="contained" onClick={handleClick}>Test speaking</Button>
+        <Button variant="contained" color="primary" onClick={handleClick}>Test speaking</Button>
       </div>
     </>
   );
@@ -185,7 +206,7 @@ function Sound() {
           </div>
         </Grid>
         <Grid item xs={2}>
-          <Button onClick={() => handleClick(item.url)} variant="contained">
+          <Button onClick={() => handleClick(item.url)} variant="contained" color="primary">
             Choose
           </Button>
         </Grid>

@@ -391,6 +391,13 @@ export default function Animation() {
                             value={keyword}
                             onChange={handleInputChange}
                             spellCheck="false"
+                            InputProps={{
+                                classes: {
+                                  root: classes.cssOutlinedInput,
+                                  notchedOutline: classes.notchedOutline,
+                                  input: classes.multilineColor
+                                },
+                            }}
                         />
                     </div>
                 </Grid>
