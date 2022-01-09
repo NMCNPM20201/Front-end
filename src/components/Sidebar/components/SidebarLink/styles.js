@@ -11,7 +11,7 @@ export default makeStyles(theme => ({
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
-    textDecoration: 'none'
+    textDecoration: 'none',
   },
   linkActive: {
     backgroundColor: theme.palette.background.light,
@@ -41,22 +41,26 @@ export default makeStyles(theme => ({
   },
   linkTextActive: {
     color: theme.palette.text.primary,
+    
   },
   linkTextHidden: {
     opacity: 0,
+    
   },
   nestedList: {
     paddingLeft: theme.spacing(2) + 30,
+    
   },
   sectionTitle: {
     marginLeft: theme.spacing(4.5),
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(2),
+    backgroundColor: "#fff !important !important"
   },
   divider: {
     marginTop: theme.spacing(2),
     marginBottom: theme.spacing(4),
     height: 1,
-    backgroundColor: "#D8D8D880",
+    backgroundColor: "#fff !important !important",
   },
 }));

@@ -43,6 +43,19 @@ const TestSpeaking = () => {
         width: '25ch',
       },
     },
+    cssOutlinedInput: {
+      '&$cssFocused $notchedOutline': {
+        borderColor: '#3F51B5 !important'
+      }
+    },
+    notchedOutline: {
+      // height:'50px',
+      borderWidth: '2px',
+      borderColor: '#3F51B5 !important'
+    },
+    multilineColor:{
+      color:'white'
+    },
   }));
   
   const classes = useStyles();
@@ -139,11 +152,19 @@ const TestSpeaking = () => {
           color="primary"
           value={text}
           onChange={handleInputChange}
-          spellCheck="false" />
+          spellCheck="false" 
+          InputProps={{
+            classes: {
+              root: classes.cssOutlinedInput,
+              notchedOutline: classes.notchedOutline,
+              input: classes.multilineColor
+            },
+          }}
+        />
       </form>
       <ContinuousSlider />
       <div className={classes.button}>
-        <Button variant="contained" onClick={handleClick}>Test speaking</Button>
+        <Button variant="contained" color="primary" onClick={handleClick}>Test speaking</Button>
       </div>
     </>
   );
@@ -185,7 +206,7 @@ function Sound() {
           </div>
         </Grid>
         <Grid item xs={2}>
-          <Button onClick={() => handleClick(item.url)} variant="contained">
+          <Button onClick={() => handleClick(item.url)} variant="contained" color="primary">
             Choose
           </Button>
         </Grid>
@@ -226,12 +247,12 @@ function Sound() {
         <Grid container item spacing={4} xs={12}>
           <Grid item xs={12}>
             <Typography variant="h5" color="textSecondary" noWrap>
-                Speaking Voice Settings
+              <p style={{color: "#ADC2C4"}}>Speaking Voice Settings</p>
             </Typography>
           </Grid>
           <Grid item xs={12}>
             <div className="App">
-              <header className="App-header">
+              <header className="App-header" style={{color: "#217E95"}}>
                 Test your speaking voice
                 <TestSpeaking />
               </header>
@@ -242,7 +263,7 @@ function Sound() {
           <Grid container item xs={12} spacing={4}>
               <Grid item xs={12}>
                 <Typography variant="h5" color="textSecondary" noWrap>
-                  Choose Your Uploaded Alert Sound
+                  <p style={{color: "#ADC2C4"}}>Choose Your Uploaded Alert Sound</p>
                 </Typography>
               </Grid>
               <Grid item xs={12}>
@@ -253,7 +274,7 @@ function Sound() {
         <Grid container item spacing={4} xs={12}>
           <Grid item xs={12}>
             <Typography variant="h5" color="textSecondary" noWrap>
-              Upload Your Alert Sound
+              <p style={{color: "#ADC2C4"}}>Upload Your Alert Sound</p>
             </Typography>
           </Grid>
           <Grid item xs={12}>

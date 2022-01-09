@@ -68,10 +68,11 @@ export default function Header(props) {
     const onMessage = async (msg) => {
       setNotificationsData((values) => {
         let newData = [...values];
+        const obj = JSON.parse(msg.body);
         newData.unshift({
           color: "primary",
           type: "notification",
-          message: msg.body,
+          message: obj.name + " vừa donate " + obj.money + " đồng",
         });
         if (newData.length > 5) {
           newData.splice(newData.length - 1, 1);
@@ -80,22 +81,6 @@ export default function Header(props) {
       });
       setUnreadNotifications(values => values + 1);
     }
-
-    /*const setMessage = (msg) => {
-      setNotificationsData((values) => {
-        let newData = [...values];
-        newData.unshift({
-          color: "primary",
-          type: "notification",
-          message: msg,
-        });
-        if (newData.length > 5) {
-          newData.splice(newData.length - 1, 1);
-        }
-        return newData;
-      });
-      setUnreadNotifications(values => values + 1);
-    }*/
   
     useSubscription("/topic/message", async (message) => await onMessage(message));
     /*useEffect(() => {
@@ -108,7 +93,7 @@ export default function Header(props) {
     }, []);*/
 
     return (
-      <AppBar position="fixed" className={classes.appBar}>
+      <AppBar position="fixed" className={classes.appBar} style={{backgroundColor: "#2B383F", zIndex: "1250"}}>
         <Toolbar className={classes.toolbar}>
           <IconButton
             color="inherit"
@@ -147,10 +132,8 @@ export default function Header(props) {
             aria-haspopup="true"
             aria-controls="mail-menu"
             onClick={e => {
-              if (unreadNotifications) {
-                setNotificationsMenu(e.currentTarget);
-                setUnreadNotifications(0);
-              }
+              setNotificationsMenu(e.currentTarget);
+              if (unreadNotifications) setUnreadNotifications(0);
             }}
             className={classes.headerMenuButton}
           >
@@ -186,7 +169,7 @@ export default function Header(props) {
 
   return (
     <StompSessionProvider
-        url={"http://localhost:8080/gs-guide-websocket"}
+        url={"https://web-donate.herokuapp.com/gs-guide-websocket"}
         debug={(str) => {
             console.log(str);
         }}

@@ -1,13 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Drawer, IconButton, List } from "@material-ui/core";
-
+import HistoryEduIcon from '@mui/icons-material/HistoryEdu';
+import FlutterDashIcon from '@mui/icons-material/FlutterDash';
 import {
+  HeadsetMic,
   Settings,
   Home as HomeIcon,
-  NotificationsNone as NotificationsIcon,
-  FormatSize as TypographyIcon,
-  FilterNone as UIElementsIcon,
-  BorderAll as TableIcon,
   ArrowBack as ArrowBackIcon,
 } from "@material-ui/icons";
 import { useTheme } from "@material-ui/styles";
@@ -28,22 +26,16 @@ import {
 } from "../../context/LayoutContext";
 
 const structure = [
-  { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
+  { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon color="primary" /> },
   {
     id: 1,
     label: "Animation",
     link: "/app/animation",
-    icon: <TypographyIcon />,
+    icon: <FlutterDashIcon color="primary"/>,
   },
-  { id: 2, label: "Tables", link: "/app/tables", icon: <TableIcon /> },
-  { id: 3, label: "Settings", link: "/app/settings", icon: <Settings />},
-  { id: 4, label: "Sound", link: "/app/sound", icon: <Settings />},
-  {
-    id: 5,
-    label: "Notifications",
-    link: "/app/notifications",
-    icon: <NotificationsIcon />,
-  },
+  { id: 2, label: "History", link: "/app/tables", icon: <HistoryEduIcon color="primary" /> },
+  { id: 3, label: "General Settings", link: "/app/settings", icon: <Settings color="primary"/>},
+  { id: 4, label: "Sound", link: "/app/sound", icon: <HeadsetMic color="primary"/>},
 ];
 
 function Sidebar({ location }) {
@@ -92,7 +84,7 @@ function Sidebar({ location }) {
       </div>
       <List className={classes.sidebarList}>
         {structure.map(link => (
-          <SidebarLink
+          <SidebarLink className={classes.sidebarList}
             key={link.id}
             location={location}
             isSidebarOpened={isSidebarOpened}
