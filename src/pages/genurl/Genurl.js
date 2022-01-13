@@ -66,7 +66,8 @@ const SubscribingComponent = (props) => {
         setCountMessage(values => values + 1);
         setMessageQueue(values => {
             const obj = JSON.parse(msg.body);
-            const text = "Cảm ơn " + obj.name + " đã donate " + obj.money; 
+            const text = "Cảm ơn " + obj.name + " đã donate " + obj.money + " đồng";
+            const content = (obj.content == undefined || obj.content == null || obj.content.length == 0) ? "" : '" ' + obj.content + ' "';
             return [...values, {
                 id: countMessage,
                 content: obj.content,
@@ -81,10 +82,10 @@ const SubscribingComponent = (props) => {
     useEffect(() => {
         if (!showAnimation) return;
         audio.current = new Audio(sharingSound ? sharingSound : savedSound);
-        speaking.current = new Audio(`https://web-donate.herokuapp.com/text_to_speech?text=${content}`);
+        if (content.length != 0) speaking.current = new Audio(`https://web-donate.herokuapp.com/text_to_speech?text=${content}`);
         setTimeout(() => audio.current.play(), 1000);
         setTimeout(() => audio.current.pause(), 4000);
-        setTimeout(() => speaking.current.play(), 4100);
+        if (content.length != 0) setTimeout(() => speaking.current.play(), 4100);
         setTimeout(() => setWaiting(false), 1000);
         setTimeout(() => setWaiting(true), 11000);
         setTimeout(() => setCurrentMessage(values => values + 1), 11000);
