@@ -46,9 +46,13 @@ export default function Dashboard(props) {
   });
   const dateObj = new Date();
   const [data1, setData1] = React.useState([]);
+  const [years, setYears] = React.useState([]);
   React.useEffect(() => {
     axios.get("https://web-donate.herokuapp.com/donate/total_donate_by_year?year="+`${monthlyBarChart}`)
       .then(res => {
+        for (var i = 0; i <= (dateObj.getUTCFullYear()-2021); i++) {
+          years.push(2021+i);
+        };
         setData1(res.data.map(d=>
           d={
             'Momo banking' : d.total_donate
@@ -66,24 +70,24 @@ export default function Dashboard(props) {
     };
   const [data2, setData2] = React.useState([]);
   React.useEffect(() => {
-    axios.get("https://web-donate.herokuapp.com/donate/total_donate_by_month?year=2021&month="+`${mainChartState}`)
+    axios.get("https://web-donate.herokuapp.com/donate/total_donate_by_month?year="+dateObj.getUTCFullYear()+"&month="+`${mainChartState}`)
       .then(res => {
         setData2(res.data.map(d=>
           d={
             day:d.day-1,
             'Momo banking': d.total_donate,
-            desktop: 500000
+            desktop: 1000000
           }));
       });
   }, []);
   function getMainChartState(month){
-    axios.get("https://web-donate.herokuapp.com/donate/total_donate_by_month?year=2021&month="+`${month}`)
+    axios.get("https://web-donate.herokuapp.com/donate/total_donate_by_month?year="+dateObj.getUTCFullYear()+"&month="+`${month}`)
       .then(res => {
         setData2(res.data.map(d=>
           d={
             day:d.day-1,
             'Momo banking' : d.total_donate,
-            desktop: 500000
+            desktop: 1000000
           }));
       });
   }
@@ -148,9 +152,11 @@ export default function Dashboard(props) {
                   }
                   autoWidth
                 >
-                  <MenuItem value="2021">2021</MenuItem>
-                  <MenuItem value="2022">2022</MenuItem>
-                  <MenuItem value="2023">2023</MenuItem>
+                  {
+                    years.map(year=>(
+                      <MenuItem value={year} >{year}</MenuItem>
+                    ))
+                  }
                 </Select>
               </div>
             }
