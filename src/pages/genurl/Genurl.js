@@ -23,6 +23,8 @@ const SubscribingComponent = (props) => {
     const [showAnimation, setShowAnimation] = useState(false);
     const [countMessage, setCountMessage] = useState(0);
     const [currentMessage, setCurrentMessage] = useState(0);
+    const [name, setName] = useState("");
+    const [money, setMoney] = useState(0);
     
     const audio = useRef(null);
     const speaking = useRef(null);
@@ -56,8 +58,11 @@ const SubscribingComponent = (props) => {
     const AnimatedText = () => {
         return ( 
             <div class="content">
-                <h1 class="text_shadows" style={{ color: "red", fontWeight: "bold"}}>{text}</h1>
-                <h1 class="text_shadows" style={{ color: "red", fontSize: "1rem"}}>{content}</h1>
+                <h1 class="text_shadows" style={{ color: "white", fontWeight: "bold"}}>
+                    {/*text*/}
+                    Cảm ơn <mark style={{ background: "none", color: "red"}}>{name}</mark> đã donate <mark style={{ background: "none", color: "red"}}>{money}</mark> đồng!                
+                </h1>
+                <h1 class="text_shadows" style={{ textShadow: "none", color: "red", fontWeight: "bold", fontSize: "0.9rem"}}>{content}</h1>
             </div>
         );
     }
@@ -70,8 +75,10 @@ const SubscribingComponent = (props) => {
             const content = (obj.content == undefined || obj.content == null || obj.content.length == 0) ? "" : '" ' + obj.content + ' "';
             return [...values, {
                 id: countMessage,
-                content: obj.content,
-                text: text
+                content: content,
+                text: text,
+                name: obj.name,
+                money: obj.money
             }];
         });
         //await getGifTexts(text);
@@ -99,6 +106,8 @@ const SubscribingComponent = (props) => {
         const message = messageQueue[currentMessage];
         setContent(values => message.content);
         setText(values => message.text);
+        setName(values => message.name);
+        setMoney(values => message.money);
         setShowAnimation(true);
     }, [currentMessage, messageQueue, showAnimation]);
 
@@ -112,7 +121,7 @@ const SubscribingComponent = (props) => {
                         setSavedTextStyleId(values => item.textStyleId);
                         setSavedSound(values => item.soundUrl);
                     }
-                })
+                });
             }
         })
         .catch(error => console.log(error));
