@@ -5,11 +5,7 @@
 }
 
 :root {
-  --color-primary: #f6aca2;
-  --color-secondary: #f49b90;
-  --color-tertiary: #f28b7d;
-  --color-quaternary: #f07a6a;
-  --color-quinary: #ee6352;
+  --color-secondary: #1A9336;
   /*
   --color-primary: #5192ED;
   --color-secondary: #69A1F0;
@@ -26,10 +22,8 @@
 }
 
 .text_shadows {
-  text-shadow: 3px 3px 0 var(--color-secondary)/*, 6px 6px 0 var(--color-tertiary),
-    9px 9px var(--color-quaternary), 12px 12px 0 var(--color-quinary)*/;
-  /*text-shadow: 2px 0 0 #fff, -2px 0 0 #fff, 0 2px 0 #fff, 0 -2px 0 #fff, 1px 1px #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff;*/
-  font-family: bungee, sans-serif;
+  text-shadow: 3px 3px 0 var(--color-secondary);
+  font-family: Arial, Helvetica, sans-serif;
   font-weight: 400;
   text-transform: uppercase;
   font-size: calc(1rem + 1.2vw);

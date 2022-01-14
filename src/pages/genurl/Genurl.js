@@ -60,9 +60,9 @@ const SubscribingComponent = (props) => {
             <div class="content">
                 <h1 class="text_shadows" style={{ color: "white", fontWeight: "bold"}}>
                     {/*text*/}
-                    Cảm ơn <mark style={{ background: "none", color: "red"}}>{name}</mark> đã donate <mark style={{ background: "none", color: "red"}}>{money}</mark> đồng!                
+                    Cảm ơn <mark style={{ background: "none", color: "#63D572"}}>{name}</mark> đã donate <mark style={{ background: "none", color: "#63D572"}}>{money}</mark> đồng!                
                 </h1>
-                <h1 class="text_shadows" style={{ textShadow: "none", color: "red", fontWeight: "bold", fontSize: "0.9rem"}}>{content}</h1>
+                <h1 class="text_shadows" style={{ textShadow: "none", color: "white", fontWeight: "bold", fontSize: "0.9rem"}}>{content}</h1>
             </div>
         );
     }
