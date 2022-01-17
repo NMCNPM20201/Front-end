@@ -162,7 +162,9 @@ export default function Dashboard(props) {
             }
           >
             <ResponsiveContainer width="100%" minWidth={500} height={350}>
-                <BarChart width={730} height={250} data={data1}>
+                <BarChart 
+                  margin={{ top: 0, right: 0, left: 25, bottom: 0 }}
+                  data={data1}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="day" />
                 <YAxis />
@@ -234,7 +236,7 @@ export default function Dashboard(props) {
           >
             <ResponsiveContainer width="100%" minWidth={500} height={350}>
               <ComposedChart
-                margin={{ top: 0, right: 0, left: 0, bottom: 0 }}
+                margin={{ top: 0, right: 0, left: 25, bottom: 0 }}
                 data={data2}
 
               >
